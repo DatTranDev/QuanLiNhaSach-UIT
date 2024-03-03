@@ -1,0 +1,72 @@
+﻿<Window x:Class="QuanLiNhaSach.View.MessageBox.Warning"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiNhaSach.View.MessageBox"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Warning"
+        Width="409.6"  
+        Height="224"
+        AllowsTransparency="True"
+        Background="Transparent"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="8.32"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        >
+    <Grid>
+        <Border Background="White" CornerRadius="12.8" BorderBrush="DarkGray" BorderThickness="1">
+            <Grid Background="Transparent">
+                <StackPanel Margin="32">
+                    <Image 
+                     Width="57.344" 
+                     Source="/QuanLiNhaSach;component/Resources/Icon/Warning_Icon.png" />
+                    <TextBlock
+                     x:Name="TextboxShow"
+                     Margin="6.4,16,6.4,16"  
+                     HorizontalAlignment="Center"
+                     FontFamily="Droid Sans"
+                     FontSize="18.432"                        />
+                    <StackPanel 
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Center"
+                     Orientation="Horizontal"
+                     Margin="0 5 0 0">
+
+                        <Button
+                         Width="98.304"  
+                         Height="37.888"
+                         Padding="0"
+                         materialDesign:ButtonAssist.CornerRadius="15.36"  
+                         Background="#42a9e3"
+                         BorderThickness="0"
+                         Content="Có"
+                         FontSize="15.36" 
+                         FontWeight="Bold"
+                         Click="Yes_btn_Click"/>
+                        <Button
+                         Width="98.304"  
+                         Height="37.888" 
+                         Margin="30,0,0,0"  
+                         Padding="0"
+                         materialDesign:ButtonAssist.CornerRadius="15.36" 
+                         Background="#ef4444"
+                         BorderThickness="0"
+                         Click="No_btn_Click"
+                         Content="Không"
+                         FontSize="15.36"  
+                         FontWeight="Bold" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
