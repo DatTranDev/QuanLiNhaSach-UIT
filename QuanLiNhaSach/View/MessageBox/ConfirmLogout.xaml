@@ -1,0 +1,65 @@
+﻿<Window x:Class="QuanLiNhaSach.View.MessageBox.ConfirmLogout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiNhaSach.View.MessageBox"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="ConfirmLogout" 
+        Width="450"
+        Height="230"
+        AllowsTransparency="True"
+        Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        >
+    <Grid>
+        <Border Background="White" CornerRadius="12.8" BorderBrush="DarkGray" BorderThickness="1">
+            <Grid Background="Transparent">
+                <StackPanel Margin="32">
+                    <Image Width="57.344" Source="/QuanLiNhaSach;component/Resources/Icon/Log_Out_Caution.png" />
+                    <TextBlock
+                        Margin="6.4,16,6.4,16"
+                        HorizontalAlignment="Center"
+                        FontFamily="Droid Sans"
+                        FontSize="18.432"
+                        Text="Bạn có chắc chắn muốn đăng xuất không?" />
+                    <StackPanel
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+
+                        <Button
+                            Width="98.304"
+                            Height="37.888"
+                            Padding="0"
+                            materialDesign:ButtonAssist.CornerRadius="15.36"
+                            Background="#42a9e3"
+                            BorderThickness="0"
+                            Content="Có"
+                            Click="Yes_btn_Click"
+                            FontSize="15.36"
+                            FontWeight="Bold" />
+                        <Button
+                            Width="98.304"
+                            Height="37.888"
+                            Margin="30,0,0,0"
+                            Padding="0"
+                            materialDesign:ButtonAssist.CornerRadius="15.36"
+                            Background="#ef4444"
+                            BorderThickness="0"
+                            Content="Không"
+                            FontSize="15.36"
+                            Click="No_btn_Click"
+                            FontWeight="Bold" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

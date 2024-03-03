@@ -1,0 +1,73 @@
+﻿<Window x:Class="QuanLiNhaSach.View.MessageBox.Success"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiNhaSach.View.MessageBox"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        x:Name="messageBoxWindow"
+        Width="auto"
+        Height="180"
+        SizeToContent="Width"
+        AllowsTransparency="True"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        TextElement.FontSize="8.32"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        mc:Ignorable="d"
+        Title="MessageBox" >
+    <Grid>
+        <Border Background="White" CornerRadius="12.8" BorderThickness="1" BorderBrush="DarkGray">
+            <Grid Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <StackPanel
+                        Margin="20,30,20,20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                    <Image
+                        Grid.Row="0"
+                        Width="59"
+                        Height="59"
+                        Margin="0,0,20,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Source="/QuanLiNhaSach;component/Resources/Icon/CircleTick.png" />
+                        <TextBlock
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="Droid Sans"
+                        FontSize="18.432"
+                        Text="{Binding Text}" />
+                </StackPanel>
+
+
+                <Button
+                    Grid.Row="1"
+                    Width="98.304"
+                    Height="37.888"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    materialDesign:ButtonAssist.CornerRadius="15.36"
+                    Background="#42a9e3"
+                    BorderThickness="0"
+                    Click="Ok_btn_Click"
+                    Content="OK"
+                    FontSize="15.36"
+                    FontWeight="Bold" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

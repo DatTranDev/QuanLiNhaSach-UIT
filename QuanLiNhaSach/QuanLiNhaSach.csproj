@@ -122,6 +122,17 @@
     <Compile Include="Converter\PriceConverter.cs" />
     <Compile Include="Resources\Icon\placeHolder.cs" />
     <Compile Include="Utils\CloudService.cs" />
+    <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
+    <Compile Include="View\MessageBox\ConfirmLogout.xaml.cs">
+      <DependentUpon>ConfirmLogout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MessageBox\Error.xaml.cs">
+      <DependentUpon>Error.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MessageBox\MessageBoxCustom.cs" />
+    <Compile Include="View\MessageBox\Success.xaml.cs">
+      <DependentUpon>Success.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessageBox\Warning.xaml.cs">
       <DependentUpon>Warning.xaml</DependentUpon>
     </Compile>
@@ -139,6 +150,18 @@
     </Compile>
     <Page Include="ResourcesXAML\MainResource.xaml">
       <Generator>ResXFileCodeGenerator</Generator>
+    </Page>
+    <Page Include="View\MessageBox\ConfirmLogout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MessageBox\Error.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MessageBox\Success.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MessageBox\Warning.xaml">
       <SubType>Designer</SubType>
@@ -177,7 +200,6 @@
     <Folder Include="Resources\Image\" />
     <Folder Include="ViewModel\AdminVM\" />
     <Folder Include="ViewModel\LoginVM\" />
-    <Folder Include="ViewModel\MessageBoxVM\" />
     <Folder Include="ViewModel\StaffVM\" />
     <Folder Include="View\Admin\" />
     <Folder Include="View\Login\" />
