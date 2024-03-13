@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLiNhaSach.Resources.Icon
+namespace QuanLiNhaSach.ViewModel.AdminVM
 {
-    internal class placeHolder
+    internal class MainAdminViewModel : BaseViewModel
     {
     }
 }
