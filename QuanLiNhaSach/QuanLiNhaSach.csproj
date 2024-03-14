@@ -122,10 +122,26 @@
     <Compile Include="Converter\PriceConverter.cs" />
     <Compile Include="Resources\Icon\placeHolder.cs" />
     <Compile Include="Utils\CloudService.cs" />
+    <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
-    <Compile Include="View\MainAdminWindow.xaml.cs">
+    <Compile Include="View\Admin\AccountInfomation.xaml.cs">
+      <DependentUpon>AccountInfomation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\CustomerManagement\AddCustomerWindow.xaml.cs">
+      <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\CustomerManagement\CustomerPage.xaml.cs">
+      <DependentUpon>CustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\CustomerManagement\DebtingWindow.xaml.cs">
+      <DependentUpon>DebtingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml.cs">
+      <DependentUpon>EditCustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MessageBox\ConfirmLogout.xaml.cs">
@@ -148,11 +164,31 @@
     <Page Include="ResourcesXAML\MainResource.xaml">
       <Generator>ResXFileCodeGenerator</Generator>
     </Page>
+    <Page Include="View\Admin\AccountInfomation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\CustomerManagement\AddCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\CustomerManagement\CustomerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\CustomerManagement\DebtingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Admin\StaffManagement\ButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainAdminWindow.xaml">
+    <Page Include="View\Admin\MainAdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,6 +307,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\system_icon_brown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\money_icon_green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />

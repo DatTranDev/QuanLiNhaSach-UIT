@@ -13,7 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace QuanLiNhaSach.View
+namespace QuanLiNhaSach.View.Admin
 {
     /// <summary>
     /// Interaction logic for MainAdminWindow.xaml

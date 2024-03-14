@@ -1,0 +1,186 @@
+﻿<Window x:Class="QuanLiNhaSach.View.Admin.CustomerManagement.EditCustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.CustomerManagement"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        x:Name="EditCusPage"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        AllowsTransparency="True"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        DataContext="{StaticResource CustomerPageVM}"
+        Icon="/Resources/Icon/AppIcon.ico"
+        Height="613.6" Width="886.4">
+    <Window.Resources>
+
+        <Style x:Key="TextBlockLogin" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="19.2"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border Background="White" CornerRadius="20" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="77"/>
+                        <RowDefinition Height="436.2"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Sửa khách hàng" 
+                               FontSize="28.8" 
+                               FontWeight="Bold" 
+                               Foreground="#CC824D" 
+                               FontFamily="Inter"
+                               VerticalAlignment="Bottom"
+                               Margin="73.6,0,0,0"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Style="{DynamicResource TextBlockLogin}" 
+                                   Text="Họ và tên" 
+                                   Margin="73.6,34.6,0,14.6" 
+                                   Height="23" 
+                                   VerticalAlignment="Top"/>
+                            <TextBox Width="336" 
+                                    Height="53.6" 
+                                    BorderThickness="0.5" 
+                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="24" 
+                                    BorderBrush="Transparent"
+                                    VerticalContentAlignment="Center"
+                                    Padding="12,2.4"
+                                    HorizontalAlignment="Left"
+                                    Margin="73.6,0,0,0"
+                                    Background="#D9D9D9"
+                                    FontFamily="Inter" 
+                                    FontSize="14" 
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"  
+                                     Text="{Binding EditName}"/>
+                            <TextBlock Style="{DynamicResource TextBlockLogin}" 
+                                       Text="Email" 
+                                       Margin="73.6,20.8,0,20.8" 
+                                       VerticalAlignment="Top"/>
+                            <TextBox Width="336" 
+                                    Height="53.6" 
+                                    BorderThickness="0.5" 
+                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="24" 
+                                    BorderBrush="Transparent"
+                                    VerticalContentAlignment="Center"
+                                    Padding="12,2.4"
+                                    HorizontalAlignment="Left"
+                                    
+                                    Background="#D9D9D9"
+                                    FontFamily="Inter" 
+                                    FontSize="14" 
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                     Text="{Binding EditEmail}"
+                                     Margin="73.6,0,0,0"/>
+                            <TextBlock Style="{DynamicResource TextBlockLogin}" 
+                                       Text="Địa chỉ" 
+                                       Margin="73.6,20.8,0,20.8" 
+                                       VerticalAlignment="Top"/>
+                            <TextBox Width="336" 
+                                    Height="53.6" 
+                                    BorderThickness="0.5" 
+                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="24" 
+                                    BorderBrush="Transparent"
+                                    VerticalContentAlignment="Center"
+                                    Padding="12,2.4"
+                                    HorizontalAlignment="Left"
+                                    Margin="73.6,0,0,0"
+                                    Background="#D9D9D9"
+                                    FontFamily="Inter" 
+                                    FontSize="14" 
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                     Text="{Binding EditAddress}"
+                                     />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Style="{StaticResource TextBlockLogin}" Text="Số Điện Thoại" Margin="40.8,34.6,0,14.6"/>
+                            <TextBox Width="336" 
+                                    Height="53.6" 
+                                    BorderThickness="0.5" 
+                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="24" 
+                                    VerticalContentAlignment="Center"
+                                    BorderBrush="Transparent"
+                                    Padding="12,2.4"
+                                    HorizontalAlignment="Left"
+                                    Margin="40.8,0,0,0"
+                                    Background="#D9D9D9"
+                                    FontFamily="Inter" 
+                                    FontSize="14" 
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"  
+                                     Text="{Binding EditPhoneNumber}"/>
+                            <TextBlock Style="{DynamicResource TextBlockLogin}" 
+                                       Text="Ghi chú" 
+                                       Margin="40.8,20.8,0,20.8" 
+                                       VerticalAlignment="Top"/>
+                            <TextBox
+                                Text="{Binding EditDescription}"
+                                VerticalContentAlignment="Top"
+                                Margin="40.8,0,0,0"
+                                Width="336" 
+                                Height="209" 
+                                BorderThickness="0.5" 
+                                materialDesign:TextFieldAssist.TextFieldCornerRadius="24" 
+                                BorderBrush="Transparent"
+                                MaxLines="20"
+                                Padding="12"
+                                HorizontalAlignment="Left"
+                                Background="#D9D9D9"
+                                FontFamily="Inter" 
+                                FontSize="14" 
+                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden" />
+                        </StackPanel>
+
+
+                    </Grid>
+                    <StackPanel Grid.Row="2"
+                                Orientation="Horizontal">
+                        <Button Command="{Binding EditCusListCM}"
+                                CommandParameter="{Binding ElementName=EditCusPage}"
+                                Width="320.8"
+                                Height="61.6"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#F0BD70"
+                                BorderThickness="0"
+                                Content="Sửa khách hàng"
+                                FontSize="24"
+                                FontWeight="Bold"
+                                VerticalAlignment="Top"
+                                Margin="348.8,0,29.6,0" />
+                        <Button Command="{Binding CloseWdCM}"
+                                CommandParameter="{Binding ElementName=EditCusPage}"
+                                Width="120"
+                                Height="61.6"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#EFD8B4"
+                                BorderThickness="0"
+                                Content="Bỏ qua"
+                                FontSize="24"
+                                FontWeight="Bold"
+                                VerticalAlignment="Top"
+                                />
+
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
