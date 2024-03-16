@@ -202,7 +202,7 @@
                       Margin="10,20,10,10"
                       VerticalScrollBarVisibility="Auto"
                       VerticalAlignment="Top"
-                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                    >
             <ListView x:Name="SanPhamList"
                       VerticalAlignment="Top"
                       ItemsSource="{Binding ProductList}">

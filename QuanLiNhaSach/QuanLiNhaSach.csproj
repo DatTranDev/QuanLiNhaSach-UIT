@@ -128,6 +128,9 @@
     <Compile Include="View\Admin\ProductsManager\AddProducts.xaml.cs">
       <DependentUpon>AddProducts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ProductsManager\Import_products.xaml.cs">
+      <DependentUpon>Import_products.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\ProductsManager\ProductMain.xaml.cs">
       <DependentUpon>ProductMain.xaml</DependentUpon>
     </Compile>
@@ -158,6 +161,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
     </Page>
     <Page Include="View\Admin\ProductsManager\AddProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\Import_products.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
