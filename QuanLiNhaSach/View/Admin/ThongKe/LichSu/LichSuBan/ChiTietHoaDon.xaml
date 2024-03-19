@@ -16,7 +16,6 @@
     BorderBrush="Transparent"
     BorderThickness="0"
     FontFamily="{DynamicResource MaterialDesignFont}"
-    MouseLeftButtonDown="Window_MouseLeftButtonDown"
     ResizeMode="NoResize"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
