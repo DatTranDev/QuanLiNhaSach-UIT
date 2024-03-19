@@ -225,6 +225,9 @@
     <Compile Include="View\Admin\ThongKe\LichSu\LichSuThuTien\LichSuTable.xaml.cs">
       <DependentUpon>LichSuTable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ThongKe\SachBanChay\SachBanChayTable.xaml.cs">
+      <DependentUpon>SachBanChayTable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\ThongKe\ThongKeMainPage.xaml.cs">
       <DependentUpon>ThongKeMainPage.xaml</DependentUpon>
     </Compile>
@@ -285,6 +288,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\ThongKe\LichSu\LichSuThuTien\LichSuTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\SachBanChay\SachBanChayTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
