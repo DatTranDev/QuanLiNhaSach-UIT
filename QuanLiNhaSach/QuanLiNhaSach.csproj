@@ -222,6 +222,9 @@
     <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ThongKe\CongNo\CongNoTable.xaml.cs">
+      <DependentUpon>CongNoTable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\ThongKe\DoanhThu\DoanhThuTable.xaml.cs">
       <DependentUpon>DoanhThuTable.xaml</DependentUpon>
     </Compile>
@@ -285,6 +288,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\MainAdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\CongNo\CongNoTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
