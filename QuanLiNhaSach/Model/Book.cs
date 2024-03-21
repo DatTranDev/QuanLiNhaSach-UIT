@@ -17,8 +17,8 @@ namespace QuanLiNhaSach.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Book()
         {
-            this.BillInfoes = new HashSet<BillInfo>();
-            this.GoodReceivedInfoes = new HashSet<GoodReceivedInfo>();
+            this.BillInfo = new HashSet<BillInfo>();
+            this.GoodReceivedInfo = new HashSet<GoodReceivedInfo>();
         }
     
         public int ID { get; set; }
@@ -32,9 +32,9 @@ namespace QuanLiNhaSach.Model
         public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillInfo> BillInfoes { get; set; }
+        public virtual ICollection<BillInfo> BillInfo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodReceivedInfo> GoodReceivedInfoes { get; set; }
+        public virtual ICollection<GoodReceivedInfo> GoodReceivedInfo { get; set; }
         public virtual GenreBook GenreBook { get; set; }
     }
 }
