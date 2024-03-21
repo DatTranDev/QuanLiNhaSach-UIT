@@ -180,6 +180,8 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Service\CustomerService.cs" />
+    <Compile Include="Model\Service\PaymentReceiptService.cs" />
+    <Compile Include="Model\Service\SystemValueService.cs" />
     <Compile Include="Model\Staff.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
