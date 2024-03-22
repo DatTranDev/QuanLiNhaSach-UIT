@@ -1,0 +1,694 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuanLiNhaSachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCus" Type="int" />
+          <Property Name="IDStaff" Type="int" />
+          <Property Name="CreateAt" Type="smalldatetime" />
+          <Property Name="TotalPrice" Type="money" />
+          <Property Name="Paid" Type="money" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="BillInfo">
+          <Key>
+            <PropertyRef Name="IDBill" />
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDBill" Type="int" Nullable="false" />
+          <Property Name="IDBook" Type="int" Nullable="false" />
+          <Property Name="PriceItem" Type="money" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="Price" Type="money" />
+          <Property Name="IDGenre" Type="int" />
+          <Property Name="Inventory" Type="int" />
+          <Property Name="Author" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Debts" Type="money" />
+          <Property Name="Spend" Type="money" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="GenreBook">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GoodReceived">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatAt" Type="smalldatetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="GoodReceivedInfo">
+          <Key>
+            <PropertyRef Name="IDGoodReceived" />
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDGoodReceived" Type="int" Nullable="false" />
+          <Property Name="IDBook" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="PaymentReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCus" Type="int" />
+          <Property Name="CreatAt" Type="smalldatetime" />
+          <Property Name="AmountReceived" Type="money" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="smalldatetime" />
+          <Property Name="UserName" Type="varchar(max)" />
+          <Property Name="PassWord" Type="varchar(max)" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+          <Property Name="BirthDay" Type="smalldatetime" />
+          <Property Name="Wage" Type="money" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar(max)" />
+          <Property Name="Gender" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="SystemValue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="MinReceived" Type="int" />
+          <Property Name="MaxInventory" Type="int" />
+          <Property Name="MaxDebts" Type="money" />
+          <Property Name="MinSaleInventory" Type="int" />
+          <Property Name="Profit" Type="float" />
+          <Property Name="DebtsPolicy" Type="bit" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bill_Cus">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IDCus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IDStaff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillInfo_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="BillInfo" Type="Self.BillInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BillInfo">
+              <PropertyRef Name="IDBill" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillInfo_PrD">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="BillInfo" Type="Self.BillInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BillInfo">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GRInfo_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="GoodReceivedInfo" Type="Self.GoodReceivedInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GoodReceivedInfo">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GRInfo_GR">
+          <End Role="GoodReceived" Type="Self.GoodReceived" Multiplicity="1" />
+          <End Role="GoodReceivedInfo" Type="Self.GoodReceivedInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodReceived">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GoodReceivedInfo">
+              <PropertyRef Name="IDGoodReceived" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentReceived">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="PaymentReceipt" Type="Self.PaymentReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PaymentReceipt">
+              <PropertyRef Name="IDCus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrD_Genre">
+          <End Role="GenreBook" Type="Self.GenreBook" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenreBook">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLiNhaSachModelStoreContainer">
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BillInfo" EntityType="Self.BillInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GenreBook" EntityType="Self.GenreBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodReceived" EntityType="Self.GoodReceived" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodReceivedInfo" EntityType="Self.GoodReceivedInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentReceipt" EntityType="Self.PaymentReceipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemValue" EntityType="Self.SystemValue" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bill_Cus" Association="Self.FK_Bill_Cus">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Staff" Association="Self.FK_Bill_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillInfo_Bill" Association="Self.FK_BillInfo_Bill">
+            <End Role="Bill" EntitySet="Bill" />
+            <End Role="BillInfo" EntitySet="BillInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillInfo_PrD" Association="Self.FK_BillInfo_PrD">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="BillInfo" EntitySet="BillInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GRInfo_Book" Association="Self.FK_GRInfo_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="GoodReceivedInfo" EntitySet="GoodReceivedInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GRInfo_GR" Association="Self.FK_GRInfo_GR">
+            <End Role="GoodReceived" EntitySet="GoodReceived" />
+            <End Role="GoodReceivedInfo" EntitySet="GoodReceivedInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentReceived" Association="Self.FK_PaymentReceived">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="PaymentReceipt" EntitySet="PaymentReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrD_Genre" Association="Self.FK_PrD_Genre">
+            <End Role="GenreBook" EntitySet="GenreBook" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuanLiNhaSachModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDCus" Type="Int32" />
+          <Property Name="IDStaff" Type="Int32" />
+          <Property Name="CreateAt" Type="DateTime" Precision="0" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Paid" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Bill_Cus" FromRole="Bill" ToRole="Customer" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Bill_Staff" FromRole="Bill" ToRole="Staff" />
+          <NavigationProperty Name="BillInfoes" Relationship="Self.FK_BillInfo_Bill" FromRole="Bill" ToRole="BillInfo" />
+        </EntityType>
+        <EntityType Name="BillInfo">
+          <Key>
+            <PropertyRef Name="IDBill" />
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDBill" Type="Int32" Nullable="false" />
+          <Property Name="IDBook" Type="Int32" Nullable="false" />
+          <Property Name="PriceItem" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_BillInfo_Bill" FromRole="BillInfo" ToRole="Bill" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_BillInfo_PrD" FromRole="BillInfo" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IDGenre" Type="Int32" />
+          <Property Name="Inventory" Type="Int32" />
+          <Property Name="Author" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="BillInfoes" Relationship="Self.FK_BillInfo_PrD" FromRole="Book" ToRole="BillInfo" />
+          <NavigationProperty Name="GoodReceivedInfoes" Relationship="Self.FK_GRInfo_Book" FromRole="Book" ToRole="GoodReceivedInfo" />
+          <NavigationProperty Name="GenreBook" Relationship="Self.FK_PrD_Genre" FromRole="Book" ToRole="GenreBook" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Debts" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Spend" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Cus" FromRole="Customer" ToRole="Bill" />
+          <NavigationProperty Name="PaymentReceipts" Relationship="Self.FK_PaymentReceived" FromRole="Customer" ToRole="PaymentReceipt" />
+        </EntityType>
+        <EntityType Name="GenreBook">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_PrD_Genre" FromRole="GenreBook" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="GoodReceived">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatAt" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="GoodReceivedInfoes" Relationship="Self.FK_GRInfo_GR" FromRole="GoodReceived" ToRole="GoodReceivedInfo" />
+        </EntityType>
+        <EntityType Name="GoodReceivedInfo">
+          <Key>
+            <PropertyRef Name="IDGoodReceived" />
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDGoodReceived" Type="Int32" Nullable="false" />
+          <Property Name="IDBook" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_GRInfo_Book" FromRole="GoodReceivedInfo" ToRole="Book" />
+          <NavigationProperty Name="GoodReceived" Relationship="Self.FK_GRInfo_GR" FromRole="GoodReceivedInfo" ToRole="GoodReceived" />
+        </EntityType>
+        <EntityType Name="PaymentReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDCus" Type="Int32" />
+          <Property Name="CreatAt" Type="DateTime" Precision="0" />
+          <Property Name="AmountReceived" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_PaymentReceived" FromRole="PaymentReceipt" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PassWord" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDay" Type="DateTime" Precision="0" />
+          <Property Name="Wage" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Staff" FromRole="Staff" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="SystemValue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="MinReceived" Type="Int32" />
+          <Property Name="MaxInventory" Type="Int32" />
+          <Property Name="MaxDebts" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MinSaleInventory" Type="Int32" />
+          <Property Name="Profit" Type="Double" />
+          <Property Name="DebtsPolicy" Type="Boolean" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="FK_Bill_Cus">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IDCus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IDStaff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillInfo_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="BillInfo" Type="Self.BillInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BillInfo">
+              <PropertyRef Name="IDBill" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillInfo_PrD">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="BillInfo" Type="Self.BillInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BillInfo">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GRInfo_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="GoodReceivedInfo" Type="Self.GoodReceivedInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GoodReceivedInfo">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrD_Genre">
+          <End Role="GenreBook" Type="Self.GenreBook" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenreBook">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentReceived">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="PaymentReceipt" Type="Self.PaymentReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PaymentReceipt">
+              <PropertyRef Name="IDCus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GRInfo_GR">
+          <End Role="GoodReceived" Type="Self.GoodReceived" Multiplicity="1" />
+          <End Role="GoodReceivedInfo" Type="Self.GoodReceivedInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodReceived">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GoodReceivedInfo">
+              <PropertyRef Name="IDGoodReceived" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLiNhaSachEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="BillInfoes" EntityType="Self.BillInfo" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="GenreBooks" EntityType="Self.GenreBook" />
+          <EntitySet Name="GoodReceiveds" EntityType="Self.GoodReceived" />
+          <EntitySet Name="GoodReceivedInfoes" EntityType="Self.GoodReceivedInfo" />
+          <EntitySet Name="PaymentReceipts" EntityType="Self.PaymentReceipt" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="SystemValues" EntityType="Self.SystemValue" />
+          <AssociationSet Name="FK_Bill_Cus" Association="Self.FK_Bill_Cus">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Staff" Association="Self.FK_Bill_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillInfo_Bill" Association="Self.FK_BillInfo_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="BillInfo" EntitySet="BillInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillInfo_PrD" Association="Self.FK_BillInfo_PrD">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="BillInfo" EntitySet="BillInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GRInfo_Book" Association="Self.FK_GRInfo_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="GoodReceivedInfo" EntitySet="GoodReceivedInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrD_Genre" Association="Self.FK_PrD_Genre">
+            <End Role="GenreBook" EntitySet="GenreBooks" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentReceived" Association="Self.FK_PaymentReceived">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="PaymentReceipt" EntitySet="PaymentReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GRInfo_GR" Association="Self.FK_GRInfo_GR">
+            <End Role="GoodReceived" EntitySet="GoodReceiveds" />
+            <End Role="GoodReceivedInfo" EntitySet="GoodReceivedInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuanLiNhaSachModelStoreContainer" CdmEntityContainer="QuanLiNhaSachEntities">
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDCus" ColumnName="IDCus" />
+                <ScalarProperty Name="IDStaff" ColumnName="IDStaff" />
+                <ScalarProperty Name="CreateAt" ColumnName="CreateAt" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillInfoes">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.BillInfo">
+              <MappingFragment StoreEntitySet="BillInfo">
+                <ScalarProperty Name="IDBill" ColumnName="IDBill" />
+                <ScalarProperty Name="IDBook" ColumnName="IDBook" />
+                <ScalarProperty Name="PriceItem" ColumnName="PriceItem" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IDGenre" ColumnName="IDGenre" />
+                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Debts" ColumnName="Debts" />
+                <ScalarProperty Name="Spend" ColumnName="Spend" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GenreBooks">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.GenreBook">
+              <MappingFragment StoreEntitySet="GenreBook">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodReceiveds">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.GoodReceived">
+              <MappingFragment StoreEntitySet="GoodReceived">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreatAt" ColumnName="CreatAt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodReceivedInfoes">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.GoodReceivedInfo">
+              <MappingFragment StoreEntitySet="GoodReceivedInfo">
+                <ScalarProperty Name="IDGoodReceived" ColumnName="IDGoodReceived" />
+                <ScalarProperty Name="IDBook" ColumnName="IDBook" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentReceipts">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.PaymentReceipt">
+              <MappingFragment StoreEntitySet="PaymentReceipt">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDCus" ColumnName="IDCus" />
+                <ScalarProperty Name="CreatAt" ColumnName="CreatAt" />
+                <ScalarProperty Name="AmountReceived" ColumnName="AmountReceived" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="Wage" ColumnName="Wage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemValues">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.SystemValue">
+              <MappingFragment StoreEntitySet="SystemValue">
+                <ScalarProperty Name="MinReceived" ColumnName="MinReceived" />
+                <ScalarProperty Name="MaxInventory" ColumnName="MaxInventory" />
+                <ScalarProperty Name="MaxDebts" ColumnName="MaxDebts" />
+                <ScalarProperty Name="MinSaleInventory" ColumnName="MinSaleInventory" />
+                <ScalarProperty Name="Profit" ColumnName="Profit" />
+                <ScalarProperty Name="DebtsPolicy" ColumnName="DebtsPolicy" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
