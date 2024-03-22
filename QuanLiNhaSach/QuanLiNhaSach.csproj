@@ -226,6 +226,9 @@
     <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Login\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessageBox\ConfirmLogout.xaml.cs">
       <DependentUpon>ConfirmLogout.xaml</DependentUpon>
     </Compile>
@@ -242,6 +245,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\Admin\System\SystemPage.xaml.cs">
+      <DependentUpon>SystemPage.xaml</DependentUpon>
     </Compile>
     <Page Include="ResourcesXAML\MainResource.xaml">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -274,6 +280,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Login\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MessageBox\ConfirmLogout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -287,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MessageBox\Warning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\System\SystemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -326,10 +340,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Image\" />
     <Folder Include="ViewModel\LoginVM\" />
     <Folder Include="ViewModel\StaffVM\" />
-    <Folder Include="View\Login\" />
+    <Folder Include="ViewModel\SystemVM\" />
     <Folder Include="View\Staff\" />
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +426,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Image\BookStoreLogo.jpg" />
+    <Resource Include="Resources\Image\BookStore.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

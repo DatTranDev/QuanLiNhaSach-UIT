@@ -94,7 +94,7 @@
                       Margin="11"
                    
                       ItemsSource="{Binding CustomerList}"
-                      SelectedItem="{Binding SelectedItem}" >
+                      SelectedItem="{Binding SelectedItem}" SelectionChanged="CusList_SelectionChanged" >
 
                     <ListView.ItemContainerStyle>
 

@@ -13,19 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuanLiNhaSach.View.Admin.CustomerManagement
+namespace QuanLiNhaSach.View
 {
     /// <summary>
-    /// Interaction logic for CustomerPage.xaml
+    /// Interaction logic for SystemPage.xaml
     /// </summary>
-    public partial class CustomerPage : Page
+    public partial class SystemPage : Page
     {
-        public CustomerPage()
+        public SystemPage()
         {
             InitializeComponent();
         }
 
-        private void CusList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
