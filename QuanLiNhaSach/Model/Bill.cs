@@ -17,7 +17,7 @@ namespace QuanLiNhaSach.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Bill()
         {
-            this.BillInfoes = new HashSet<BillInfo>();
+            this.BillInfo = new HashSet<BillInfo>();
         }
     
         public int ID { get; set; }
@@ -31,6 +31,6 @@ namespace QuanLiNhaSach.Model
         public virtual Customer Customer { get; set; }
         public virtual Staff Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillInfo> BillInfoes { get; set; }
+        public virtual ICollection<BillInfo> BillInfo { get; set; }
     }
 }

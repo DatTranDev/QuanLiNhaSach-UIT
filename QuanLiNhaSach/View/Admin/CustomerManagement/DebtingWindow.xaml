@@ -71,7 +71,8 @@
                                     FontFamily="Inter" 
                                     FontSize="14" 
                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"  
-                                     Text="{Binding DebtName}"/>
+                                     Text="{Binding DebtName}"
+                                     IsEnabled="False"/>
                             <TextBlock Style="{DynamicResource TextBlockLogin}" 
                                        Text="Email" 
                                        Margin="73.6,34.6,0,14.6" 
@@ -90,6 +91,7 @@
                                     FontSize="14" 
                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                      Text="{Binding DebtEmail}"
+                                     IsEnabled="False"
                                      Margin="73.6,0,0,0"/>
                             <TextBlock Style="{DynamicResource TextBlockLogin}" 
                                        Text="Ngày thu tiền" 
@@ -109,6 +111,7 @@
                                      FontFamily="Inter" 
                                      FontSize="14" 
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden" 
+                                    
                                     SelectedDate="{Binding DebtDay, Mode=TwoWay}" />
                         </StackPanel>
                         <StackPanel Grid.Column="1">
@@ -126,7 +129,8 @@
                                     FontFamily="Inter" 
                                     FontSize="14" 
                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"  
-                                     Text="{Binding DebtAddress}"/>
+                                     Text="{Binding DebtAddress}"
+                                     IsEnabled="False"/>
                             <TextBlock Style="{StaticResource TextBlockLogin}" Text="Số điện thoại" Margin="40.8,34.6,0,14.6"/>
                             <TextBox Width="336" 
                                     Height="53.6" 
@@ -140,6 +144,7 @@
                                     Background="#D9D9D9"
                                     FontFamily="Inter" 
                                     FontSize="14" 
+                                     IsEnabled="False"
                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"  
                                      Text="{Binding DebtPhoneNumber}"/>
                             <TextBlock Style="{StaticResource TextBlockLogin}" Text="Số tiền thu" Margin="40.8,34.6,0,14.6"/>

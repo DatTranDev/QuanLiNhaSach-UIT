@@ -25,6 +25,10 @@ namespace QuanLiNhaSach.DTOs
                 }
             }
         }
+        public string BookAuthor { get; set; }
+        public string BookName { get; set; }
+        public string BookGenre { get; set; }
+        public Nullable<decimal> BookPrice { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public GoodReceived GoodReceived { get; set; }
         public Book Book { get; set; }

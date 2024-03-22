@@ -179,7 +179,16 @@
     <Compile Include="Model\PaymentReceipt.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\BillService.cs" />
+    <Compile Include="Model\Service\BookService.cs" />
     <Compile Include="Model\Service\CustomerService.cs" />
+    <Compile Include="Model\Service\GenreService.cs" />
+    <Compile Include="Model\Service\GoodReceivedService.cs" />
+    <Compile Include="Model\Service\LoginService.cs" />
+    <Compile Include="Model\Service\PaymentReceiptService.cs" />
+    <Compile Include="Model\Service\StaffService.cs" />
+    <Compile Include="Model\Service\SystemValueService.cs" />
+    <Compile Include="Model\Service\ThongKeService.cs" />
     <Compile Include="Model\Staff.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -188,6 +197,7 @@
     </Compile>
     <Compile Include="Resources\Icon\placeHolder.cs" />
     <Compile Include="Utils\CloudService.cs" />
+    <Compile Include="Utils\Helper.cs" />
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
