@@ -46,7 +46,7 @@ namespace QuanLiNhaSach.Model.Service
                                         Customer = c.Customer,
                                         Paid = c.Paid,
                                         Staff = c.Staff,                                        
-                                        BillInfo = (from x in c.BillInfo
+                                        BillInfo = (from x in c.BillInfoes
                                                     where x.IsDeleted == false
                                                     select new BillInfoDTO
                                                     {
@@ -209,7 +209,7 @@ namespace QuanLiNhaSach.Model.Service
                         billInfo.IDBook = b.IDBook;                       
                         billInfo.Quantity = b.Quantity;
                         billInfo.Bill = b.Bill;
-                        bill.BillInfo.Add(new BillInfo
+                        bill.BillInfoes.Add(new BillInfo
                         {
                             IDBill = b.IDBill,
                             IDBook = b.IDBook,

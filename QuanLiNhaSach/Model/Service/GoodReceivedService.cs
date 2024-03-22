@@ -39,7 +39,7 @@ namespace QuanLiNhaSach.Model.Service
                                     {
                                         ID = c.ID,                                        
                                         CreateAt = c.CreatAt,                                        
-                                        GoodReceivedInfo = (from x in c.GoodReceivedInfo
+                                        GoodReceivedInfo = (from x in c.GoodReceivedInfoes
                                                     where x.IsDeleted == false
                                                     select new GoodReceivedInfoDTO
                                                     {
