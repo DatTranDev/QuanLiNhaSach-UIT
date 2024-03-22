@@ -123,6 +123,7 @@
     <Compile Include="Resources\Icon\placeHolder.cs" />
     <Compile Include="Utils\CloudService.cs" />
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
     <Compile Include="View\Admin\ProductsManager\AddProducts.xaml.cs">
@@ -156,6 +157,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\Staff\Sale\SalePage.xaml.cs">
+      <DependentUpon>SalePage.xaml</DependentUpon>
     </Compile>
     <Page Include="ResourcesXAML\MainResource.xaml">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -200,6 +204,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Staff\Sale\SalePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -234,7 +242,6 @@
     <Folder Include="ViewModel\LoginVM\" />
     <Folder Include="ViewModel\StaffVM\" />
     <Folder Include="View\Login\" />
-    <Folder Include="View\Staff\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\AddBlack_Icon.png" />

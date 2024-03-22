@@ -5,70 +5,71 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.ProductsManager"
       mc:Ignorable="d"
-      d:DesignHeight="750"
-      d:DesignWidth="1225"
+      d:DesignHeight="686"
+      d:DesignWidth="740"
       Background="White"
       Title="test">
 
     <StackPanel>
         <Border Margin="0,5,0,0"
-                Width="252"
-                Height="382"
+                Width="229"
+                Height="354"
                 Background="White"
                 BorderBrush="#E0AE8A"
                 BorderThickness="2,2,2,2"
                 CornerRadius="15">
-            <StackPanel Width="252"
-                        Height="382">
+            <StackPanel Width="229"
+                        Height="354">
                 <!--Source="{Binding Image}"-->
 
 
-                <Image MaxHeight="193"
-                       MaxWidth="225"
-                       Margin="0,15,0,0"
+                <Image MaxHeight="170"
+                       MaxWidth="200"
+                       Margin="0,10,0,0"
                        Source="B:\study\nmcnpm\Quan_li_nha_sach\QuanLiNhaSach\View\Admin\ProductsManager\tải xuống.jpg"
-                       Height="195"
-                       Width="215" />
+                       Height="176"
+                       Width="205" />
                 <!--Source="{Binding Image}"-->
-                <StackPanel Height="80">
+                <StackPanel Height="135">
                     <TextBlock TextWrapping="Wrap"
-                               Margin="20,10,0,0"
+                               Margin="15,10,0,0"
                                HorizontalAlignment="Left"
                                FontFamily="Poppins"
                                FontSize="16"
                                FontWeight="SemiBold"
                                Text="Bộ đề kiểm tra tiếng việt bab "
                                Grid.Row="1"
-                               Width="216"
+                               Width="200"
                                 />
                     <!--Text="{Binding DisplayName}"-->
                     <TextBlock TextWrapping="Wrap"
-                               Margin="20,10,0,0"
+                               Margin="15,10,0,0"
                                HorizontalAlignment="Left"
                                FontFamily="Poppins"
                                FontSize="16"
                                FontWeight="Regular"
                                Text="Tác giả: Bộ giáo dục"
                                Grid.Row="1"
-                               Width="213" />
+                               Width="200" />
                 </StackPanel>
 
 
                
-                <TextBlock TextWrapping="Wrap"
-                           Margin="25,35,0,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           FontFamily="Poppins"
-                           FontSize="16"
-                           FontWeight="Light"
-                           Text="Tồn: 200"
-                           Grid.Row="1" />
+               
 
                 <DockPanel Grid.Row="2"
-                           Margin="0,0,10,5"
+                           Margin="0,5,10,5"
                            LastChildFill="False">
-                    <TextBlock Margin="25,0,0,0"
+                    <TextBlock TextWrapping="Wrap"
+                               Margin="15,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="Poppins"
+                               FontSize="16"
+                               FontWeight="Regular"
+                               Text="Tồn: 200"
+                               Grid.Row="1" />
+                    <TextBlock Margin="65,0,0,0"
                                x:Name="PriceSP"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
@@ -78,7 +79,7 @@
                                Foreground="#EA6A12"
                                Text="25.000đ" />
 
-                    <StackPanel DockPanel.Dock="Right"
+                    <!--<StackPanel DockPanel.Dock="Right"
                                 Orientation="Horizontal">
                         <Button Width="30"
                                 Padding="0"
@@ -90,11 +91,11 @@
                                 CommandParameter="{Binding}">
                             <Image Width="22"
                                    Source="B:\study\nmcnpm\Quan_li_nha_sach\QuanLiNhaSach\View\Admin\ProductsManager\Add to cart Icon.png" />
-                            <!--<i:Interaction.Triggers>
+                            --><!--<i:Interaction.Triggers>
                           <i:EventTrigger EventName="Click">
                               <i:InvokeCommandAction Command="{Binding ElementName=SanPhamList, Path=DataContext.OpenEditWdCM}" />
                           </i:EventTrigger>
-                      </i:Interaction.Triggers>-->
+                      </i:Interaction.Triggers>--><!--
                         </Button>
                         <Button Command="{Binding DataContext.DeleteSanPhamListCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
                                 CommandParameter="{Binding}"
@@ -106,14 +107,14 @@
                                 Foreground="{x:Null}">
                             <Image Width="22"
                                    Source="B:\study\nmcnpm\Quan_li_nha_sach\QuanLiNhaSach\View\Admin\ProductsManager\Add to cart Icon (1).png" />
-                            <!--<i:Interaction.Triggers>
+                            --><!--<i:Interaction.Triggers>
                           <i:EventTrigger EventName="Click">
                               <i:InvokeCommandAction Command="{Binding ElementName=SanPhamList, Path=DataContext.DeleteSanPhamListCM}" />
                           </i:EventTrigger>
-                      </i:Interaction.Triggers>-->
+                      </i:Interaction.Triggers>--><!--
                         </Button>
 
-                    </StackPanel>
+                    </StackPanel>-->
 
                 </DockPanel>
             </StackPanel>
