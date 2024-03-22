@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 
 namespace QuanLiNhaSach.DTOs
 {
-    public class GenreProductDTO
+    public class GenreBookDTO
     {
         public int ID { get; set; }
         public string DisplayName { get; set; }
+        public int Quantity { get; set; }
+
+        public GenreBookDTO(int iD, string displayName, int quantity)
+        {
+            ID = iD;
+            DisplayName = displayName;
+            Quantity = quantity;
+        }
     }
 }

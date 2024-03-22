@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         d:DesignHeight="864" d:DesignWidth="1536"
         Background="White"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.FontFamily="Roboto Condensed"
         TextElement.FontSize="18"
         TextElement.FontWeight="Regular"
@@ -49,7 +50,7 @@
                 <Style TargetType="Border">
                     <Setter Property="Margin" Value="10 0 10 0"/>
                     <Setter Property="CornerRadius" Value="19"/>
-                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderThickness" Value="0.1"/>
                     <Setter Property="Background" Value="#D9D9D9"/>
                 </Style>
             </Grid.Resources>
@@ -135,6 +136,7 @@
                             <Setter Property="FlowDirection" Value="RightToLeft" />
                             <Setter Property="IsChecked" Value="True" />
                             <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
                         </Style>
                     </CheckBox.Resources>
                 </CheckBox>
@@ -186,9 +188,22 @@
                     Margin="0 30">
                 <Grid Width="648"
                       Height="490">
-                    <TextBlock>
+                    <ListView>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="200" Header="STT">
+                                    
+                                </GridViewColumn>
 
-                    </TextBlock>
+                                <GridViewColumn Width="200" Header="Danh mục">
+
+                                </GridViewColumn>
+                                <GridViewColumn Width="200" Header="Số lượng sản phẩm">
+                                    
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </Grid>
             </Border>
 
