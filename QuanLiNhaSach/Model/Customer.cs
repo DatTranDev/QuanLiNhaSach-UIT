@@ -18,6 +18,7 @@ namespace QuanLiNhaSach.Model
         public Customer()
         {
             this.Bills = new HashSet<Bill>();
+            this.DebtReports = new HashSet<DebtReport>();
             this.PaymentReceipts = new HashSet<PaymentReceipt>();
         }
     
@@ -33,6 +34,8 @@ namespace QuanLiNhaSach.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DebtReport> DebtReports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentReceipt> PaymentReceipts { get; set; }
     }

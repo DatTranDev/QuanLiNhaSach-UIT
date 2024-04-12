@@ -56,6 +56,17 @@
           <Property Name="Spend" Type="money" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
+        <EntityType Name="DebtReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="FirstDebt" Type="money" />
+          <Property Name="LastDebt" Type="money" />
+          <Property Name="Arise" Type="money" />
+          <Property Name="MonthYear" Type="varchar" MaxLength="7" />
+        </EntityType>
         <EntityType Name="GenreBook">
           <Key>
             <PropertyRef Name="ID" />
@@ -70,6 +81,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreatAt" Type="smalldatetime" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="StaffId" Type="int" />
         </EntityType>
         <EntityType Name="GoodReceivedInfo">
           <Key>
@@ -80,6 +92,17 @@
           <Property Name="IDBook" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
           <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="InventoryReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookId" Type="int" />
+          <Property Name="FirstIvt" Type="int" />
+          <Property Name="LastIvt" Type="int" />
+          <Property Name="Arise" Type="int" />
+          <Property Name="MonthYear" Type="varchar" MaxLength="7" />
         </EntityType>
         <EntityType Name="PaymentReceipt">
           <Key>
@@ -108,6 +131,16 @@
           <Property Name="Gender" Type="nchar" MaxLength="3" Nullable="false" />
           <Property Name="Role" Type="nvarchar" MaxLength="100" />
           <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="SystemValue">
           <Key>
@@ -169,6 +202,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DR_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="DebtReport" Type="Self.DebtReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DebtReport">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GR_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="GoodReceived" Type="Self.GoodReceived" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GoodReceived">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GRInfo_Book">
           <End Role="Book" Type="Self.Book" Multiplicity="1" />
           <End Role="GoodReceivedInfo" Type="Self.GoodReceivedInfo" Multiplicity="*" />
@@ -190,6 +247,18 @@
             </Principal>
             <Dependent Role="GoodReceivedInfo">
               <PropertyRef Name="IDGoodReceived" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IR_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+          <End Role="InventoryReport" Type="Self.InventoryReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryReport">
+              <PropertyRef Name="BookId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -222,11 +291,14 @@
           <EntitySet Name="BillInfo" EntityType="Self.BillInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DebtReport" EntityType="Self.DebtReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GenreBook" EntityType="Self.GenreBook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodReceived" EntityType="Self.GoodReceived" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodReceivedInfo" EntityType="Self.GoodReceivedInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryReport" EntityType="Self.InventoryReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentReceipt" EntityType="Self.PaymentReceipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SystemValue" EntityType="Self.SystemValue" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Bill_Cus" Association="Self.FK_Bill_Cus">
             <End Role="Customer" EntitySet="Customer" />
@@ -244,6 +316,14 @@
             <End Role="Book" EntitySet="Book" />
             <End Role="BillInfo" EntitySet="BillInfo" />
           </AssociationSet>
+          <AssociationSet Name="FK_DR_Customer" Association="Self.FK_DR_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="DebtReport" EntitySet="DebtReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GR_Staff" Association="Self.FK_GR_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="GoodReceived" EntitySet="GoodReceived" />
+          </AssociationSet>
           <AssociationSet Name="FK_GRInfo_Book" Association="Self.FK_GRInfo_Book">
             <End Role="Book" EntitySet="Book" />
             <End Role="GoodReceivedInfo" EntitySet="GoodReceivedInfo" />
@@ -251,6 +331,10 @@
           <AssociationSet Name="FK_GRInfo_GR" Association="Self.FK_GRInfo_GR">
             <End Role="GoodReceived" EntitySet="GoodReceived" />
             <End Role="GoodReceivedInfo" EntitySet="GoodReceivedInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IR_Book" Association="Self.FK_IR_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="InventoryReport" EntitySet="InventoryReport" />
           </AssociationSet>
           <AssociationSet Name="FK_PaymentReceived" Association="Self.FK_PaymentReceived">
             <End Role="Customer" EntitySet="Customer" />
@@ -309,6 +393,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="BillInfoes" Relationship="Self.FK_BillInfo_PrD" FromRole="Book" ToRole="BillInfo" />
           <NavigationProperty Name="GoodReceivedInfoes" Relationship="Self.FK_GRInfo_Book" FromRole="Book" ToRole="GoodReceivedInfo" />
+          <NavigationProperty Name="InventoryReports" Relationship="Self.FK_IR_Book" FromRole="Book" ToRole="InventoryReport" />
           <NavigationProperty Name="GenreBook" Relationship="Self.FK_PrD_Genre" FromRole="Book" ToRole="GenreBook" />
         </EntityType>
         <EntityType Name="Customer">
@@ -325,7 +410,20 @@
           <Property Name="Spend" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Cus" FromRole="Customer" ToRole="Bill" />
+          <NavigationProperty Name="DebtReports" Relationship="Self.FK_DR_Customer" FromRole="Customer" ToRole="DebtReport" />
           <NavigationProperty Name="PaymentReceipts" Relationship="Self.FK_PaymentReceived" FromRole="Customer" ToRole="PaymentReceipt" />
+        </EntityType>
+        <EntityType Name="DebtReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="FirstDebt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LastDebt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Arise" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MonthYear" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_DR_Customer" FromRole="DebtReport" ToRole="Customer" />
         </EntityType>
         <EntityType Name="GenreBook">
           <Key>
@@ -342,6 +440,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreatAt" Type="DateTime" Precision="0" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="StaffId" Type="Int32" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_GR_Staff" FromRole="GoodReceived" ToRole="Staff" />
           <NavigationProperty Name="GoodReceivedInfoes" Relationship="Self.FK_GRInfo_GR" FromRole="GoodReceived" ToRole="GoodReceivedInfo" />
         </EntityType>
         <EntityType Name="GoodReceivedInfo">
@@ -355,6 +455,18 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Book" Relationship="Self.FK_GRInfo_Book" FromRole="GoodReceivedInfo" ToRole="Book" />
           <NavigationProperty Name="GoodReceived" Relationship="Self.FK_GRInfo_GR" FromRole="GoodReceivedInfo" ToRole="GoodReceived" />
+        </EntityType>
+        <EntityType Name="InventoryReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookId" Type="Int32" />
+          <Property Name="FirstIvt" Type="Int32" />
+          <Property Name="LastIvt" Type="Int32" />
+          <Property Name="Arise" Type="Int32" />
+          <Property Name="MonthYear" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_IR_Book" FromRole="InventoryReport" ToRole="Book" />
         </EntityType>
         <EntityType Name="PaymentReceipt">
           <Key>
@@ -385,6 +497,17 @@
           <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Staff" FromRole="Staff" ToRole="Bill" />
+          <NavigationProperty Name="GoodReceiveds" Relationship="Self.FK_GR_Staff" FromRole="Staff" ToRole="GoodReceived" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="SystemValue">
           <Key>
@@ -458,6 +581,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_IR_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+          <End Role="InventoryReport" Type="Self.InventoryReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryReport">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PrD_Genre">
           <End Role="GenreBook" Type="Self.GenreBook" Multiplicity="0..1" />
           <End Role="Book" Type="Self.Book" Multiplicity="*" />
@@ -470,6 +605,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DR_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="DebtReport" Type="Self.DebtReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DebtReport">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PaymentReceived">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="PaymentReceipt" Type="Self.PaymentReceipt" Multiplicity="*" />
@@ -479,6 +626,18 @@
             </Principal>
             <Dependent Role="PaymentReceipt">
               <PropertyRef Name="IDCus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GR_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="GoodReceived" Type="Self.GoodReceived" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GoodReceived">
+              <PropertyRef Name="StaffId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -499,11 +658,14 @@
           <EntitySet Name="BillInfoes" EntityType="Self.BillInfo" />
           <EntitySet Name="Books" EntityType="Self.Book" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="DebtReports" EntityType="Self.DebtReport" />
           <EntitySet Name="GenreBooks" EntityType="Self.GenreBook" />
           <EntitySet Name="GoodReceiveds" EntityType="Self.GoodReceived" />
           <EntitySet Name="GoodReceivedInfoes" EntityType="Self.GoodReceivedInfo" />
+          <EntitySet Name="InventoryReports" EntityType="Self.InventoryReport" />
           <EntitySet Name="PaymentReceipts" EntityType="Self.PaymentReceipt" />
           <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="SystemValues" EntityType="Self.SystemValue" />
           <AssociationSet Name="FK_Bill_Cus" Association="Self.FK_Bill_Cus">
             <End Role="Customer" EntitySet="Customers" />
@@ -525,13 +687,25 @@
             <End Role="Book" EntitySet="Books" />
             <End Role="GoodReceivedInfo" EntitySet="GoodReceivedInfoes" />
           </AssociationSet>
+          <AssociationSet Name="FK_IR_Book" Association="Self.FK_IR_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="InventoryReport" EntitySet="InventoryReports" />
+          </AssociationSet>
           <AssociationSet Name="FK_PrD_Genre" Association="Self.FK_PrD_Genre">
             <End Role="GenreBook" EntitySet="GenreBooks" />
             <End Role="Book" EntitySet="Books" />
           </AssociationSet>
+          <AssociationSet Name="FK_DR_Customer" Association="Self.FK_DR_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="DebtReport" EntitySet="DebtReports" />
+          </AssociationSet>
           <AssociationSet Name="FK_PaymentReceived" Association="Self.FK_PaymentReceived">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="PaymentReceipt" EntitySet="PaymentReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GR_Staff" Association="Self.FK_GR_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="GoodReceived" EntitySet="GoodReceiveds" />
           </AssociationSet>
           <AssociationSet Name="FK_GRInfo_GR" Association="Self.FK_GRInfo_GR">
             <End Role="GoodReceived" EntitySet="GoodReceiveds" />
@@ -598,6 +772,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DebtReports">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.DebtReport">
+              <MappingFragment StoreEntitySet="DebtReport">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="FirstDebt" ColumnName="FirstDebt" />
+                <ScalarProperty Name="LastDebt" ColumnName="LastDebt" />
+                <ScalarProperty Name="Arise" ColumnName="Arise" />
+                <ScalarProperty Name="MonthYear" ColumnName="MonthYear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="GenreBooks">
             <EntityTypeMapping TypeName="QuanLiNhaSachModel.GenreBook">
               <MappingFragment StoreEntitySet="GenreBook">
@@ -612,6 +798,7 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CreatAt" ColumnName="CreatAt" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -622,6 +809,18 @@
                 <ScalarProperty Name="IDBook" ColumnName="IDBook" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryReports">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.InventoryReport">
+              <MappingFragment StoreEntitySet="InventoryReport">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="FirstIvt" ColumnName="FirstIvt" />
+                <ScalarProperty Name="LastIvt" ColumnName="LastIvt" />
+                <ScalarProperty Name="Arise" ColumnName="Arise" />
+                <ScalarProperty Name="MonthYear" ColumnName="MonthYear" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -652,6 +851,17 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QuanLiNhaSachModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

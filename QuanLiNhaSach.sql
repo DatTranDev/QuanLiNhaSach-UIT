@@ -128,3 +128,27 @@ go
 ALter table [dbo].[Systemvalue] add ID int identity(1,1)
 go
 Alter table [dbo].[Systemvalue] add constraint PK_SystemValue primary key (ID)
+go
+create table InventoryReport (
+	Id int identity(1,1) primary key,
+	BookId int,
+	FirstIvt int,
+	LastIvt int,
+	Arise int,
+	MonthYear varchar(7),
+	constraint FK_IR_Book Foreign key (BookId) references Book(Id) 
+)
+go
+create table DebtReport (
+	Id int identity(1, 1) primary key,
+	CustomerId int,
+	FirstDebt money,
+	LastDebt money,
+	Arise money,
+	MonthYear varchar(7),
+	constraint FK_DR_Customer Foreign key (CustomerId) references Customer(Id)
+)
+go
+alter table GoodReceived add
+StaffId int, 
+constraint FK_GR_Staff foreign key (StaffId) references Staff(Id)

@@ -23,7 +23,9 @@ namespace QuanLiNhaSach.Model
         public int ID { get; set; }
         public Nullable<System.DateTime> CreatAt { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> StaffId { get; set; }
     
+        public virtual Staff Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodReceivedInfo> GoodReceivedInfoes { get; set; }
     }
