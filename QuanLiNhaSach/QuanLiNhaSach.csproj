@@ -140,10 +140,13 @@
     <Compile Include="DTOs\BillInfoDTO.cs" />
     <Compile Include="DTOs\BookDTO.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
+    <Compile Include="DTOs\DebtReportDTO.cs" />
     <Compile Include="DTOs\GerneBookDTO.cs" />
     <Compile Include="DTOs\GoodReceivedDTO.cs" />
     <Compile Include="DTOs\GoodReceivedInfoDTO.cs" />
+    <Compile Include="DTOs\InventoryReportDTO.cs" />
     <Compile Include="DTOs\PaymentReceiptDTO.cs" />
+    <Compile Include="Model\Service\ReportService.cs" />
     <Compile Include="DTOs\StaffDTO.cs" />
     <Compile Include="DTOs\SystemValueDTO.cs" />
     <Compile Include="Model\Bill.cs">
