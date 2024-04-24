@@ -221,6 +221,18 @@
     <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ProductsManager\AddProducts.xaml.cs">
+      <DependentUpon>AddProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\Import_products.xaml.cs">
+      <DependentUpon>Import_products.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\ProductMain.xaml.cs">
+      <DependentUpon>ProductMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessageBox\ConfirmLogout.xaml.cs">
       <DependentUpon>ConfirmLogout.xaml</DependentUpon>
     </Compile>
@@ -263,6 +275,22 @@
     <Page Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\AddProducts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\Import_products.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\ProductMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\test.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Admin\StaffManagement\ButtonStyle.xaml">
       <SubType>Designer</SubType>
@@ -414,6 +442,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="View\Admin\ProductsManager\tải xuống.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

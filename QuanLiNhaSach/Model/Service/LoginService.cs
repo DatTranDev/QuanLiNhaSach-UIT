@@ -9,7 +9,7 @@ using System.Data.Entity;
 using QuanLiNhaSach.Utils;
 using QuanLiNhaSach.View.MessageBox;
 
-namespace QuanLiCoffeeShop.Model.Service
+namespace QuanLiNhaSach.Model.Service
 {
     public class LoginService
     {

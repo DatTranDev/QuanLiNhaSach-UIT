@@ -10,12 +10,13 @@
       d:DesignHeight="800"
       d:DesignWidth="1536"
       DataContext="{StaticResource ProductVM}"
-      Title="ProductMain">
+      Title="ProductPage"
+      x:Name="ProductPage">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding FirstLoadCM}"
-                                   CommandParameter="{Binding ElementName=sanPhamPage}" />
+                                   CommandParameter="{Binding ElementName=ProductPage}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <!--<Page.Resources>
@@ -234,53 +235,73 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="164"
-                                Height="216"
+                        <Border Margin="0,20,0,0"
+                                Width="252"
+                                Height="320"
                                 Background="White"
                                 BorderBrush="#E0AE8A"
                                 BorderThickness="2,2,2,2"
                                 CornerRadius="15">
-                            <Grid Width="164"
-                                  Height="216">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="146" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="30" />
-                                </Grid.RowDefinitions>
-                                <Image Grid.Row="0"
-                                       MaxHeight="126"
-                                       MaxWidth="140"
-                                       Margin="-4,10,0,10"
-                                       Source="{Binding Image}" />
+                            <StackPanel Width="252"
+                                        Height="382">
+                                <!--Source="{Binding Image}"-->
+
+
+                                <Image MaxHeight="193"
+                                       MaxWidth="225"
+                                       Margin="0,15,0,0"
+                                       Source="{Binding Image}"
+                                       Height="195"
+                                       Width="215" />
+                                
+
+
                                 <TextBlock TextWrapping="Wrap"
-                                           Grid.Row="1"
-                                           Margin="10,0,0,0"
+                                           Margin="20,6,0,0"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top"
                                            FontFamily="Poppins"
                                            FontSize="16"
-                                           FontWeight="Bold"
-                                           Text="{Binding DisplayName}" />
+                                           FontWeight="SemiBold"
+                                           Text="{Binding DisplayName}"
+                                           Grid.Row="1" />
+                               
+                                <TextBlock TextWrapping="Wrap"
+                                           Margin="25,3,0,0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top"
+                                           FontFamily="Poppins"
+                                           FontSize="12"
+                                           FontWeight="Light"
+                                           Text="{Binding Author}"
+                                           Grid.Row="1" />
+                                <TextBlock TextWrapping="Wrap"
+                                           Margin="25,3,0,0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top"
+                                           FontFamily="Poppins"
+                                           FontSize="12"
+                                           FontWeight="Light"
+                                           Text="{Binding Inventory}"
+                                           Grid.Row="1" />
+
                                 <DockPanel Grid.Row="2"
                                            Margin="10,0,10,5"
                                            LastChildFill="False">
-                                    <TextBlock x:Name="PriceSP"
-                                               HorizontalAlignment="Left"
+                                    <TextBlock HorizontalAlignment="Left"
                                                VerticalAlignment="Center"
                                                FontFamily="Poppins"
                                                FontSize="13"
                                                FontWeight="Bold"
                                                Foreground="#EA6A12"
-                                               Text="{Binding Price, Converter={StaticResource PriceConverter}}" />
+                                               Text="{Binding Price}" />
                                     <TextBlock Margin="1,0,0,0"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Center"
                                                FontFamily="Poppins"
                                                FontSize="13"
                                                FontWeight="Bold"
-                                               Foreground="#EA6A12">
-                                         đ
-                                    </TextBlock>
+                                               Foreground="#EA6A12"><Run Text="đ" /></TextBlock>
                                     <StackPanel DockPanel.Dock="Right"
                                                 Orientation="Horizontal">
                                         <Button Width="30"
@@ -292,12 +313,12 @@
                                                 Command="{Binding DataContext.OpenEditWdCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
                                                 CommandParameter="{Binding}">
                                             <Image Width="22"
-                                                   Source="/QuanLiCoffeeShop;component/Resources/Icon/ChangeBrown_Icon.png" />
+                                                   Source="B:\study\nmcnpm\Quan_li_nha_sach\QuanLiNhaSach\View\Admin\ProductsManager\Add to cart Icon.png" />
                                             <!--<i:Interaction.Triggers>
-                                             <i:EventTrigger EventName="Click">
-                                                 <i:InvokeCommandAction Command="{Binding ElementName=SanPhamList, Path=DataContext.OpenEditWdCM}" />
-                                             </i:EventTrigger>
-                                         </i:Interaction.Triggers>-->
+                   <i:EventTrigger EventName="Click">
+                       <i:InvokeCommandAction Command="{Binding ElementName=SanPhamList, Path=DataContext.OpenEditWdCM}" />
+                   </i:EventTrigger>
+               </i:Interaction.Triggers>-->
                                         </Button>
                                         <Button Command="{Binding DataContext.DeleteSanPhamListCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
                                                 CommandParameter="{Binding}"
@@ -308,20 +329,21 @@
                                                 BorderBrush="{x:Null}"
                                                 Foreground="{x:Null}">
                                             <Image Width="22"
-                                                   Source="/QuanLiCoffeeShop;component/Resources/Icon/DeleteBlue_Icon.png" />
+                                                   Source="B:\study\nmcnpm\Quan_li_nha_sach\QuanLiNhaSach\View\Admin\ProductsManager\Add to cart Icon (1).png" />
                                             <!--<i:Interaction.Triggers>
-                                             <i:EventTrigger EventName="Click">
-                                                 <i:InvokeCommandAction Command="{Binding ElementName=SanPhamList, Path=DataContext.DeleteSanPhamListCM}" />
-                                             </i:EventTrigger>
-                                         </i:Interaction.Triggers>-->
+                   <i:EventTrigger EventName="Click">
+                       <i:InvokeCommandAction Command="{Binding ElementName=SanPhamList, Path=DataContext.DeleteSanPhamListCM}" />
+                   </i:EventTrigger>
+               </i:Interaction.Triggers>-->
                                         </Button>
 
                                     </StackPanel>
 
                                 </DockPanel>
-                            </Grid>
+                            </StackPanel>
 
                         </Border>
+
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
