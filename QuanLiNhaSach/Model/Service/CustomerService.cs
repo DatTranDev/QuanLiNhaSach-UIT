@@ -28,8 +28,8 @@ namespace QuanLiNhaSach.Model.Service
         }
         public async Task<List<CustomerDTO>> GetAllCus()
         {
-            try
-            {
+            //try
+            //{
                 using (var context = new QuanLiNhaSachEntities())
                 {
                     var cusList = (from s in context.Customer
@@ -48,12 +48,12 @@ namespace QuanLiNhaSach.Model.Service
                                    }).ToListAsync();
                     return await cusList;
                 }
-            }
-            catch
-            {
-                MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
-                return null;
-            }
+            //}
+            //catch
+            //{
+            //    MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
+            //    return null;
+            //}
 
         }
         public async Task<(bool, string)> AddNewCus(Customer newCus)

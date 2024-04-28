@@ -38,8 +38,10 @@ namespace QuanLiNhaSach.Model.Service
                                     select new GoodReceivedDTO
                                     {
                                         ID = c.ID,                                        
-                                        CreateAt = c.CreatAt,                                        
-                                        GoodReceivedInfo = (from x in c.GoodReceivedInfo
+                                        CreateAt = c.CreatAt,          
+                                        StaffId = (int)c.StaffId,
+                                        Staff = c.Staff,
+                                        GoodReceivedInfo = (from x in c.GoodReceivedInfoes
                                                     where x.IsDeleted == false
                                                     select new GoodReceivedInfoDTO
                                                     {
@@ -76,7 +78,7 @@ namespace QuanLiNhaSach.Model.Service
                     List<GoodReceivedDTO> billDTOs = await GoodReceivedService.Ins.GetAllGoodReceived();
 
                     List<GoodReceivedDTO> billList = billDTOs
-                        .Where(bill => bill.CreateAt >= dateFrom && bill.CreateAt <= dateTo)
+                        .Where(goodR => goodR.CreateAt >= dateFrom && goodR.CreateAt <= dateTo)
                         .ToList();
 
                     return billList;
@@ -89,7 +91,7 @@ namespace QuanLiNhaSach.Model.Service
                 return null;
             }
         }
-        //Add new bill
+        //Add new goodR
         public async Task<(bool, string)> AddNewGoodReceived(GoodReceivedDTO newGR) 
         {
             try
@@ -107,11 +109,14 @@ namespace QuanLiNhaSach.Model.Service
                     {
                         curID = 1;
                     }
-                    GoodReceived bill = new GoodReceived
+                    GoodReceived goodR = new GoodReceived
                     {
                         ID = curID,                       
                         IsDeleted = false,                       
-                        CreatAt = newGR.CreateAt                     
+                        CreatAt = newGR.CreateAt,
+                        Staff = newGR.Staff,
+                        StaffId = newGR.StaffId
+                     
                     };
 
                     List<GoodReceivedInfo> billInfoList = new List<GoodReceivedInfo>();
@@ -135,27 +140,27 @@ namespace QuanLiNhaSach.Model.Service
                     }
 
                     context.GoodReceivedInfo.AddRange(billInfoList);
-                    context.GoodReceived.Add(bill);
+                    context.GoodReceived.Add(goodR);
                     await context.SaveChangesAsync();
                     return (true, "Thêm thành công");
                 }
             }
             catch
             {
-                MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi xảy ra khi thêm bill!");
+                MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi xảy ra khi thêm goodR!");
                 return (false, null);
             }
 
         }
-        ////Delete bill
+        ////Delete goodR
         //public async Task<(bool, string)> DeleteBill(BillDTO Bill)
         //{
         //    try
         //    {
         //        using (var context = new QuanLiNhaSachEntities())
         //        {
-        //            var bill = await context.Bill.Where(p => p.ID == Bill.ID).FirstOrDefaultAsync();
-        //            if (bill.IsDeleted == false) bill.IsDeleted = true;
+        //            var goodR = await context.Bill.Where(p => p.ID == Bill.ID).FirstOrDefaultAsync();
+        //            if (goodR.IsDeleted == false) goodR.IsDeleted = true;
         //            foreach (var b in Bill.BillInfo)
         //            {
         //                var billInfo = await context.BillInfo.Where(p => p.IDBill == b.IDBill && p.IDBook == b.IDBook).FirstOrDefaultAsync();
@@ -185,9 +190,9 @@ namespace QuanLiNhaSach.Model.Service
         //                                                   && p.CreateAt.Value.Year == date.Year
         //                                                   && p.IsDeleted == false).ToListAsync();
         //            int totalPrice = 0;
-        //            foreach (var bill in billTotal)
+        //            foreach (var goodR in billTotal)
         //            {
-        //                totalPrice = totalPrice + (int)bill.TotalPrice;
+        //                totalPrice = totalPrice + (int)goodR.TotalPrice;
         //            }
         //            return totalPrice;
 

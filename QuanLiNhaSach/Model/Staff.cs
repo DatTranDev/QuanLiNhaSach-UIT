@@ -18,6 +18,7 @@ namespace QuanLiNhaSach.Model
         public Staff()
         {
             this.Bills = new HashSet<Bill>();
+            this.GoodReceiveds = new HashSet<GoodReceived>();
         }
     
         public int ID { get; set; }
@@ -36,5 +37,7 @@ namespace QuanLiNhaSach.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodReceived> GoodReceiveds { get; set; }
     }
 }

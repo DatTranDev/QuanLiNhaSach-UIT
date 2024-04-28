@@ -17,14 +17,16 @@ namespace QuanLiNhaSach.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GoodReceived()
         {
-            this.GoodReceivedInfo = new HashSet<GoodReceivedInfo>();
+            this.GoodReceivedInfoes = new HashSet<GoodReceivedInfo>();
         }
     
         public int ID { get; set; }
         public Nullable<System.DateTime> CreatAt { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> StaffId { get; set; }
     
+        public virtual Staff Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodReceivedInfo> GoodReceivedInfo { get; set; }
+        public virtual ICollection<GoodReceivedInfo> GoodReceivedInfoes { get; set; }
     }
 }

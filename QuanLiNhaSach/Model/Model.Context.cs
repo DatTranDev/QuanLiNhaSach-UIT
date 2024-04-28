@@ -29,11 +29,14 @@ namespace QuanLiNhaSach.Model
         public virtual DbSet<BillInfo> BillInfo { get; set; }
         public virtual DbSet<Book> Book { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<DebtReport> DebtReport { get; set; }
         public virtual DbSet<GenreBook> GenreBook { get; set; }
         public virtual DbSet<GoodReceived> GoodReceived { get; set; }
         public virtual DbSet<GoodReceivedInfo> GoodReceivedInfo { get; set; }
+        public virtual DbSet<InventoryReport> InventoryReport { get; set; }
         public virtual DbSet<PaymentReceipt> PaymentReceipt { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<SystemValue> SystemValue { get; set; }
     }
 }
