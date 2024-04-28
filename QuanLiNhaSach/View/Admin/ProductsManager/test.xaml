@@ -67,7 +67,16 @@
                                FontFamily="Poppins"
                                FontSize="16"
                                FontWeight="Regular"
-                               Text="Tồn: 200"
+                               Text="Tồn: "
+                               Grid.Row="1" />
+                    <TextBlock TextWrapping="Wrap"
+                               Margin="0,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="Poppins"
+                               FontSize="16"
+                               FontWeight="Regular"
+                               Text="200"
                                Grid.Row="1" />
                     <TextBlock Margin="65,0,0,0"
                                x:Name="PriceSP"
@@ -78,6 +87,14 @@
                                FontWeight="Bold"
                                Foreground="#EA6A12"
                                Text="25.000đ" />
+                    <TextBlock                             
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontFamily="Poppins"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="#EA6A12"
+                               Text=" đ" />
 
                     <!--<StackPanel DockPanel.Dock="Right"
                                 Orientation="Horizontal">
@@ -151,24 +168,48 @@
                            Text="Bộ đề kiểm tra tiếng việt"
                            Grid.Row="1" />
                 <!--Text="{Binding DisplayName}"-->
-                <TextBlock TextWrapping="Wrap"
-                           Margin="25,3,0,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           FontFamily="Poppins"
-                           FontSize="12"
-                           FontWeight="Light"
-                           Text="Tác giả: Bộ giáo dục"
-                           Grid.Row="1" />
-                <TextBlock TextWrapping="Wrap"
-                           Margin="25,3,0,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           FontFamily="Poppins"
-                           FontSize="12"
-                           FontWeight="Light"
-                           Text="Tồn: 200"
-                           Grid.Row="1" />
+                <DockPanel>
+                    <TextBlock TextWrapping="Wrap"
+                               Margin="25,3,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="Poppins"
+                               FontSize="12"
+                               FontWeight="Light"
+                               Text="Tác giả: "
+                               Grid.Row="1" />
+                    <TextBlock TextWrapping="Wrap"
+                               Margin="0,3,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="Poppins"
+                               FontSize="12"
+                               FontWeight="Light"
+                               Text="Bộ giáo dục"
+                               Grid.Row="1" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock TextWrapping="Wrap"
+                               Margin="25,3,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="Poppins"
+                               FontSize="12"
+                               FontWeight="Light"
+                               Text="Tồn: "
+                               Grid.Row="1" />
+                    <TextBlock TextWrapping="Wrap"
+                               Margin="0,3,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="Poppins"
+                               FontSize="12"
+                               FontWeight="Light"
+                               Text="200"
+                               Grid.Row="1" />
+                </DockPanel>
+               
+               
 
                 <DockPanel Grid.Row="2"
                            Margin="10,0,10,5"

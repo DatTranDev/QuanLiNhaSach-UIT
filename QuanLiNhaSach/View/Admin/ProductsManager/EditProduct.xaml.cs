@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace QuanLiNhaSach.View.Admin.ProductsManager
 {
     /// <summary>
-    /// Interaction logic for ProductMain.xaml
+    /// Interaction logic for EditProduct.xaml
     /// </summary>
-    public partial class ProductMain : Page
+    public partial class EditProduct : Window
     {
-        public ProductMain()
+        public EditProduct()
         {
             InitializeComponent();
-        }
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ScrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta);
-            e.Handled = true;
         }
     }
 }

@@ -29,5 +29,10 @@ namespace QuanLiNhaSach.View.Staff.Sale
             ScrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta);
             e.Handled = true;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

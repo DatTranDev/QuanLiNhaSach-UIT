@@ -6,7 +6,9 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:QuanLiNhaSach.View.Staff.Sale"
+      xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
       mc:Ignorable="d"
+      DataContext="{StaticResource SaleVM}"
       Background="#ffecde"
       d:DesignHeight="800"
       d:DesignWidth="1536"
@@ -28,8 +30,7 @@
             <Setter Property="FontWeight"
                     Value="Bold" />
         </Style>
-        <!--<converters:IndexConverter x:Key="IndexConverter"></converters:IndexConverter>
-        <converters:PriceConverter x:Key="PriceConverter"></converters:PriceConverter>-->
+        <converters:PriceConverter x:Key="PriceConverter"></converters:PriceConverter>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -44,12 +45,12 @@
         <Grid x:Name="FillGrid"
               Margin="15,0,0,0"
               Height="16"
-              Width="14"
+              Width="16"
               VerticalAlignment="Top"
               HorizontalAlignment="Left"
-              Grid.Row="1"
               Panel.ZIndex="1"
-              Background="White" />
+              Background="White"
+              Grid.Row="1" />
         <StackPanel Orientation="Horizontal"
                     Margin="15 15 0 0"
                     HorizontalAlignment="Left"
@@ -61,7 +62,6 @@
                     CornerRadius="16">
                 <Button Command="{Binding LoadSeatPageCM}"
                         CommandParameter="{Binding ElementName=TabFrame}"
-                        
                         Tag="SeatBd"
                         Width="100"
                         Height="60"
@@ -80,11 +80,6 @@
 
                 </Button>
             </Border>
-            <Border x:Name="MenuBd"
-                    Width="130"
-                    Height="60"
-                    Background="Transparent"
-                    CornerRadius="16" />
         </StackPanel>
         <Grid Margin="15 0 5 50"
               Grid.Row="1">
@@ -107,7 +102,7 @@
                             <ComboBox Width="166"
                                       Height="40"
                                       ItemsSource="{Binding ComboList}"
-                                      SelectedItem="{Binding Genre}"
+                                      SelectedItem="{Binding GenreBox}"
                                       Margin="8,0,0,0"
                                       Padding="12,2.4"
                                       Background="#FFF4F4"
@@ -136,7 +131,7 @@
                                          FontSize="16">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding SearchProductCM}"
+                                            <i:InvokeCommandAction Command="{Binding Search}"
                                                                    CommandParameter="{Binding ElementName=searchPrdBox}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -153,7 +148,7 @@
                     </StackPanel>
                     <ScrollViewer x:Name="ScrollViewer"
                                   Grid.Row="1"
-                                  Height="615"
+                                  Height="600"
                                   Margin="4 0 4 4"
                                   VerticalScrollBarVisibility="Auto"
                                   VerticalAlignment="Top"
@@ -185,85 +180,115 @@
                             </ListView.ItemContainerStyle>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Columns="4" />
+                                    <UniformGrid Columns="3" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Border Margin="0,5,0,0"
-        Width="229"
-        Height="354"
-        Background="White"
-        BorderBrush="#E0AE8A"
-        BorderThickness="2,2,2,2"
-        CornerRadius="15">
-    <StackPanel Width="229"
-                Height="354">
-        <!--Source="{Binding Image}"-->
+                                            Width="229"
+                                            Height="320"
+                                            Background="White"
+                                            BorderBrush="#E0AE8A"
+                                            BorderThickness="2,2,2,2"
+                                            CornerRadius="15">
+                                        <StackPanel Width="229"
+                                                    Height="354">
+
+                                            <Image MaxHeight="170"
+                                                   MaxWidth="200"
+                                                   Margin="0,10,0,0"
+                                                   Source="{Binding Image}"
+                                                   Height="176"
+                                                   Width="205" />
+                                            <StackPanel Height="100">
+                                                <TextBlock TextWrapping="Wrap"
+                                                           Margin="15,15,0,0"
+                                                           HorizontalAlignment="Left"
+                                                           FontFamily="Poppins"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Text="{Binding DisplayName}"
+                                                           Grid.Row="1"
+                                                           Width="200" />
+                                                <DockPanel>
+
+                                                    <TextBlock TextWrapping="Wrap"
+                                                               Margin="15,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="14"
+                                                               FontWeight="Regular"
+                                                               Text="Tác giả: "
+                                                               Grid.Row="1" />
+
+                                                    <TextBlock TextWrapping="Wrap"
+                                                               Margin="0,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="14"
+                                                               FontWeight="Regular"
+                                                               Text="{Binding Author}"
+                                                               Grid.Row="1"
+                                                               Width="180" />
+                                                </DockPanel>
+
+                                            </StackPanel>
 
 
-        <Image MaxHeight="170"
-               MaxWidth="200"
-               Margin="0,10,0,0"
-               Source="B:\study\nmcnpm\Quan_li_nha_sach\QuanLiNhaSach\View\Admin\ProductsManager\tải xuống.jpg"
-               Height="176"
-               Width="205" />
-        <!--Source="{Binding Image}"-->
-        <StackPanel Height="135">
-            <TextBlock TextWrapping="Wrap"
-                       Margin="15,10,0,0"
-                       HorizontalAlignment="Left"
-                       FontFamily="Poppins"
-                       FontSize="16"
-                       FontWeight="SemiBold"
-                       Text="Bộ đề kiểm tra tiếng việt bab "
-                       Grid.Row="1"
-                       Width="200"
-                        />
-            <!--Text="{Binding DisplayName}"-->
-            <TextBlock TextWrapping="Wrap"
-                       Margin="15,10,0,0"
-                       HorizontalAlignment="Left"
-                       FontFamily="Poppins"
-                       FontSize="16"
-                       FontWeight="Regular"
-                       Text="Tác giả: Bộ giáo dục"
-                       Grid.Row="1"
-                       Width="200" />
-        </StackPanel>
 
 
-       
-       
 
-        <DockPanel Grid.Row="2"
-                   Margin="0,5,10,5"
-                   LastChildFill="False">
-            <TextBlock TextWrapping="Wrap"
-                       Margin="15,0,0,0"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       FontFamily="Poppins"
-                       FontSize="16"
-                       FontWeight="Regular"
-                       Text="Tồn: 200"
-                       Grid.Row="1" />
-            <TextBlock Margin="65,0,0,0"
-                       x:Name="PriceSP"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontFamily="Poppins"
-                       FontSize="16"
-                       FontWeight="Bold"
-                       Foreground="#EA6A12"
-                       Text="25.000đ" />
+                                            <DockPanel Grid.Row="2"
+                                                       Margin="0,5,10,5"
+                                                       LastChildFill="False">
+                                                <TextBlock TextWrapping="Wrap"
+                                                           Margin="15,0,0,0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Top"
+                                                           FontFamily="Poppins"
+                                                           FontSize="16"
+                                                           FontWeight="Regular"
+                                                           Text="Tồn: "
+                                                           Grid.Row="1" />
+                                                <TextBlock TextWrapping="Wrap"
+                                                           Margin="0,0,0,0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Top"
+                                                           FontFamily="Poppins"
+                                                           FontSize="16"
+                                                           FontWeight="Regular"
+                                                           Text="{Binding Inventory}"
+                                                           Width="60"
+                                                           Grid.Row="1" />
+                                                <DockPanel  Width="95"
+                                                            Margin="20,0,0,0">
+                                                    <TextBlock Margin="0,0,0,0"
+                                                               x:Name="PriceSP"
+                                                               HorizontalAlignment="Right"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="Poppins"
+                                                               FontSize="16"
+                                                               FontWeight="Bold"
+                                                               Foreground="#EA6A12"
+                                                               Text="{Binding Price, Converter={StaticResource PriceConverter}}" />
+                                                    <TextBlock Margin="0,0,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="Poppins"
+                                                               FontSize="16"
+                                                               FontWeight="Bold"
+                                                               Foreground="#EA6A12"
+                                                               Text=" đ" />
+                                                </DockPanel>
 
-          
-        </DockPanel>
-    </StackPanel>
 
-</Border>
-                                    
+
+                                            </DockPanel>
+                                        </StackPanel>
+
+                                    </Border>
+
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -272,23 +297,35 @@
                 </Grid>
             </Border>
         </Grid>
-        <Border Margin="5,15,0,725"
-                HorizontalAlignment="Left"
-                Grid.Column="1"
-                Width="130"
-                Height="60"
-                Background="White"
-                CornerRadius="16"
-                Grid.ColumnSpan="2"
-                Grid.RowSpan="2">
-            <TextBlock Margin="30,12,0,15"
-                       HorizontalAlignment="Left"
-                       FontFamily="Roboto Condensed"
-                       FontSize="17"
-                       Text="Hóa đơn"
-                       FontWeight="DemiBold"
-                       Foreground="#E0AE8A" />
-        </Border>
+        <StackPanel Orientation="Horizontal"
+                    Margin="5 15 0 0"
+                    HorizontalAlignment="Left"
+                    Grid.Column="1"
+                    Grid.Row="0">
+            <Border Width="88"
+                    Height="60"
+                    Background="White"
+                    CornerRadius="16">
+                <Button Tag="SeatBd"
+                        Height="60"
+                        Padding="0"
+                        HorizontalContentAlignment="Left"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Foreground="{x:Null}"
+                        Margin="0,0,-6,0" >
+
+                <TextBlock Margin="10,0,0,15"
+                               HorizontalAlignment="Left"
+                               FontFamily="Roboto Condensed"
+                               FontSize="17"
+                               Text="Hóa đơn"
+                               FontWeight="DemiBold"
+                               Foreground="#E0AE8A" />
+
+                </Button>
+            </Border>
+        </StackPanel>
         <Grid Grid.Row="1"
               Grid.Column="1"
               Grid.ColumnSpan="2">

@@ -8,54 +8,22 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Import_products"
+        Name="ImportPrd"
         Width="1130"
         Height="660"
         Background="Transparent"
         AllowsTransparency="True"
+        DataContext="{StaticResource ProductVM}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         ResizeMode="NoResize"
         TextElement.FontSize="13"
         TextElement.FontWeight="Regular"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Window.Resources>
-        <ControlTemplate x:Key="TextBoxAdd"
-                         TargetType="TextBox">
-            <TextBox Width="224"
-                     Height="48"
-                     Margin="0,0,0,0"
-                     Padding="12,2.4"
-                     HorizontalAlignment="Left"
-                     VerticalContentAlignment="Center"
-                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                     materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
-                     Background="#D9D9D9"
-                     BorderThickness="0.5"
-                     FontFamily="Inter"
-                     FontSize="16" />
-        </ControlTemplate>
-        <ControlTemplate x:Key="TextBoxAddBig"
-                         TargetType="TextBox">
-            <TextBox Width="196"
-                     Height="157"
-                     Margin="0,5,0,0"
-                     Padding="12,2.4"
-                     MinLines="1"
-                     MaxLines="20"
-                     TextWrapping="Wrap"
-                     HorizontalAlignment="Left"
-                     VerticalContentAlignment="Top"
-                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                     materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
-                     Background="#D9D9D9"
-                     BorderThickness="0.5"
-                     FontFamily="Inter"
-                     FontSize="16"
-                     VerticalAlignment="Top" />
-        </ControlTemplate>
         <Style x:Key="TextBlock"
                TargetType="TextBlock">
             <Setter Property="Foreground"
@@ -67,20 +35,12 @@
 
         </Style>
     </Window.Resources>
-    <Border>
-        <Border.BorderBrush>
-            <LinearGradientBrush EndPoint="0.5,1"
-                                 StartPoint="0.5,0">
-                <GradientStop Color="Black"
-                              Offset="0.888" />
-                <GradientStop Color="White"
-                              Offset="0" />
-                <GradientStop Color="#FE0E0E0E"
-                              Offset="0.667" />
-            </LinearGradientBrush>
-        </Border.BorderBrush>
+    <Border CornerRadius="40"
+            BorderBrush="#FF9900"
+            BorderThickness="3"
+            Background="White">
 
-        <StackPanel Background="White">
+        <StackPanel >
             <Border Width="144"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
@@ -88,7 +48,7 @@
                     BorderBrush="#E0AE8A"
                     CornerRadius="15"
                     Height="50"
-                    Margin="0,20,50,0">
+                    Margin="0,20,57,0">
                 <Button Padding="0"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
@@ -172,18 +132,34 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-                    <Button Command="{Binding AddSanPhamListCM}"
-                            CommandParameter="{Binding ElementName=AddSPPage}"
-                            Width="160"
-                            Height="62"
-                            Margin="0,15,25,0"
-                            HorizontalAlignment="Right"
-                            materialDesign:ButtonAssist.CornerRadius="24"
-                            Background="#F0BD70"
-                            BorderThickness="0"
-                            Content="Nhập kho"
-                            FontSize="24"
-                            FontWeight="Bold" />
+                    <Grid>
+                        <Button Command="{Binding CloseWd}"
+                                CommandParameter="{Binding ElementName=ImportPrd}"
+                                Width="160"
+                                Height="62"
+                                Margin="0,15,180,0"
+                                HorizontalAlignment="Right"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#EFD8B4"
+                                BorderThickness="0"
+                                Content="Thoát"
+                                FontSize="24"
+                                FontWeight="Bold" />
+                        <Button Command="{Binding ConfirmImport}"
+                                CommandParameter="{Binding ElementName=ImportPrd}"
+                                Width="160"
+                                Height="62"
+                                Margin="0,15,0,0"
+                                HorizontalAlignment="Right"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#F0BD70"
+                                BorderThickness="0"
+                                Content="Nhập kho"
+                                FontSize="24"
+                                FontWeight="Bold" />
+                    </Grid>
+                    
+                    
                 </StackPanel>
 
 
