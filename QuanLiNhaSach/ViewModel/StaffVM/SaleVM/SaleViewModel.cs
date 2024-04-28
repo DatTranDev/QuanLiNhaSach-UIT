@@ -15,6 +15,7 @@ using QuanLiNhaSach.Utils;
 using QuanLiNhaSach.View.MessageBox;
 using System.Windows;
 using OfficeOpenXml;
+using QuanLiNhaSach.View.Admin.CustomerManagement;
 
 namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
 {
@@ -111,6 +112,8 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
 
         public ICommand FirstLoadCM { get; set; }
         public ICommand Search { get; set; }
+        public ICommand SearchCusCM { get; set; }
+        public ICommand AddCustomerCM { get; set; }
         async void UpdateCb()
         {
             ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
@@ -145,6 +148,31 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                     prdList = new List<BookDTO>(ProductList);
                     ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower())));
                 }
+            });
+            SearchCusCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                (Customer a, bool success, string messageSearch) = await CustomerService.Ins.findCusbyPhone(CusInfo);
+                if (a != null)
+                {
+                    CusOfBill = a;
+                }
+                else
+                {
+                    (Customer b, bool success1, string messageSearch1) = await CustomerService.Ins.findCusbyEmail(CusInfo);
+                    if (b != null)
+                    {
+                        CusOfBill = b;
+                    }
+                    else
+                    {
+                        //MessageBoxCustom.Show(MessageBoxCustom.Error, messageSearch);
+                    }
+                }
+            });
+            AddCustomerCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                AddCustomerWindow wd = new AddCustomerWindow();
+                wd.ShowDialog();
             });
         }
 
