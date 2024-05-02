@@ -164,7 +164,9 @@
     </ApplicationDefinition>
     <Compile Include="Converter\CusNameConverter.cs" />
     <Compile Include="Converter\IndexConverter.cs" />
+    <Compile Include="Converter\InputPriceConvert.cs" />
     <Compile Include="Converter\PriceConverter.cs" />
+    <Compile Include="Converter\SalePriceConvert.cs" />
     <Compile Include="DTOs\BillDTO.cs" />
     <Compile Include="DTOs\BillInfoDTO.cs" />
     <Compile Include="DTOs\BookDTO.cs" />
@@ -250,6 +252,7 @@
     <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
+    <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\SaleVM\SaleViewModel.cs" />
     <Compile Include="View\Admin\AccountInfomation.xaml.cs">
       <DependentUpon>AccountInfomation.xaml</DependentUpon>
@@ -303,6 +306,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\Staff\MainStaffWindow.xaml.cs">
+      <DependentUpon>MainStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Staff\Sale\InvoicePrint.xaml.cs">
+      <DependentUpon>InvoicePrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\Sale\SalePage.xaml.cs">
       <DependentUpon>SalePage.xaml</DependentUpon>
@@ -378,6 +387,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MessageBox\Warning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\MainStaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\Sale\InvoicePrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -242,7 +242,7 @@ namespace QuanLiNhaSach.Model.Service
                         return (false, "Không tìm thấy khách hàng này");
                     }
 
-                    cus.Debts -= payedDebts;
+                    cus.Debts += payedDebts;
 
                     await context.SaveChangesAsync();
                     return (true, "Đã cập nhật");

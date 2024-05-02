@@ -10,31 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace QuanLiNhaSach.View.Staff.Sale
 {
     /// <summary>
-    /// Interaction logic for SalePage.xaml
+    /// Interaction logic for InvoicePrint.xaml
     /// </summary>
-    public partial class SalePage : Page
+    public partial class InvoicePrint : Window
     {
-        public SalePage()
+        public InvoicePrint()
         {
             InitializeComponent();
-        }
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ScrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta);
-            e.Handled = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            PrintDialog printDlg = new PrintDialog();
+            if (printDlg.ShowDialog() == true)
+            {
+                printDlg.PrintVisual(this, "Bill");
+            }
         }
-
-
     }
 }
