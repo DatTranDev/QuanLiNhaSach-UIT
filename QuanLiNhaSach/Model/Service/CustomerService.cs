@@ -203,6 +203,29 @@ namespace QuanLiNhaSach.Model.Service
             }
 
         }
+        public async Task<(Customer, bool, string)> findCusbyID(int id)
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var cus = await context.Customer.Where(p => p.ID==id).FirstOrDefaultAsync();
+                    if (cus == null)
+                    {
+                        return (null, false, "Không tìm thấy khách hàng này");
+                    }
+                    else
+                    {
+                        return (cus, true, "Tìm thấy khách hàng");
+                    }
+                }
+            }
+            catch
+            {
+                MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
+                return (null, false, null);
+            }
+        }
 
         // cập nhật chi tiêu
         public async Task<(bool, string)> updateSpend(decimal spendDelta, int id)

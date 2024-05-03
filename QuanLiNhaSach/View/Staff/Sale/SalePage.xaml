@@ -278,7 +278,17 @@
                                                                FontSize="16"
                                                                FontWeight="Bold"
                                                                Foreground="#EA6A12"
-                                                               Text="{Binding Price, Converter={StaticResource PriceConverter}}" />
+                                                              >
+                                                        
+                                                            <TextBlock.Text>
+                                                                <MultiBinding Converter="{StaticResource SalePriceConverter}">
+                                                                <Binding Path="Price" />
+                                                                    <Binding Path="DataContext.SystemValue.Profit"
+                                                                             RelativeSource="{RelativeSource AncestorType={x:Type Page}}" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+ </TextBlock>
+                                                 
                                                     <TextBlock Margin="0,0,0,0"
                                                                HorizontalAlignment="Left"
                                                                VerticalAlignment="Center"
@@ -641,14 +651,9 @@
                                                 </GridViewColumn.HeaderContainerStyle>
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock FontSize="17">
-                                                            <TextBlock.Text>
-                                                                <MultiBinding Converter="{StaticResource SalePriceConverter}">
-                                                                    <Binding Path="Book.Price" />
-                                                                    <Binding Path="DataContext.Profit"
-                                                                             RelativeSource="{RelativeSource AncestorType={x:Type Page}}" />
-                                                                </MultiBinding>
-                                                            </TextBlock.Text>
+                                                        <TextBlock FontSize="17"
+                                                                   Text="{ Binding Book.Price, Converter={StaticResource PriceConverter}}">
+                                                           
                                                         </TextBlock>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
@@ -754,19 +759,19 @@
                                    VerticalAlignment="Top" />
                     </StackPanel>
                     <StackPanel Grid.Row="4"
-                                Margin="320,0,0,5"
+                                Margin="280,0,0,5"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center">
-                        <Button Margin="0 0 40 0"
+                        <Button Margin="0 0 30 0"
                                 Name="EndBillButton"
                                 Command="{Binding EndBill}"
-                                CommandParameter="{Binding ElementName=EndBillButton}"
-                                Width="200"
+                                CommandParameter="{Binding ElementName=TabFrame}"
+                                Width="170"
                                 Height="62"
-                                IsEnabled="{Binding EndEnable}"
+                                IsEnabled="{Binding PayEnabled}"
                                 materialDesign:ButtonAssist.CornerRadius="24"
-                                Background="{Binding EndBackGround}"
+                                Background="#F0BD70"
                                 BorderThickness="0"
                                 Content="Kết thúc"
                                 FontSize="24"
@@ -778,7 +783,7 @@
                                 IsEnabled="{Binding PayEnabled}"
                                 Height="62"
                                 materialDesign:ButtonAssist.CornerRadius="24"
-                                Background="{Binding Brush}"
+                                Background="#F0BD70"
                                 BorderThickness="0"
                                 Content="{Binding PayContent}"
                                 FontSize="24"

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using QuanLiNhaSach.ViewModel.SystemVM;
 
 namespace QuanLiNhaSach.Converter
 {
@@ -19,7 +18,7 @@ namespace QuanLiNhaSach.Converter
             {
                 // Thực hiện phép nhân và chuyển đổi kiểu dữ liệu
                 string valuePrice;
-                int b = Decimal.ToInt32((decimal)(price * (decimal)multiplier));
+                int b = Decimal.ToInt32((decimal)(price * (decimal)(1+multiplier)));
                 string c = b.ToString("N");
                 valuePrice = c.Substring(0, c.Length - 3);
                 return valuePrice;

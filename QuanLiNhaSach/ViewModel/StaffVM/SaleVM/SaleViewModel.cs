@@ -42,19 +42,24 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
             get { return _prdEnable; }
             set { _prdEnable = value; OnPropertyChanged(); }
         }
-        private SystemValue SystemValue;
-        //public SystemValue SystemValue
-        //{
-        //    get { return systemValue; }
-        //    set { systemValue = value; }
-        //}
-
-        private double profit=0;
-        public double Profit
+        private SystemValue systemValue;
+        public SystemValue SystemValue
         {
-            get { return profit; }
-            set { profit = value; OnPropertyChanged(); }
+            get { return systemValue; }
+            set { systemValue = value; OnPropertyChanged(); }
         }
+
+        //private double profit=0;
+        //public double Profit
+        //{
+        //    get { return profit; }
+        //    set { profit = value; OnPropertyChanged(); }
+        //}
+        //private double minInventory = 0;
+        //public double MinInventory
+        //{
+        //    get { return }
+        //}
         private bool _endEnable;
         public bool EndEnable
         {
@@ -163,7 +168,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
         public decimal TotalBillValue
         {
             get { return _totalBillValue; }
-            set { _totalBillValue = value; OnPropertyChanged(); }
+            set { _totalBillValue = value; OnPropertyChanged();UpdateDebt(); }
         }
         private SolidColorBrush _brush;
         public SolidColorBrush Brush
@@ -216,15 +221,17 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
         {
             CusInfo = null;
             CusOfBill = null;
-            BillInfoList = null;
             TotalBillValue = 0;
             Debt = 0;
             PaidBillValue = 0;
+            SelectedBill = new BillDTO();
+            BillInfoList = new ObservableCollection<BillInfoDTO>();
+            billInfoList = new List<BillInfoDTO>(BillInfoList);
             PayEnabled = false;
         }
         void UpdateDebt()
         {
-            if (PaidBillValue > TotalBillValue)
+            if (PaidBillValue > TotalBillValue && TotalBillValue>0)
                 PaidBillValue = TotalBillValue;
             Debt = TotalBillValue - PaidBillValue;
         }
@@ -234,9 +241,6 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
             {
                 SystemValue= new SystemValue();
                 SystemValue = await SystemValueService.Ins.GetData();
-                if (SystemValue != null)
-                Profit=(double)SystemValue.Profit;
-                MessageBox.Show("" + Profit);
                 ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
                 if (ProductList != null)
                 {
@@ -249,6 +253,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                 BillInfoList = new ObservableCollection<BillInfoDTO>();
                 billInfoList = new List<BillInfoDTO>(BillInfoList);
                 TotalBillValue = 0;
+                PayContent = "Thanh toán";
             });
             Search = new RelayCommand<TextBox>((p) => { return true; }, async (p) =>
             {
@@ -279,7 +284,17 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                     }
                     else
                     {
-                        //MessageBoxCustom.Show(MessageBoxCustom.Error, messageSearch);
+                        Error wd1 = new Error("Khách hàng không tồn tại");
+                        wd1.ShowDialog();
+                    }
+                }
+                if(CusOfBill!= null)
+                {
+                    if(CusOfBill.Debts>SystemValue.MaxDebts)
+                    {
+                        CusOfBill = null;
+                        Error wd= new Error("Khách hàng đã nợ vượt quá quy định");
+                        wd.ShowDialog();
                     }
                 }
             });
@@ -292,7 +307,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                     {
                         ID = SelectedPrdItem.ID,
                         DisplayName = SelectedPrdItem.DisplayName,
-                        Price = SelectedPrdItem.Price,
+                        Price = SelectedPrdItem.Price * (decimal)(1+SystemValue.Profit),
                         IDGenre = SelectedPrdItem.IDGenre,
                         Inventory = SelectedPrdItem.Inventory,
                         Author = SelectedPrdItem.Author,    
@@ -306,19 +321,35 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
 
                         IDBook = SelectedPrdItem.ID,
                         IsDeleted = SelectedPrdItem.IsDeleted,
-                        PriceItem = SelectedPrdItem.Price,
+                        PriceItem = SelectedPrdItem.Price * (decimal)(1+SystemValue.Profit),
                         Quantity = 1,
                         Book = a
                     };
                     var billIF = BillInfoList.Where(x => x.IDBook == a.ID).FirstOrDefault();
                     if (billIF == null)
                     {
-                        BillInfoList.Add(billInfo);
-                        TotalBillValue = TotalBillValue + billInfo.PriceItem ?? 0;
+                        if (a.Inventory>SystemValue.MinSaleInventory)
+                        {
+                            BillInfoList.Add(billInfo);
+                            TotalBillValue = TotalBillValue + billInfo.PriceItem ?? 0;
+                        }   
+                        else
+                        {
+                            Error wd = new Error("Sản phẩm này đã hết");
+                            wd.ShowDialog();
+                        }    
                     }
                     else
                     {
-                        billIF.Quantity++;
+                        if(a.Inventory-billIF.Quantity> SystemValue.MinSaleInventory)
+                        {
+                            billIF.Quantity++;
+                        }
+                        else
+                        {
+                            Error wd = new Error("Sản phẩm này đã hết");
+                            wd.ShowDialog();
+                        }
                     }
                     Debt = TotalBillValue;
                     Brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0BD70"));
@@ -354,13 +385,25 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                     SelectedBillInfo.Quantity--;
             });
             PlusBillInfoCM = new RelayCommand<BillInfoDTO>((p) => { return true; }, (p) => {
-                SelectedBillInfo = p;
-                SelectedBillInfo.Quantity++;
+                SelectedBillInfo = p;   
+                if (SelectedBillInfo.Book.Inventory - SelectedBillInfo.Quantity > SystemValue.MinSaleInventory)
+                {
+                    SelectedBillInfo.Quantity++;
+                }
+                else
+                {
+                    Error wd = new Error("Sản phẩm này đã hết");
+                    wd.ShowDialog();
+                }
             });
             ChangeCountCM = new RelayCommand<BillInfoDTO>((p) => { return true; }, (p) =>
             {
                 SelectedBillInfo = p;
                 TotalBillValue = TotalBillValue - SelectedBillInfo.PriceItem ?? 0;
+                if(SelectedBillInfo.Book.Inventory - SelectedBillInfo.Quantity < SystemValue.MinSaleInventory)
+                {
+                    SelectedBillInfo.Quantity = SelectedBillInfo.Book.Inventory - SystemValue.MinSaleInventory;
+                }    
                 SelectedBillInfo.PriceItem = SelectedBillInfo.Quantity * SelectedBillInfo.Book.Price;
                 TotalBillValue = TotalBillValue + SelectedBillInfo.PriceItem ?? 0;
             });
@@ -377,16 +420,20 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                         (Staff a, bool success1) = await StaffService.Ins.FindStaff(currentStaff.ID);
                         billInfoList = new List<BillInfoDTO>(BillInfoList);
                         SelectedBill.BillInfo = billInfoList;
-                        SelectedBill.Customer = CusOfBill;
                         if (CusOfBill != null)
                         {
                             SelectedBill.IDCus = CusOfBill.ID;
                         }
                         else
                         {
-                            SelectedBill.IDCus = 1;
-                            //SelectedBill.Customer = null;
+                            (Customer b, bool success2, string messageSearch1) = await CustomerService.Ins.findCusbyID(2);
+                            if(success2)
+                            {
+                               CusOfBill = b;
+                               SelectedBill.IDCus = CusOfBill.ID;
+                            }    
                         }
+                        SelectedBill.Customer = CusOfBill;
                         SelectedBill.IDStaff = currentStaff.ID;
                         SelectedBill.IsDeleted = false;
                         SelectedBill.CreateAt = DateTime.Now;
@@ -394,63 +441,56 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                         SelectedBill.TotalPrice = TotalBillValue;
                         SelectedBill.Paid = PaidBillValue;
 
-                        //if (NextBillID == -1)
-                        //{
-                        //    List<BillDTO> allBill = await BillService.Ins.GetAllBill();
-                        //    if (allBill.Count > 0)
-                        //    {
-                        //        nextBillID = allBill[0].ID + 1;
-                        //    }
-                        //    else
-                        //        NextBillID = 1;
-                        //}
-                        //else
-                        //    NextBillID++;
                         // Lâu
+                        if(CusOfBill.ID==2 && Debt>0)
+                        {
+                            Error wd3= new Error("Khách lẻ không được nợ");
+                            wd3.ShowDialog();
+                            PayEnabled = true;
+                            PayContent = "Thanh toán";
+                        }
+                    else
+                    {
                         (bool isAdded, string messageAdd) = await BillService.Ins.AddNewBill(SelectedBill);
                         if (isAdded)
                         {
-                            //billList.Add(SelectedBill);
-                            Brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EFD8B4"));
-                            EndEnable = true;
-                            EndBackGround = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0BD70"));
                             (bool suc, string mEdit) = await CustomerService.Ins.updateSpend(TotalBillValue, CusOfBill.ID);
                             if (!suc) MessageBoxCustom.Show(MessageBoxCustom.Error, "Chỉnh sửa chi tiêu khách hàng thất bại!");
-                        (bool success, string message) = await CustomerService.Ins.updateDebts(Debt, CusOfBill.ID);
-                        if (!suc) MessageBoxCustom.Show(MessageBoxCustom.Error, "Chỉnh sửa nợ khách hàng thất bại!");
-                           PayContent = "Đã thanh toán";
+                            if (Debt > 0)
+                            {
+                                (bool success, string message) = await CustomerService.Ins.updateDebts(Debt, CusOfBill.ID);
+                                if (!suc) MessageBoxCustom.Show(MessageBoxCustom.Error, "Chỉnh sửa nợ khách hàng thất bại!");
+                            }
+                            PayContent = "Đã thanh toán";
                             MessageBoxCustom.Show(MessageBoxCustom.Success, "Thành công");
                             new InvoicePrint().ShowDialog();
+                            resetData();
+                            Brush = null;
+                            PayEnabled = false;
+                            PayContent = "Thanh toán";
+                            EndEnable = false;
+                            EndBackGround = null;
                         }
                         else
                         {
                             MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
-                            PayContent = "";
+                            PayContent = "Thanh toán";
                         }
-                        
+
                         //prdEnable = false;
-                }
+                    }
+                }         
             });
 
 
-            EndBill = new RelayCommand<Button>((p) =>{ return true;},  (p) =>
+            EndBill = new RelayCommand<Button>((p) => { return true; }, (p) =>
                 {
-                            resetData();
-                            SelectedBill = null;
-                            SelectedBill = new BillDTO();
-                            CusOfBill = null;
-                            CusInfo = null;
-                            CusOfBill = new Customer();
-                            BillInfoList = null;
-                            BillInfoList = new ObservableCollection<BillInfoDTO>();
-                            Brush = null;
-                            PayEnabled = false;
-                            PayContent = "";
-                            EndEnable = false;
-                            EndBackGround = null;
-                            TotalBillValue = 0;
-                            SelectedBill = null;
-                    
+                    resetData();
+                    Brush = null;
+                    PayEnabled = false;
+                    PayContent = "Thanh toán";
+                    EndEnable = false;
+                    EndBackGround = null;
                 });
         }
 
