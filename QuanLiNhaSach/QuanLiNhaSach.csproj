@@ -164,6 +164,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\CusNameConverter.cs" />
     <Compile Include="Converter\IndexConverter.cs" />
+    <Compile Include="Converter\IndexInvoiceConverter.cs" />
     <Compile Include="Converter\InputPriceConvert.cs" />
     <Compile Include="Converter\PriceConverter.cs" />
     <Compile Include="Converter\SalePriceConvert.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Utils\Helper.cs" />
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\ProductVM\ImportItem.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />

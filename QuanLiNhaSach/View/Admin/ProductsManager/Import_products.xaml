@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.ProductsManager"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Import_products"
@@ -24,16 +25,10 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Window.Resources>
-        <Style x:Key="TextBlock"
-               TargetType="TextBlock">
-            <Setter Property="Foreground"
-                    Value="Black" />
-            <Setter Property="FontSize"
-                    Value="19.2" />
-            <Setter Property="FontWeight"
-                    Value="Bold" />
+        <ResourceDictionary>
+            <converters:IndexInvoiceConverter x:Key="IndexInvoiceConverter"></converters:IndexInvoiceConverter>
+        </ResourceDictionary>
 
-        </Style>
     </Window.Resources>
     <Border CornerRadius="40"
             BorderBrush="#FF9900"
@@ -84,19 +79,27 @@
                         </TextBlock>
                     </Border>
                     <Border Height="35">
-                        <TextBlock Text="Ngày nhập: ...."
-                                   HorizontalAlignment="Center"
-                                   FontSize="25">
-                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Margin="350 0 0 0 " Text="Ngày nhập: "
+                                       HorizontalAlignment="Center"
+                                       FontSize="25">
+                            </TextBlock>
+                            <TextBox Text="{Binding DateImport}"
+                                     FontSize="22"
+                                     Width="150">
+
+                            </TextBox>
+                        </StackPanel>
+                        
                     </Border>
                     <Grid Height="400">
 
                         <DataGrid x:Name="dataGrid"
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="True"
-                                  IsReadOnly="False"
-                                  
-                                  ItemsSource="{Binding Books}"
+                                  IsReadOnly="False"                                  
+                                  ItemsSource="{Binding ListImport}"
+                                  SelectedItem="{Binding BookImport}"
                                  >
                             <DataGrid.ColumnHeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
@@ -106,29 +109,27 @@
                             </DataGrid.ColumnHeaderStyle>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="STT"
+                                                    IsReadOnly="False"
                                                     Binding="{Binding Path=STT}"
-                                                    IsReadOnly="True" 
-                                                    Width="50"/>
+                                                    Width="50" />
+
                                 <DataGridTextColumn Header="Sách"
-                                                    Binding="{Binding Path=BookName}"
+                                                    Binding="{Binding Path=DisplayName}"
                                                     IsReadOnly="False"
                                                     HeaderStringFormat=""
-                                                    Width="264"/>
+                                                    Width="273"/>
                                 <DataGridTextColumn Header="Thể loại"
-                                                    Width="150"
-                                                    Binding="{Binding Path=Category}" />
+                                                    Width="260"
+                                                    Binding="{Binding Path= GenreName}" />
                                 <DataGridTextColumn Header="Tác giả"
                                                     Width="180"
                                                     Binding="{Binding Path=Author}" />
                                 <DataGridTextColumn Header="Số lượng"
                                                     Width="85"
-                                                    Binding="{Binding Path=Quantity}" />
+                                                    Binding="{Binding Path=Count}" />
                                 <DataGridTextColumn Header="Đơn giá nhập"
                                                     Width="150"
-                                                    Binding="{Binding Path=UnitPrice}" />
-                                <DataGridTextColumn Header="Link ảnh"
-                                                    Width="120"
-                                                    Binding="{Binding Path=ImageLink}" />
+                                                    Binding="{Binding Path=Price}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

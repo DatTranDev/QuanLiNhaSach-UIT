@@ -12,9 +12,11 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Data.SqlClient;
 using Microsoft.Win32;
+using System.Globalization;
 using QuanLiNhaSach.Utils;
 using QuanLiNhaSach.View.MessageBox;
 using System.Windows;
+using System.Diagnostics;
 using OfficeOpenXml;
 
 
@@ -22,6 +24,23 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
 {
     public class ProductViewModel : BaseViewModel
     {
+        //test
+        public ObservableCollection<StaffDTO> listStaff;
+        public ObservableCollection<StaffDTO> ListStaff
+        {
+            get { return listStaff; }
+            set { listStaff = value; OnPropertyChanged(); }
+        }
+        public Staff Staff;
+        public static StaffDTO currentStaff;
+        //
+        private SystemValue systemValue;
+        public SystemValue SystemValue
+        {
+            get { return systemValue; }
+            set { systemValue = value; OnPropertyChanged(); }
+        }
+
         public static List<BookDTO> prdList;
         private ObservableCollection<BookDTO> _productList;
 
@@ -44,7 +63,22 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             set { _selectedItem = value; OnPropertyChanged(); }
         }
 
+        private ImportItem bookImport;
 
+        public ImportItem BookImport
+        {
+            get { return bookImport; }
+            set { bookImport = value; OnPropertyChanged(); }
+        }
+
+
+
+        private ObservableCollection<ImportItem> listImport;
+        public ObservableCollection<ImportItem> ListImport
+        {
+            get { return listImport; }
+            set { listImport = value; OnPropertyChanged(); }
+        }
         private ObservableCollection<string> _genreList;
         public ObservableCollection<string> GenreList
         {
@@ -158,6 +192,28 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             get { return _genreBox; }
             set { _genreBox = value; OnPropertyChanged(); UpdateCb(); }
         }
+
+
+        private GoodReceivedInfoDTO receivedInfo;
+        public GoodReceivedInfoDTO ReceivedInfo
+        {
+            get { return receivedInfo; }
+            set { receivedInfo = value; OnPropertyChanged(); }
+        }
+
+        private GoodReceivedDTO goodReceived;
+        public GoodReceivedDTO GoodReceived
+        {
+            get { return goodReceived; }
+            set { goodReceived = value; OnPropertyChanged(); }
+        }
+
+        private string dateImport;
+        public string DateImport
+        {
+            get { return dateImport; }
+            set { dateImport = value; OnPropertyChanged(); }
+        }
         private string OriginImage { get; set; }
         public ICommand FirstLoadCM { get; set; }
         public ICommand AddSanPhamCM { get; set; }
@@ -213,6 +269,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
         {
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                //test
+                (Staff e,bool g) = await StaffService.Ins.FindStaff(5);
+                Staff = e;
+                MessageBox.Show("" + Staff.ID);
+                //
+                SystemValue = new SystemValue();
+                SystemValue = await SystemValueService.Ins.GetData();
                 ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
                 if (ProductList != null)
                 {
@@ -348,15 +411,146 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             });
             OpenImportGoods = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
+                
+                ListImport = new ObservableCollection<ImportItem>();
                 Import_products imp= new Import_products();
                 imp.ShowDialog();
 
+            });
+            ConfirmImport = new RelayCommand<Window>(p => { return true; }, async (p) =>
+            {
+                //MessageBox.Show("" + ListImport.Count());
+                DateTime date;
+                if (DateTime.TryParseExact(DateImport, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                {
+                    GoodReceived = new GoodReceivedDTO
+                    {
+                        CreateAt = date,
+                        Staff = this.Staff,
+                        StaffId = this.Staff.ID,
+                        GoodReceivedInfo = new List<GoodReceivedInfoDTO>()
+                    };
+                    bool flag = true;
+                    for (int i = 0; i < ListImport.Count; i++)
+                    {
+                        if (ListImport[i].DisplayName == null || ListImport[i].GenreName == null || ListImport[i].Author == null)
+                        {
+                            if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                flag = false;
+                                Error wd3 = new Error("Nhập thiếu thông tin tại STT: " + ListImport[i].STT);
+                                wd3.ShowDialog();
+                                break;
+                            }
+
+                        }
+                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author);
+                        if (!a)
+                        {
+                            flag = false;
+                            Error wd = new Error("Thông tin nhập sai tại STT: " + ListImport[i].STT);
+                            wd.ShowDialog();
+                            break;
+                        }
+                        else
+                        {
+                            if (b.Inventory > SystemValue.MaxInventory)
+                            {
+                                flag = false;
+                                Error wd1 = new Error("STT " + ListImport[i].STT + " ở kho vẫn còn hàng");
+                                wd1.ShowDialog();
+                                break;
+                            }
+                            if (ListImport[i].Count < SystemValue.MinReceived)
+                            {
+                                flag = false;
+                                Error wd2 = new Error("STT " + ListImport[i].STT + " có số lượng nhập không đủ");
+                                wd2.ShowDialog();
+                                break;
+                            }
+                        }
+                    }
+                    if (flag)
+                    {
+                        for (int i = 0; i < ListImport.Count; i++)
+                        {
+                            if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
+                            {
+                                continue;
+                            }
+                            ImportItem item = ListImport[i];
+
+                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author);
+                            if (a)
+                            {
+                                if (b.Price < ListImport[i].Price)
+                                {
+                                    b.Price = ListImport[i].Price;
+                                }
+                                b.Inventory += ListImport[i].Count;
+                                Book newPrD = new Book
+                                {
+                                    ID = b.ID,
+                                    DisplayName = b.DisplayName,
+                                    IDGenre = b.IDGenre,
+                                    Price = (decimal)b.Price,
+                                    Inventory = b.Inventory,
+                                    Author = b.Author,
+                                    Image = b.Image,
+                                    Description = b.Description,
+                                    IsDeleted = false,
+                                };
+                                (bool c, string s) = await BookService.Ins.EditPrD(newPrD, b.ID);
+                                if (!c)
+                                {
+                                    flag = false;
+                                    break;
+                                }
+                                else
+                                {
+                                    receivedInfo = new GoodReceivedInfoDTO
+                                    {
+                                        IDBook = b.ID,
+                                        Quantity = item.Count,
+                                        BookAuthor = item.Author,
+                                        BookName = item.DisplayName,
+                                        BookGenre = item.GenreName,
+                                        BookPrice = item.Price,
+                                        IsDeleted = false,
+                                    };
+                                    GoodReceived.GoodReceivedInfo.Add(receivedInfo);
+                                }
+                            }
+                        }
+                    }
+                    if (flag)
+                    {
+                        (bool d, string str) = await GoodReceivedService.Ins.AddNewGoodReceived(GoodReceived);
+                        if (d)
+                        {
+                            Success wd4 = new Success("Nhập hàng thành công");
+                            wd4.ShowDialog();
+                        }
+
+                    }
+                } 
+                else
+                {
+                    Error wd5 = new Error("Nhập sai ngày tháng năm");
+                    wd5.ShowDialog();
+                }    
+                
             });
             CloseWd = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 p.Close();
             });
 
+            
             
 
             OpenEditWdCM = new RelayCommand<BookDTO>((p) => { return true; }, (p) => {

@@ -148,6 +148,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
             get { return _cusInfo; }
             set { _cusInfo = value; OnPropertyChanged(); }
         }
+
         private decimal _debt;
 
         public decimal Debt
@@ -170,6 +171,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
             get { return _totalBillValue; }
             set { _totalBillValue = value; OnPropertyChanged();UpdateDebt(); }
         }
+
         private SolidColorBrush _brush;
         public SolidColorBrush Brush
         {
@@ -259,13 +261,13 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
             {
                 if (p.Text == "")
                 {
-                    ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
+                    UpdateCb();
                 }
                 else
                 {
                     ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
                     prdList = new List<BookDTO>(ProductList);
-                    ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower())));
+                    ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower()) && (x.GenreName == GenreBox)));
                 }
             });
             SearchCusCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
@@ -298,20 +300,21 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                     }
                 }
             });
-            SelectPrd = new RelayCommand<object>((p) => { return true; }, (p) =>
+            SelectPrd = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 if (SelectedPrdItem != null)
                 {
-
+                    (int c, GenreBook b) = await GenreService.Ins.FindGenrePrD(SelectedPrdItem.GenreName);
                     Book a = new Book
                     {
                         ID = SelectedPrdItem.ID,
                         DisplayName = SelectedPrdItem.DisplayName,
-                        Price = SelectedPrdItem.Price * (decimal)(1+SystemValue.Profit),
+                        Price = SelectedPrdItem.Price * (decimal)(1 + SystemValue.Profit),
                         IDGenre = SelectedPrdItem.IDGenre,
                         Inventory = SelectedPrdItem.Inventory,
-                        Author = SelectedPrdItem.Author,    
+                        Author = SelectedPrdItem.Author,
                         Description = SelectedPrdItem.Description,
+                        GenreBook = b,
                         Image = SelectedPrdItem.Image,
                         IsDeleted = SelectedPrdItem.IsDeleted,
                     };
@@ -470,6 +473,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                             PayContent = "Thanh toán";
                             EndEnable = false;
                             EndBackGround = null;
+                            FirstLoadCM.Execute(null);
                         }
                         else
                         {

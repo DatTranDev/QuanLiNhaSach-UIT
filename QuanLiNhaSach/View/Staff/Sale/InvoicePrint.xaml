@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
         xmlns:local="clr-namespace:QuanLiNhaSach.View.Staff.Sale"
         mc:Ignorable="d"
         Title="Bill"
-        Width="800"
+        Width="820"
         Height="auto"
         DataContext="{StaticResource SaleVM}"
         Icon="/Resources/Icon/AppIcon.ico">
@@ -18,19 +19,30 @@
                 <ResourceDictionary Source="/View/Admin/StaffManagement/ButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:IndexConverter x:Key="IndexConverter"></converters:IndexConverter>
+            <converters:IndexInvoiceConverter x:Key="IndexInvoiceConverter"></converters:IndexInvoiceConverter>
+            <converters:PriceConverter x:Key="PriceConverter"></converters:PriceConverter>
         </ResourceDictionary>
-       
-        
+
+
     </Window.Resources>
     <Grid Name="invoiceGrid">
         <StackPanel Orientation="Vertical">
 
             <DockPanel Margin="10,20,10,0">
-
-                <Image Width="48"
+                <Button Width="40"
+                        Height="36"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        BorderBrush="Transparent"
+                        Click="Button_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/QuanLiNhaSach;component/Resources/Icon/AppIcon.png" />
+                    </Button.Background>
+                </Button>
+                <!--<Image Width="48"
                        Height="36"
                        HorizontalAlignment="Left"
-                       Source="/QuanLiNhaSach;component/Resources/Icon/AppIcon.png" />
+                       
+                       Source="/QuanLiNhaSach;component/Resources/Icon/AppIcon.png" />-->
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="25"
                            Text="Book Shop UIT" />
@@ -91,13 +103,189 @@
                                                FontSize="18">
                                     </TextBlock>
                                     <TextBlock Text="{Binding SelectedBill.CreateAt, StringFormat='dd/MM/yyyy HH:mm'}"
+                                               VerticalAlignment="Center"
                                                Width="221"
                                                FontSize="18" />
 
                                 </DockPanel>
 
                             </Border>
-                            <Grid Height="auto">
+                            <Border Margin="0"
+                                    Background="White"
+                                    Opacity="0.58"
+                                    BorderThickness="1"
+                                    BorderBrush="Black"
+                                    Width="800"
+                                    CornerRadius="0">
+
+                                <ListView x:Name="BillInfoList"
+                                          Width="800"
+                                          ItemsSource="{Binding BillInfoList}"
+                                          Margin="0,0,0,0">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}">
+                                            <Setter Property="Width"
+                                                    Value="795" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Resources>
+                                        <Style TargetType="ScrollViewer">
+                                            <Setter Property="HorizontalScrollBarVisibility"
+                                                    Value="Visible" />
+                                        </Style>
+                                    </ListView.Resources>
+
+                                    <ListView.View>
+                                        <GridView  >
+                                            
+
+                                           
+                                            <GridViewColumn Header="STT"
+                                                            Width="50">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Black" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel VerticalAlignment="Center"
+                                                                    HorizontalAlignment="Center"
+                                                                    Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Converter={StaticResource IndexConverter}, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                                                                       FontSize="17"
+                                                                       Padding="7 0 0 0"
+                                                                       HorizontalAlignment="Center"/>
+                                                           
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Sách"
+                                                            Width="250">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Black" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel VerticalAlignment="Center"
+                                                                    HorizontalAlignment="Center"
+                                                                    Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Book.DisplayName}"
+                                                                       FontSize="17"
+                                                                       HorizontalAlignment="Center" />
+                                                         
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Thể loại"
+                                                            Width="235">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Black" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Book.GenreBook.DisplayName}"
+                                                                   FontSize="17"
+                                                                   HorizontalAlignment="Center" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Số lượng"
+                                                            Width="100">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Black" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel VerticalAlignment="Center"
+                                                                    HorizontalAlignment="Center"
+                                                                    Orientation="Horizontal">
+                                                            <TextBlock 
+                                                                       HorizontalAlignment="Center"
+                                                                       FontSize="17"
+                                                                       Padding="25 0 0 0"
+                                                                     Text="{Binding Quantity}">
+                                                               
+                                                            </TextBlock>
+                                                           
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Đơn giá"
+                                                            Width="160">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Black" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock FontSize="17"
+                                                                   Width="150"
+                                                                   Padding="30 0 0 0"
+                                                                   Margin="0,0,0,0"
+                                                                   HorizontalAlignment="Center"
+                                                                   Text="{ Binding Book.Price, Converter={StaticResource PriceConverter}}">
+
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+
+                                            </GridViewColumn>
+
+
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+
+                            </Border>
+                            <!--<Grid Height="auto">
 
                                 <DataGrid x:Name="dataGrid"
                                           AutoGenerateColumns="False"
@@ -114,14 +302,26 @@
                                     </DataGrid.ColumnHeaderStyle>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="STT"
-                                                            Binding="{Binding Converter={StaticResource IndexConverter}, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}, Mode=FindAncestor}}"
-                                                            IsReadOnly="True"
-                                                            Width="60" />
+                                                            Width="60">
+                                            <DataGridTextColumn.Binding>
+                                                <MultiBinding Converter="{StaticResource IndexInvoiceConverter}">
+                                                    -->
+                            <!-- Truyền vị trí của mục trong danh sách -->
+                            <!--
+                                                    <Binding RelativeSource="{RelativeSource Mode=PreviousData}" />
+                                                    -->
+                            <!-- Truyền danh sách ItemsSource vào Converter -->
+                            <!--
+                                                    <Binding Path="ItemsSource"
+                                                             RelativeSource="{RelativeSource AncestorType={x:Type DataGrid}}" />
+                                                </MultiBinding>
+                                            </DataGridTextColumn.Binding>
+                                        </DataGridTextColumn>
                                         <DataGridTextColumn Header="Sách"
                                                             Binding="{Binding Book.DisplayName}"
                                                             IsReadOnly="False"
                                                             HeaderStringFormat=""
-                                                            Width="280" />
+                                                            Width="270" />
                                         <DataGridTextColumn Header="Thể loại"
                                                             Width="200"
                                                             Binding="{Binding Book.GenreBook.DisplayName}" />
@@ -129,12 +329,12 @@
                                                             Width="90"
                                                             Binding="{Binding Quantity}" />
                                         <DataGridTextColumn Header="Đơn giá bán"
-                                                            Width="180"
+                                                            Width="170"
                                                             Binding="{Binding Book.Price, StringFormat={}{0:N0}}" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
-                            <Grid />
+                            <Grid />-->
 
 
                         </StackPanel>
@@ -184,28 +384,20 @@
                        HorizontalAlignment="Right"
                        FontSize="20">
                         <Run Text="Số tiền trả: " />
-                        <Run Text="{Binding SelectedBill.Paid, StringFormat={}{0:N0}}" />     
+                        <Run Text="{Binding SelectedBill.Paid, StringFormat={}{0:N0}}" />
             </TextBlock>
 
             <TextBlock Margin="0,10,10,0"
                        HorizontalAlignment="Right"
                        FontSize="20">
                         <Run Text="Còn lại: " />
-                        <Run Text="{Binding Debt, StringFormat={}{0:N0}}" />     
+                        <Run Text="{Binding Debt, StringFormat={}{0:N0}}" />
             </TextBlock>
 
             <TextBlock Margin="10,30,0,30"
                        Text="Cám ơn quý khách!" />
 
-            <Button Width="30"
-                    Height="30"
-                    materialDesign:ButtonAssist.CornerRadius="10"
-                    BorderBrush="Transparent"
-                    Click="Button_Click">
-                <Button.Background>
-                    <ImageBrush ImageSource="/QuanLiNhaSach;component/Resources/Icon/PrintIcon.png" />
-                </Button.Background>
-            </Button>
+           
         </StackPanel>
     </Grid>
 </Window>
