@@ -1,4 +1,4 @@
-﻿<Window x:Class="QuanLiNhaSach.View.Admin.ProductsManager.Import_products"
+﻿<Window x:Class="QuanLiNhaSach.View.Admin.ProductsManager.AddListProduct"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,9 +8,9 @@
         xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Import_products"
-        Name="ImportPrd"
-        Width="1130"
+        Title="AddListProduct"
+        Name="AddList"
+        Width="1200"
         Height="660"
         Background="Transparent"
         AllowsTransparency="True"
@@ -19,7 +19,6 @@
         ResizeMode="NoResize"
         TextElement.FontSize="13"
         TextElement.FontWeight="Regular"
-
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         WindowStartupLocation="CenterScreen"
@@ -35,7 +34,7 @@
             BorderThickness="3"
             Background="White">
 
-        <StackPanel >
+        <StackPanel>
             <Border Width="144"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
@@ -49,7 +48,7 @@
                         BorderBrush="{x:Null}"
                         Foreground="{x:Null}"
                         Command="{Binding OpenExcel}"
-                        CommandParameter="ImportGoods">
+                        CommandParameter="ListNewProduct">
                     <StackPanel Width="144"
                                 Orientation="Horizontal">
                         <Image Width="20"
@@ -69,39 +68,25 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border Width="1000" Margin="0,20,0,0">
+            <Border Width="1140"
+                    Margin="0,20,0,0">
                 <StackPanel>
                     <Border Height="40"
                             Background="#FFF2E9">
                         <TextBlock Foreground="#E0AE8A"
                                    FontSize="30"
                                    HorizontalAlignment="Center">
-                        Phiếu nhập sách
+                    Phiếu thêm sách
                         </TextBlock>
-                    </Border>
-                    <Border Height="35">
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Margin="350 0 0 0 " Text="Ngày nhập: "
-                                       HorizontalAlignment="Center"
-                                       FontSize="25">
-                            </TextBlock>
-                            <TextBox Text="{Binding DateImport}"
-                                     FontSize="22"
-                                     Width="150">
-
-                            </TextBox>
-                        </StackPanel>
-                        
                     </Border>
                     <Grid Height="400">
 
                         <DataGrid x:Name="dataGrid"
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="True"
-                                  IsReadOnly="False"                                  
-                                  ItemsSource="{Binding ListImport}"
-                                  SelectedItem="{Binding BookImport}"
-                                 >
+                                  IsReadOnly="False"
+                                  ItemsSource="{Binding ListAdd}"
+                                  >
                             <DataGrid.ColumnHeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
                                     <Setter Property="HorizontalContentAlignment"
@@ -111,35 +96,51 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="STT"
                                                     IsReadOnly="False"
+                                                    Width="40">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource IndexInvoiceConverter}">
+                                            <Binding Path="." />
+                                            <Binding Path="ListAdd" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <!--<DataGridTextColumn Header="STT"
+                                                    IsReadOnly="False"
                                                     Binding="{Binding Path=STT}"
-                                                    Width="50" />
+                                                    Width="40" />-->
 
                                 <DataGridTextColumn Header="Sách"
                                                     Binding="{Binding Path=DisplayName}"
                                                     IsReadOnly="False"
                                                     HeaderStringFormat=""
-                                                    Width="273"/>
+                                                    Width="260" />
                                 <DataGridTextColumn Header="Thể loại"
-                                                    Width="260"
+                                                    Width="245"
                                                     Binding="{Binding Path= GenreName}" />
                                 <DataGridTextColumn Header="Tác giả"
-                                                    Width="180"
-                                                    Binding="{Binding Path=Author}" />
-                                <DataGridTextColumn Header="Số lượng"
-                                                    Width="85"
-                                                    Binding="{Binding Path=Count}" />
-                                <DataGridTextColumn Header="Đơn giá nhập"
                                                     Width="150"
+                                                    Binding="{Binding Path=Author}" />
+                                <DataGridTextColumn Header="Tồn kho"
+                                                    Width="85"
+                                                    Binding="{Binding Path=Inventory}" />
+                                <DataGridTextColumn Header="Đơn giá nhập"
+                                                    Width="130"
                                                     Binding="{Binding Path=Price}" />
+                                <DataGridTextColumn Header="Mô tả"
+                                                    Width="80"
+                                                    Binding="{Binding Path=Description}" />
+                                <DataGridTextColumn Header="Link ảnh"
+                                                    Width="150"
+                                                    Binding="{Binding Path=Image}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                     <Grid>
                         <Button Command="{Binding CloseWd}"
-                                CommandParameter="{Binding ElementName=ImportPrd}"
+                                CommandParameter="{Binding ElementName=AddList}"
                                 Width="160"
                                 Height="62"
-                                Margin="0,15,180,0"
+                                Margin="0,25,230,0"
                                 HorizontalAlignment="Right"
                                 materialDesign:ButtonAssist.CornerRadius="24"
                                 Background="#EFD8B4"
@@ -147,21 +148,21 @@
                                 Content="Thoát"
                                 FontSize="24"
                                 FontWeight="Bold" />
-                        <Button Command="{Binding ConfirmImport}"
-                                CommandParameter="{Binding ElementName=ImportPrd}"
-                                Width="160"
+                        <Button Command="{Binding AddListProduct}"
+                                CommandParameter="{Binding ElementName=AddList}"
+                                Width="200"
                                 Height="62"
-                                Margin="0,15,0,0"
+                                Margin="0,25,0,0"
                                 HorizontalAlignment="Right"
                                 materialDesign:ButtonAssist.CornerRadius="24"
                                 Background="#F0BD70"
                                 BorderThickness="0"
-                                Content="Nhập kho"
+                                Content="Thêm sách mới"
                                 FontSize="24"
                                 FontWeight="Bold" />
                     </Grid>
-                    
-                    
+
+
                 </StackPanel>
 
 

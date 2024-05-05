@@ -169,7 +169,7 @@
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 Foreground="{x:Null}"
-                                Command="{Binding AddSanPhamCM}">
+                                Command="{Binding ExportExcel}">
                             <StackPanel Width="135"
                                         Orientation="Horizontal">
                                 <Image Width="24"

@@ -69,30 +69,17 @@
 
         </Style>
     </Window.Resources>
-    <Border>
-        <Border.BorderBrush>
-            <LinearGradientBrush EndPoint="0.5,1"
-                                 StartPoint="0.5,0">
-                <GradientStop Color="Black"
-                              Offset="0.888" />
-                <GradientStop Color="White"
-                              Offset="0" />
-                <GradientStop Color="#FE0E0E0E"
-                              Offset="0.667" />
-            </LinearGradientBrush>
-        </Border.BorderBrush>
+    <Border 
+        BorderBrush="#FF9900"
+            BorderThickness="3.5"
+            Background="White"
+            CornerRadius="30">
 
         <Grid>
-            <Border Background="White"
-                    CornerRadius="32">
-                <Border.BorderBrush>
-                    <LinearGradientBrush EndPoint="0.5,1"
-                                         StartPoint="0.5,0">
-                        <GradientStop Color="Black" />
-                        <GradientStop Color="#FFD1D1D1"
-                                      Offset="1" />
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
+            <Border 
+                    CornerRadius="32"
+                    Background="#FBFBFB">
+
                 <Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -114,9 +101,9 @@
                                    Text="Thêm sản phẩm"
                                    HorizontalAlignment="Left"
                                    Width="231" />
-                        <Border Width="144"
+                        <Border Width="200"
                                 Height="50"
-                                Margin="126,0,0,442"
+                                Margin="75,0,0,442"
                                 HorizontalAlignment="Left"
                                 Background="#EA9F2D"
                                 BorderBrush="#E0AE8A"
@@ -128,23 +115,25 @@
                                     Background="{x:Null}"
                                     BorderBrush="{x:Null}"
                                     Foreground="{x:Null}"
-                                    Command="{Binding AddSanPhamCM}">
-                                <StackPanel Width="144"
+                                    Command="{Binding OpenAddList}"
+                                    CommandParameter="{Binding ElementName=AddSPPage}"
+                                    >
+                                <StackPanel Width="200"
                                             Orientation="Horizontal">
                                     <Image Width="20"
                                            Margin="10,0,10,0"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            Source="/QuanLiNhaSach;component/Resources/Icon/Excel_White_Icon.png" />
-                                    <TextBlock Width="96"
+                                    <TextBlock Width="150"
                                                Margin="0,2,0,0"
                                                VerticalAlignment="Center"
                                                Panel.ZIndex="1"
                                                FontFamily="Roboto Condensed"
-                                               FontSize="22"
+                                               FontSize="20"
                                                FontWeight="SemiBold"
                                                Foreground="White"
-                                               Text="File Excel"></TextBlock>
+                                               Text="Thêm hàng loạt"></TextBlock>
                                 </StackPanel>
                             </Button>
                         </Border>
