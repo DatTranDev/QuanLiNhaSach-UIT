@@ -1,0 +1,799 @@
+﻿<Page x:Class="QuanLiNhaSach.View.Staff.Sale.SalePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:QuanLiNhaSach.View.Staff.Sale"
+      xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
+      mc:Ignorable="d"
+      x:Name="salePgae"
+      DataContext="{StaticResource SaleVM}"
+      Background="#ffecde"
+      d:DesignHeight="800"
+      d:DesignWidth="1536"
+      Title="SalePage">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}"
+                                   CommandParameter="{Binding ElementName=TabFrame}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Page.Resources>
+        <Style x:Key="TextBlock"
+               TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="Black" />
+            <Setter Property="FontSize"
+                    Value="19.2" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+        </Style>
+        <converters:IndexConverter x:Key="IndexConverter"></converters:IndexConverter>
+        <converters:PriceConverter x:Key="PriceConverter"></converters:PriceConverter>
+        <converters:InputPriceConvert x:Key="InputPriceConverter"></converters:InputPriceConvert>
+        <converters:SalePriceConvert x:Key="SalePriceConverter"  ></converters:SalePriceConvert>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="53"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="768*"></ColumnDefinition>
+            <ColumnDefinition Width="109*"></ColumnDefinition>
+            <ColumnDefinition Width="659*" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="FillGrid"
+              Margin="15,0,0,0"
+              Height="16"
+              Width="16"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left"
+              Panel.ZIndex="1"
+              Background="White"
+              Grid.Row="1" />
+        <StackPanel Orientation="Horizontal"
+                    Margin="15 15 0 0"
+                    HorizontalAlignment="Left"
+                    Grid.Row="0"
+                    Width="100">
+            <Border x:Name="SeatBd"
+                    Width="100"
+                    Height="60"
+                    Background="White"
+                    CornerRadius="16">
+                <Button Command="{Binding LoadSeatPageCM}"
+                        CommandParameter="{Binding ElementName=TabFrame}"
+                        Tag="SeatBd"
+                        Width="100"
+                        Height="60"
+                        Padding="0"
+                        HorizontalContentAlignment="Left"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Foreground="{x:Null}"
+                        Margin="0,-6,0,6">
+                    <TextBlock Margin="10,0,0,15"
+                               HorizontalAlignment="Left"
+                               FontFamily="Roboto Condensed"
+                               FontSize="17"
+                               Text="Sản phẩm"
+                               FontWeight="DemiBold"
+                               Foreground="#E0AE8A" />
+
+                </Button>
+            </Border>
+        </StackPanel>
+        <Grid Margin="15 0 5 20"
+              Grid.Row="1">
+            <Border CornerRadius="20"
+                    Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="4"
+                                Orientation="Horizontal">
+                        <Border  Height="40"
+                                 Width="183"
+                                 Margin="10,0,15,0"
+                                 BorderThickness="1.5"
+                                 BorderBrush="#FFE0AE8A"
+                                 CornerRadius="16"
+                                 Background="#FFF4F4">
+                            <ComboBox Width="166"
+                                      Height="40"
+                                      ItemsSource="{Binding ComboList}"
+                                      SelectedItem="{Binding GenreBox}"
+                                      Margin="8,0,0,0"
+                                      Padding="12,2.4"
+                                      Background="#FFF4F4"
+                                      HorizontalAlignment="Left"
+                                      VerticalContentAlignment="Center"
+                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                      materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
+                                      BorderThickness="0"
+                                      FontFamily="Inter"
+                                      FontSize="18" />
+                        </Border>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Cursor="Hand"
+                                   Width="18"
+                                   Height="18"
+                                   Margin="10,0,10,0"
+                                   Source="/QuanLiNhaSach;component/Resources/Icon/SearchGray_Icon.png" />
+                            <Grid>
+                                <TextBox x:Name="searchPrdBox"
+                                         Width="145"
+                                         Height="40"
+                                         VerticalContentAlignment="Center"
+                                         materialDesign:HintAssist.Hint="Tìm kiếm"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                         BorderThickness="0"
+                                         FontSize="16">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding Search}"
+                                                                   CommandParameter="{Binding ElementName=searchPrdBox}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <Border Margin="0 0 0 5"
+                                        BorderThickness="0,0,0,1"
+                                        BorderBrush="#9c9c9c"
+                                        HorizontalAlignment="Left">
+                                    <Rectangle Width="{Binding ActualWidth, ElementName=searchPrdBox}"
+                                               Height="0" />
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                    <ScrollViewer x:Name="ScrollViewer"
+                                  Grid.Row="1"
+                                  Margin="4,0,4,0"
+                                  VerticalScrollBarVisibility="Auto"
+                                  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+                                  Height="640"
+                                  VerticalAlignment="Top">
+                        <ListView x:Name="SanPhamList"
+                                  VerticalAlignment="Top"
+                                  SelectedItem="{Binding SelectedPrdItem}"
+                                  ItemsSource="{Binding ProductList}">
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource MaterialDesignListBoxItem}"
+                                       TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Padding"
+                                            Value="0" />
+                                    <Setter Property="Margin"
+                                            Value="2" />
+                                    <Setter Property="materialDesign:ListBoxItemAssist.ShowSelection"
+                                            Value="False" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver"
+                                                 Value="True">
+                                            <Setter Property="IsSelected"
+                                                    Value="True" />
+                                            <Setter Property="Background"
+                                                    Value="#FFEAF8FF" />
+                                        </Trigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="3" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,5,0,0"
+                                            Width="229"
+                                            Height="320"
+                                            Background="White"
+                                            BorderBrush="#E0AE8A"
+                                            BorderThickness="2,2,2,2"
+                                            CornerRadius="15">
+                                        <StackPanel Width="229"
+                                                    Height="354">
+
+                                            <Image MaxHeight="170"
+                                                   MaxWidth="200"
+                                                   Margin="0,10,0,0"
+                                                   Source="{Binding Image}"
+                                                   Height="176"
+                                                   Width="205" />
+                                            <StackPanel Height="100">
+                                                <TextBlock TextWrapping="Wrap"
+                                                           Margin="15,15,0,0"
+                                                           HorizontalAlignment="Left"
+                                                           FontFamily="Poppins"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Text="{Binding DisplayName}"
+                                                           Grid.Row="1"
+                                                           Width="200" />
+                                                <DockPanel>
+
+                                                    <TextBlock TextWrapping="Wrap"
+                                                               Margin="15,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="14"
+                                                               FontWeight="Regular"
+                                                               Text="Tác giả: "
+                                                               Grid.Row="1" />
+
+                                                    <TextBlock TextWrapping="Wrap"
+                                                               Margin="0,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="14"
+                                                               FontWeight="Regular"
+                                                               Text="{Binding Author}"
+                                                               Grid.Row="1"
+                                                               Width="180" />
+                                                </DockPanel>
+
+                                            </StackPanel>
+
+
+
+
+
+                                            <DockPanel Grid.Row="2"
+                                                       Margin="0,5,10,5"
+                                                       LastChildFill="False">
+                                                <TextBlock TextWrapping="Wrap"
+                                                           Margin="15,0,0,0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Top"
+                                                           FontFamily="Poppins"
+                                                           FontSize="16"
+                                                           FontWeight="Regular"
+                                                           Text="Tồn: "
+                                                           Grid.Row="1" />
+                                                <TextBlock TextWrapping="Wrap"
+                                                           Margin="0,0,0,0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Top"
+                                                           FontFamily="Poppins"
+                                                           FontSize="16"
+                                                           FontWeight="Regular"
+                                                           Text="{Binding Inventory}"
+                                                           Width="60"
+                                                           Grid.Row="1" />
+                                                <DockPanel  Width="95"
+                                                            Margin="20,0,0,0">
+                                                    <TextBlock Margin="0,0,0,0"
+                                                               x:Name="PriceSP"
+                                                               HorizontalAlignment="Right"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="Poppins"
+                                                               FontSize="16"
+                                                               FontWeight="Bold"
+                                                               Foreground="#EA6A12"
+                                                              >
+                                                        
+                                                            <TextBlock.Text>
+                                                                <MultiBinding Converter="{StaticResource SalePriceConverter}">
+                                                                <Binding Path="Price" />
+                                                                    <Binding Path="DataContext.SystemValue.Profit"
+                                                                             RelativeSource="{RelativeSource AncestorType={x:Type Page}}" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+ </TextBlock>
+                                                 
+                                                    <TextBlock Margin="0,0,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="Poppins"
+                                                               FontSize="16"
+                                                               FontWeight="Bold"
+                                                               Foreground="#EA6A12"
+                                                               Text=" đ" />
+                                                </DockPanel>
+
+
+
+                                            </DockPanel>
+                                        </StackPanel>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SelectPrd, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                                                       CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Border>
+
+                                </DataTemplate>
+
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+
+                </Grid>
+            </Border>
+        </Grid>
+        <StackPanel Orientation="Horizontal"
+                    Margin="5 15 0 0"
+                    HorizontalAlignment="Left"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Width="88">
+            <Border Width="88"
+                    Height="60"
+                    Background="White"
+                    CornerRadius="16">
+                <Button Tag="SeatBd"
+                        Height="60"
+                        Padding="0"
+                        HorizontalContentAlignment="Left"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Foreground="{x:Null}"
+                        Margin="0,0,-6,0">
+
+                    <TextBlock Margin="10,0,0,15"
+                               HorizontalAlignment="Left"
+                               FontFamily="Roboto Condensed"
+                               FontSize="17"
+                               Text="Hóa đơn"
+                               FontWeight="DemiBold"
+                               Foreground="#E0AE8A" />
+
+                </Button>
+            </Border>
+        </StackPanel>
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Grid.ColumnSpan="2">
+            <Grid Margin="5 0 15 50"
+                  Height="18"
+                  Width="15"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left"
+                  Panel.ZIndex="1"
+                  Background="White" />
+            <Border CornerRadius="20"
+                    Margin="5,0,15,20"
+                    Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                        <RowDefinition Height="Auto"
+                                       MinHeight="475" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"
+                                       MinHeight="106" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="30 0 0 0"
+                                    Orientation="Horizontal">
+                            <Button Command="{Binding SearchCusCM}"
+                                    Padding="0"
+                                    BorderBrush="{x:Null}"
+                                    Foreground="{x:Null}"
+                                    Background="{x:Null}">
+                                <Image Cursor="Hand"
+                                       Width="18"
+                                       Height="18"
+                                       Margin="10,0,10,0"
+                                       Source="/QuanLiNhaSach;component/Resources/Icon/SearchGray_Icon.png" />
+                            </Button>
+                            <Grid>
+                                <TextBox Text="{Binding CusInfo}"
+                                         Panel.ZIndex="1"
+                                         x:Name="searchCusBox"
+                                         Width="160"
+                                         Height="40"
+                                         VerticalContentAlignment="Center"
+                                         materialDesign:HintAssist.Hint="Khách hàng"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                         BorderThickness="0"
+                                         FontSize="16">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding SearchCusCM}"
+                                                                   CommandParameter="{Binding ElementName=searchCusBox}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <Border Panel.ZIndex="0"
+                                        Margin="0 0 0 12"
+                                        BorderThickness="0,0,0,1"
+                                        BorderBrush="#9c9c9c"
+                                        HorizontalAlignment="Left">
+                                    <Rectangle Width="{Binding ActualWidth, ElementName=searchCusBox}"
+                                               Height="0" />
+                                </Border>
+                            </Grid>
+                            <Button Command="{Binding AddCustomerCM}"
+                                    Padding="5"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    Foreground="{x:Null}">
+                                <Image Width="22"
+                                       Height="22"
+                                       Source="/QuanLiNhaSach;component/Resources/Icon/AddGray_Icon.png" />
+                            </Button>
+                            <TextBlock Margin="10 0 0 0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontFamily="Roboto Condensed"
+                                       FontSize="17"
+                                       FontWeight="DemiBold"
+                                       Text="Khách hàng: "
+                                       Foreground="#E0AE8A" />
+                            <TextBlock Margin="10 0 0 0"
+                                       VerticalAlignment="Center"
+                                       x:Name="BillCusName"
+                                       Text="{Binding CusOfBill.DisplayName, UpdateSourceTrigger=PropertyChanged}"
+                                       TextWrapping="NoWrap"
+                                       FontFamily="Roboto Condensed"
+                                       FontWeight="DemiBold"
+                                       Width="160"
+                                       FontSize="17" />
+
+                        </StackPanel>
+
+                    </StackPanel>
+                    <Grid Grid.Row="1"
+                          Height="450"
+                          VerticalAlignment="Center">
+                        <Border Margin="14,0,14,0"
+                                Background="#E6B89F"
+                                Opacity="0.58"
+                                Width="720"
+                                CornerRadius="25">
+                            <Border Background="White"
+                                    Margin="8"
+                                    CornerRadius="20">
+                                <ListView x:Name="BillInfoList"
+                                          Width="720"
+                                          ItemsSource="{Binding BillInfoList}"
+                                          SelectedItem="{Binding SelectedBillInfo}">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MaterialDesignGridViewItem}" />
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.View>
+                                        <GridView>
+
+                                            <GridViewColumn Header=""
+                                                            Width="30">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Transparent" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Height="18"
+                                                                Width="18"
+                                                                Command="{Binding DataContext.DeleteBillInfoCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                                                CommandParameter="{Binding}"
+                                                                Margin="0 22 0 0"
+                                                                Padding="0"
+                                                                BorderBrush="{x:Null}"
+                                                                Background="{x:Null}"
+                                                                Foreground="{x:Null}">
+                                                            <Image VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"
+                                                                   Width="15"
+                                                                   Height="15"
+                                                                   Source="/QuanLiNhaSach;component/Resources/Icon/DeleteGray_Icon.png" />
+                                                        </Button>
+
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="STT"
+                                                            Width="50">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Transparent" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel VerticalAlignment="Center"
+                                                                    HorizontalAlignment="Center"
+                                                                    Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Converter={StaticResource IndexConverter}, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                                                                       FontSize="17" />
+                                                            <!--<Image Margin="0 15 0 0"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"
+                                                                   Width="15"
+                                                                   Height="15"
+                                                                   Source="/QuanLiNhaSach;component/Resources/Icon/PenBlack_Icon.png" />-->
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Tên sản phẩm"
+                                                            Width="265">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Transparent" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel VerticalAlignment="Center"
+                                                                    HorizontalAlignment="Left"
+                                                                    Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Book.DisplayName}"
+                                                                       FontSize="17"
+                                                                       Margin="0,0,0,0" />
+                                                            <!--<TextBox Text="{Binding Description}"
+                                                                     x:Name="NoteBox"
+                                                                     Width="170"
+                                                                     Height="40"
+                                                                     VerticalContentAlignment="Center"
+                                                                     materialDesign:HintAssist.Hint="Ghi chú..."
+                                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                     BorderThickness="0"
+                                                                     FontSize="15">-->
+                                                            <!--<i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="TextChanged">
+                                                                        <i:InvokeCommandAction Command="{Binding NoteBoxCM}" CommandParameter="{Binding ElementName=NoteBox}"/>
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>-->
+                                                            <!--</TextBox>-->
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Số lượng"
+                                                            Width="100">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Transparent" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel VerticalAlignment="Center"
+                                                                    HorizontalAlignment="Center"
+                                                                    Orientation="Horizontal">
+                                                            <Button Command="{Binding DataContext.SubBillInfoCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                                                    CommandParameter="{Binding}"
+                                                                    Padding="0"
+                                                                    BorderBrush="{x:Null}"
+                                                                    Background="{x:Null}"
+                                                                    Foreground="{x:Null}">
+                                                                <Image VerticalAlignment="Center"
+                                                                       HorizontalAlignment="Center"
+                                                                       Width="12"
+                                                                       Height="12"
+                                                                       Source="/QuanLiNhaSach;component/Resources/Icon/SubtractBlack_Icon.png" />
+                                                            </Button>
+                                                            <TextBox Width="22"
+                                                                     MaxWidth="22"
+                                                                     Margin="10 0 10 0"
+                                                                     FontSize="17"
+                                                                     Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}">
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="TextChanged">
+                                                                        <i:InvokeCommandAction Command="{Binding DataContext.ChangeCountCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                                                                               CommandParameter="{Binding}" />
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                            </TextBox>
+                                                            <Button Height="15"
+                                                                    Width="15"
+                                                                    Command="{Binding DataContext.PlusBillInfoCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                                                    CommandParameter="{Binding}"
+                                                                    Padding="0"
+                                                                    BorderBrush="{x:Null}"
+                                                                    Background="{x:Null}"
+                                                                    Foreground="{x:Null}">
+                                                                <Image VerticalAlignment="Center"
+                                                                       HorizontalAlignment="Center"
+                                                                       Width="12"
+                                                                       Height="12"
+                                                                       Source="/QuanLiNhaSach;component/Resources/Icon/AddBlack_Icon.png" />
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Đơn giá"
+                                                            Width="110">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Transparent" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock FontSize="17"
+                                                                   Text="{ Binding Book.Price, Converter={StaticResource PriceConverter}}">
+                                                           
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Thành tiền (VND)"
+                                                            Width="130">
+                                                <GridViewColumn.HeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment"
+                                                                Value="Center" />
+                                                        <Setter Property="Background"
+                                                                Value="Transparent" />
+                                                        <Setter Property="BorderBrush"
+                                                                Value="Transparent" />
+                                                        <Setter Property="Height"
+                                                                Value="47" />
+                                                    </Style>
+                                                </GridViewColumn.HeaderContainerStyle>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"
+                                                                   Margin="10 0 0 0"
+                                                                   Text="{Binding PriceItem, Converter={StaticResource PriceConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                                   FontSize="17" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+
+                            </Border>
+
+                        </Border>
+
+                    </Grid>
+                    <StackPanel Grid.Row="3"
+                                Orientation="Horizontal"
+                                Margin="525,0,0,0"
+                                VerticalAlignment="Top"
+                                Height="26">
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="Tổng:"
+                                   FontSize="20"
+                                   VerticalAlignment="Top"
+                                   Margin="0 0 15 0 " />
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="{Binding TotalBillValue, Converter={StaticResource PriceConverter}}"
+                                   MaxWidth="170"
+                                   Margin="0 0 5 0"
+                                   VerticalAlignment="Top" />
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="đ"
+                                   FontSize="20"
+                                   VerticalAlignment="Top" />
+                    </StackPanel>
+
+
+                    <StackPanel Grid.Row="3"
+                                Orientation="Horizontal"
+                                Margin="450,30,0,0"
+                                Height="33"
+                                VerticalAlignment="Top">
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="Số tiền đã trả:"
+                                   FontSize="20"
+                                   VerticalAlignment="Top"
+                                   Margin="0 0 15 0 " />
+                        <TextBox Text="{Binding PaidBillValue, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource InputPriceConverter}}"
+                                 MaxWidth="170"
+                                 FontSize="20"
+                                 Foreground="#29FF24"
+                                 FontWeight="Bold"
+                                 Margin="0 0 5 0"
+                                 VerticalAlignment="Top" />
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="đ"
+                                   FontSize="20"
+                                   VerticalAlignment="Top" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3"
+                                Orientation="Horizontal"
+                                Margin="510,65,0,0"
+                                Height="34"
+                                VerticalAlignment="Top">
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="Còn lại:"
+                                   FontSize="20"
+                                   VerticalAlignment="Top"
+                                   Margin="0 0 15 0 " />
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="{Binding Debt, Converter={StaticResource PriceConverter}}"
+                                   MaxWidth="170"
+                                   Foreground="Red"
+                                   Margin="0 0 5 0"
+                                   VerticalAlignment="Top" />
+                        <TextBlock Style="{DynamicResource TextBlock}"
+                                   Text="đ"
+                                   FontSize="20"
+                                   VerticalAlignment="Top" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4"
+                                Margin="280,0,0,5"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                        <Button Margin="0 0 30 0"
+                                Name="EndBillButton"
+                                Command="{Binding EndBill}"
+                                CommandParameter="{Binding ElementName=TabFrame}"
+                                Width="170"
+                                Height="62"
+                                IsEnabled="{Binding PayEnabled}"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#F0BD70"
+                                BorderThickness="0"
+                                Content="Kết thúc"
+                                FontSize="24"
+                                FontWeight="Bold" />
+                        <Button x:Name="Pay_btn"
+                                Command="{Binding PayBill}"
+                                CommandParameter="{Binding ElementName=TabFrame}"
+                                Width="200"
+                                IsEnabled="{Binding PayEnabled}"
+                                Height="62"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#F0BD70"
+                                BorderThickness="0"
+                                Content="{Binding PayContent}"
+                                FontSize="24"
+                                FontWeight="Bold" />
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+
+        </Grid>
+    </Grid>
+</Page>

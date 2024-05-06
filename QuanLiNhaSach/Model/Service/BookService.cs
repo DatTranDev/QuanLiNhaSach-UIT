@@ -211,5 +211,30 @@ namespace QuanLiNhaSach.Model.Service
                 return (false, null);
             }
         }
+
+        public async Task<(bool, Book)> findIdBook(string Name, string Genre, string Author)
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var book = await context.Book.Where(p => p.DisplayName==Name && p.GenreBook.DisplayName==Genre && p.Author==Author).FirstOrDefaultAsync();
+                    if (book == null)
+                    {
+                        return (false, null);
+                    }
+                    else
+                    {
+                        return (true, book);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
+                return (false, null);
+            }
+
+        }
     }
 }

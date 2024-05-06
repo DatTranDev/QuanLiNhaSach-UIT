@@ -114,9 +114,7 @@ namespace QuanLiNhaSach.Model.Service
                         ID = curID,                       
                         IsDeleted = false,                       
                         CreatAt = newGR.CreateAt,
-                        Staff = newGR.Staff,
                         StaffId = newGR.StaffId
-                     
                     };
 
                     List<GoodReceivedInfo> billInfoList = new List<GoodReceivedInfo>();
@@ -130,11 +128,11 @@ namespace QuanLiNhaSach.Model.Service
                             IsDeleted = false,
                             Quantity = bI.Quantity
                         };
-                        (bool success, string msg) = await BookService.Ins.EditCountPrd(bI.IDBook, -bI.Quantity);
-                        if (!success)
-                        {
-                            return (false, null);
-                        }
+                        //(bool success, string msg) = await BookService.Ins.EditCountPrd(bI.IDBook, -bI.Quantity);
+                        //if (!success)
+                        //{
+                        //    return (false, null);
+                        //}
                         billInfoList.Add(billInfo);
 
                     }

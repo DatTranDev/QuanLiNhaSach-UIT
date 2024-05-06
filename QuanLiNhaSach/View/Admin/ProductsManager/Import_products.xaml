@@ -1,0 +1,171 @@
+﻿<Window x:Class="QuanLiNhaSach.View.Admin.ProductsManager.Import_products"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.ProductsManager"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Import_products"
+        Name="ImportPrd"
+        Width="1130"
+        Height="660"
+        Background="Transparent"
+        AllowsTransparency="True"
+        DataContext="{StaticResource ProductVM}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:IndexInvoiceConverter x:Key="IndexInvoiceConverter"></converters:IndexInvoiceConverter>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Border CornerRadius="40"
+            BorderBrush="#FF9900"
+            BorderThickness="3"
+            Background="White">
+
+        <StackPanel >
+            <Border Width="144"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Background="#EA9F2D"
+                    BorderBrush="#E0AE8A"
+                    CornerRadius="15"
+                    Height="50"
+                    Margin="0,20,57,0">
+                <Button Padding="0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Foreground="{x:Null}"
+                        Command="{Binding OpenExcel}"
+                        CommandParameter="ImportGoods">
+                    <StackPanel Width="144"
+                                Orientation="Horizontal">
+                        <Image Width="20"
+                               Margin="10,0,10,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Source="/QuanLiNhaSach;component/Resources/Icon/Excel_White_Icon.png" />
+                        <TextBlock Width="96"
+                                   Margin="0,2,0,0"
+                                   VerticalAlignment="Center"
+                                   Panel.ZIndex="1"
+                                   FontFamily="Roboto Condensed"
+                                   FontSize="22"
+                                   FontWeight="SemiBold"
+                                   Foreground="White"
+                                   Text="File Excel"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+            <Border Width="1000" Margin="0,20,0,0">
+                <StackPanel>
+                    <Border Height="40"
+                            Background="#FFF2E9">
+                        <TextBlock Foreground="#E0AE8A"
+                                   FontSize="30"
+                                   HorizontalAlignment="Center">
+                        Phiếu nhập sách
+                        </TextBlock>
+                    </Border>
+                    <Border Height="35">
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Margin="350 0 0 0 " Text="Ngày nhập: "
+                                       HorizontalAlignment="Center"
+                                       FontSize="25">
+                            </TextBlock>
+                            <TextBox Text="{Binding DateImport}"
+                                     FontSize="22"
+                                     Width="150">
+
+                            </TextBox>
+                        </StackPanel>
+                        
+                    </Border>
+                    <Grid Height="400">
+
+                        <DataGrid x:Name="dataGrid"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="True"
+                                  IsReadOnly="False"                                  
+                                  ItemsSource="{Binding ListImport}"
+                                  SelectedItem="{Binding BookImport}"
+                                 >
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Center" />
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="STT"
+                                                    IsReadOnly="False"
+                                                    Binding="{Binding Path=STT}"
+                                                    Width="50" />
+
+                                <DataGridTextColumn Header="Sách"
+                                                    Binding="{Binding Path=DisplayName}"
+                                                    IsReadOnly="False"
+                                                    HeaderStringFormat=""
+                                                    Width="273"/>
+                                <DataGridTextColumn Header="Thể loại"
+                                                    Width="260"
+                                                    Binding="{Binding Path= GenreName}" />
+                                <DataGridTextColumn Header="Tác giả"
+                                                    Width="180"
+                                                    Binding="{Binding Path=Author}" />
+                                <DataGridTextColumn Header="Số lượng"
+                                                    Width="85"
+                                                    Binding="{Binding Path=Count}" />
+                                <DataGridTextColumn Header="Đơn giá nhập"
+                                                    Width="150"
+                                                    Binding="{Binding Path=Price}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <Grid>
+                        <Button Command="{Binding CloseWd}"
+                                CommandParameter="{Binding ElementName=ImportPrd}"
+                                Width="160"
+                                Height="62"
+                                Margin="0,15,180,0"
+                                HorizontalAlignment="Right"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#EFD8B4"
+                                BorderThickness="0"
+                                Content="Thoát"
+                                FontSize="24"
+                                FontWeight="Bold" />
+                        <Button Command="{Binding ConfirmImport}"
+                                CommandParameter="{Binding ElementName=ImportPrd}"
+                                Width="160"
+                                Height="62"
+                                Margin="0,15,0,0"
+                                HorizontalAlignment="Right"
+                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Background="#F0BD70"
+                                BorderThickness="0"
+                                Content="Nhập kho"
+                                FontSize="24"
+                                FontWeight="Bold" />
+                    </Grid>
+                    
+                    
+                </StackPanel>
+
+
+            </Border>
+        </StackPanel>
+    </Border>
+</Window>
