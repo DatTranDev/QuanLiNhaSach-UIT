@@ -47,6 +47,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=7.1.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.7.1.2\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
@@ -59,6 +68,12 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.9.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.4.9.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -69,23 +84,40 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
@@ -122,6 +154,7 @@
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -141,15 +174,21 @@
     </ApplicationDefinition>
     <Compile Include="Converter\CusNameConverter.cs" />
     <Compile Include="Converter\IndexConverter.cs" />
+    <Compile Include="Converter\IndexInvoiceConverter.cs" />
+    <Compile Include="Converter\InputPriceConvert.cs" />
     <Compile Include="Converter\PriceConverter.cs" />
+    <Compile Include="Converter\SalePriceConvert.cs" />
     <Compile Include="DTOs\BillDTO.cs" />
     <Compile Include="DTOs\BillInfoDTO.cs" />
     <Compile Include="DTOs\BookDTO.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
+    <Compile Include="DTOs\DebtReportDTO.cs" />
     <Compile Include="DTOs\GerneBookDTO.cs" />
     <Compile Include="DTOs\GoodReceivedDTO.cs" />
     <Compile Include="DTOs\GoodReceivedInfoDTO.cs" />
+    <Compile Include="DTOs\InventoryReportDTO.cs" />
     <Compile Include="DTOs\PaymentReceiptDTO.cs" />
+    <Compile Include="Model\Service\ReportService.cs" />
     <Compile Include="DTOs\StaffDTO.cs" />
     <Compile Include="DTOs\SystemValueDTO.cs" />
     <Compile Include="Model\Bill.cs">
@@ -164,6 +203,9 @@
     <Compile Include="Model\Customer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DebtReport.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GenreBook.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -171,6 +213,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GoodReceivedInfo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\InventoryReport.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Model.Context.cs">
@@ -191,8 +236,20 @@
     <Compile Include="Model\PaymentReceipt.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\BillService.cs" />
+    <Compile Include="Model\Service\BookService.cs" />
     <Compile Include="Model\Service\CustomerService.cs" />
+    <Compile Include="Model\Service\GenreService.cs" />
+    <Compile Include="Model\Service\GoodReceivedService.cs" />
+    <Compile Include="Model\Service\LoginService.cs" />
+    <Compile Include="Model\Service\PaymentReceiptService.cs" />
+    <Compile Include="Model\Service\StaffService.cs" />
+    <Compile Include="Model\Service\SystemValueService.cs" />
+    <Compile Include="Model\Service\ThongKeService.cs" />
     <Compile Include="Model\Staff.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sysdiagram.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SystemValue.cs">
@@ -200,10 +257,15 @@
     </Compile>
     <Compile Include="Resources\Icon\placeHolder.cs" />
     <Compile Include="Utils\CloudService.cs" />
+    <Compile Include="Utils\Helper.cs" />
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\ProductVM\ImportItem.cs" />
+    <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
+    <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />
+    <Compile Include="ViewModel\StaffVM\SaleVM\SaleViewModel.cs" />
     <Compile Include="View\Admin\AccountInfomation.xaml.cs">
       <DependentUpon>AccountInfomation.xaml</DependentUpon>
     </Compile>
@@ -246,6 +308,27 @@
     <Compile Include="View\Admin\ThongKe\TonKho\TonKhoTable.xaml.cs">
       <DependentUpon>TonKhoTable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ProductsManager\AddListProduct.xaml.cs">
+      <DependentUpon>AddListProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\AddProducts.xaml.cs">
+      <DependentUpon>AddProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\EditProduct.xaml.cs">
+      <DependentUpon>EditProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\Import_products.xaml.cs">
+      <DependentUpon>Import_products.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\ProductMain.xaml.cs">
+      <DependentUpon>ProductMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ProductsManager\test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Login\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessageBox\ConfirmLogout.xaml.cs">
       <DependentUpon>ConfirmLogout.xaml</DependentUpon>
     </Compile>
@@ -262,6 +345,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\Staff\MainStaffWindow.xaml.cs">
+      <DependentUpon>MainStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Staff\Sale\InvoicePrint.xaml.cs">
+      <DependentUpon>InvoicePrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Staff\Sale\SalePage.xaml.cs">
+      <DependentUpon>SalePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\System\SystemPage.xaml.cs">
+      <DependentUpon>SystemPage.xaml</DependentUpon>
     </Compile>
     <Page Include="ResourcesXAML\MainResource.xaml">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -285,6 +380,30 @@
     <Page Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\AddListProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\AddProducts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\EditProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\Import_products.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\ProductMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\test.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Admin\StaffManagement\ButtonStyle.xaml">
       <SubType>Designer</SubType>
@@ -326,6 +445,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Login\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MessageBox\ConfirmLogout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -339,6 +462,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MessageBox\Warning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\MainStaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\Sale\InvoicePrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\Sale\SalePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\System\SystemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -378,11 +517,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Image\" />
     <Folder Include="ViewModel\LoginVM\" />
-    <Folder Include="ViewModel\StaffVM\" />
-    <Folder Include="View\Login\" />
-    <Folder Include="View\Staff\" />
+    <Folder Include="ViewModel\SystemVM\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\AddBlack_Icon.png" />
@@ -455,6 +591,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Image\BookStoreLogo.jpg" />
+    <Resource Include="Resources\Image\BookStore.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Model\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
@@ -465,6 +605,10 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icon\import_products.png" />
+    <Resource Include="Resources\Icon\Export_excel_white_icon.png" />
+    <Resource Include="Resources\Icon\Excel_white_Icon.png" />
+    <Resource Include="View\Admin\ProductsManager\tải xuống.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

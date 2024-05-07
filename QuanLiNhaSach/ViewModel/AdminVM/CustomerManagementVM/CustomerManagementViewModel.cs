@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -133,6 +134,44 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
             set { _Debts = value; }
         }
 
+        //Debting
+        private string _debtName;
+        public string DebtName
+        {
+            get { return _debtName; }
+            set { _debtName = value; }
+        }
+        private string _debtAddress;
+        public string DebtAddress
+        {
+            get { return _debtAddress; }
+            set { _debtAddress = value; }
+        }
+        private string _debtEmail;
+        public string DebtEmail
+        {
+            get { return _debtEmail; }
+            set { _debtEmail = value; }
+        }
+        private string _debtPhoneNumber;
+        public string DebtPhoneNumber
+        {
+            get { return _debtPhoneNumber; }
+            set { _debtPhoneNumber = value; }
+        }
+        private DateTime _debtDay;
+        public DateTime DebtDay
+        {
+            get { return _debtDay; }
+            set { _debtDay = value; }
+        }
+        private string _debtMoney;
+        public string DebtMoney
+        {
+            get { return _debtMoney; }
+            set { _debtMoney = value; }
+        }
+
         public ICommand FirstLoadCM { get; set; }
         public ICommand SearchCustomerCM { get; set; }
         public ICommand AddCusWdCM { get; set; }
@@ -141,7 +180,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
         public ICommand OpenEditWdCM { get; set; }
         public ICommand EditCusListCM { get; set; }
         public ICommand DeleteCusListCM { get; set; }
-        public ICommand DebtCusCM { get; set; }
+        public ICommand DebtCusListCM { get; set; }
+        public ICommand DebtingCM { get; set; }
         public CustomerManagementViewModel()
         {
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
@@ -170,36 +210,54 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
             });
             AddCusListCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
             {
-                if (this.Name == null || this.PhoneNumber == null || this.Email == null)
+                if (this.Name == null || this.PhoneNumber == null || this.Email == null || this.Address ==null)
                 {
                     MessageBoxCustom.Show(MessageBoxCustom.Error, "Không nhập đủ dữ liệu");
                 }
                 else
                 {
-                    if (this.Description == null) this.Description = "";
-                    if (this.Spend == null || this.Spend == "") this.Spend = "0";
-                    Customer newCus = new Customer
+                    string mailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                    string phonePattern = @"^0\d{9}$";
+                    if(!Regex.IsMatch(PhoneNumber, phonePattern))
                     {
-                        Description = this.Description,
-                        DisplayName = this.Name,
-                        PhoneNumber = this.PhoneNumber,
-                        Email = this.Email,
-                        Address = this.Address,
-                        IsDeleted = false,
-
-                    };
-                    (bool IsAdded, string messageAdd) = await CustomerService.Ins.AddNewCus(newCus);
-                    if (IsAdded)
-                    {
-                        p.Close();
-                        resetData();
-                        CustomerList = new ObservableCollection<CustomerDTO>(await CustomerService.Ins.GetAllCus());
-                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Đã thêm khách hàng thành công");
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Số điện thoại không hợp lệ");
                     }
                     else
                     {
-                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi khi thêm khách hàng");
-                    }
+                        if (!Regex.IsMatch(Email, mailPattern))
+                        {
+                            MessageBoxCustom.Show(MessageBoxCustom.Error, "Địa chỉ mail không hợp lệ");
+                        }
+                        else
+                        {
+                            if (this.Description == null) this.Description = "";
+                            if (this.Spend == null || this.Spend == "") this.Spend = "0";
+                            Customer newCus = new Customer
+                            {
+                                Description = this.Description,
+                                DisplayName = this.Name,
+                                PhoneNumber = this.PhoneNumber,
+                                Debts = 0,
+                                Spend = 0,
+                                Email = this.Email,
+                                Address = this.Address,
+                                IsDeleted = false,
+
+                            };
+                            (bool IsAdded, string messageAdd) = await CustomerService.Ins.AddNewCus(newCus);
+                            if (IsAdded)
+                            {
+                                p.Close();
+                                resetData();
+                                CustomerList = new ObservableCollection<CustomerDTO>(await CustomerService.Ins.GetAllCus());
+                                MessageBoxCustom.Show(MessageBoxCustom.Success, "Đã thêm khách hàng thành công");
+                            }
+                            else
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi khi thêm khách hàng");
+                            }
+                        }
+                    }                  
                 }
             });
             OpenEditWdCM = new RelayCommand<object>((p) => { return true; }, (p) => {
@@ -222,28 +280,41 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
                 }
                 else
                 {
-                    if (this.EditDescription == null) this.EditDescription = "";
-
-                    Customer newCus = new Customer
+                    string mailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                    string phonePattern = @"^0\d{9}$";
+                    if (!Regex.IsMatch(PhoneNumber, phonePattern))
                     {
-                        ID = SelectedItem.ID,
-                        Description = EditDescription,
-                        PhoneNumber = EditPhoneNumber,
-                        Email = EditEmail,
-                        DisplayName = EditName,
-                        Address = EditAddress,
-                        IsDeleted = false,
-                    };
-                    (bool success, string messageEdit) = await CustomerService.Ins.EditCusList(newCus, SelectedItem.ID);
-                    if (success)
-                    {
-                        p.Close();
-                        CustomerList = new ObservableCollection<CustomerDTO>(await CustomerService.Ins.GetAllCus());
-                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Đã sửa khách hàng thành công");
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Số điện thoại không hợp lệ");
                     }
                     else
                     {
-                        MessageBox.Show(messageEdit);
+                        if (!Regex.IsMatch(Email, mailPattern))
+                        {
+                            MessageBoxCustom.Show(MessageBoxCustom.Error, "Địa chỉ mail không hợp lệ");
+                        }
+                        else
+                        {
+                            if (this.EditDescription == null) this.EditDescription = "";
+                            Customer newCus = new Customer
+                            {
+                                ID = SelectedItem.ID,
+                                Description = EditDescription,
+                                PhoneNumber = EditPhoneNumber,
+                                Email = EditEmail,
+                                DisplayName = EditName,
+                                Address = EditAddress,
+                                IsDeleted = false,
+                            };
+                            (bool success, string messageEdit) = await CustomerService.Ins.EditCusList(newCus, SelectedItem.ID);
+                            if (success)
+                            {
+                                p.Close();
+                                CustomerList = new ObservableCollection<CustomerDTO>(await CustomerService.Ins.GetAllCus());
+                                MessageBoxCustom.Show(MessageBoxCustom.Success, "Đã sửa khách hàng thành công");
+                            }
+                            else
+                                MessageBox.Show(messageEdit);
+                        }
                     }
                 }
 
@@ -271,10 +342,39 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
             {
                 p.Close();
             });
-            DebtCusCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            DebtCusListCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                DebtName = SelectedItem.DisplayName;
+                DebtAddress = SelectedItem.Address;
+                DebtEmail = SelectedItem.Email;
+                DebtPhoneNumber = SelectedItem.PhoneNumber;
+                DebtDay = DateTime.Now;
                 DebtingWindow wd = new DebtingWindow();
                 wd.ShowDialog();
+            });
+            DebtingCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                SystemValue value = await SystemValueService.Ins.GetData();
+                decimal? selectedDebt = SelectedItem.Debts;
+                if (value.DebtsPolicy == true && selectedDebt < decimal.Parse(DebtMoney)) {
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Số tiền thu không được vượt quá số nợ");
+                }
+                else
+                {
+                    (bool sc, string mess) = await CustomerService.Ins.updateDebts(decimal.Parse(DebtMoney), SelectedItem.ID);
+
+                    PaymentReceipt paymentReceipt = new PaymentReceipt {
+                        IDCus = SelectedItem.ID,
+                        AmountReceived = decimal.Parse(DebtMoney),
+                        IsDeleted = false,
+                        CreatAt = DebtDay
+                    };
+                    (bool sc1, string mess1) = await PaymentReceiptService.Ins.AddNewPay(paymentReceipt);
+                    if(sc1&&sc) {
+                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Cập nhật thành công");
+                    }
+                    p.Close();
+                }
             });
         }
         void resetData()

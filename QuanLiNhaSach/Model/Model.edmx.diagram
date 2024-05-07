@@ -4,24 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d9889d7ce5fa40058d17efe8b932c65e" Name="Diagram1">
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.Bill" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.BillInfo" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.Book" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.Customer" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.GenreBook" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.GoodReceived" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.GoodReceivedInfo" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.PaymentReceipt" Width="1.5" PointX="3" PointY="17" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.Staff" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.SystemValue" Width="1.5" PointX="5.75" PointY="6.875" IsExpanded="true" />
+      <Diagram DiagramId="c7baac98e2da4bb980df7ac5e63bc6b4" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.Bill" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.BillInfo" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.Book" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.Customer" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.DebtReport" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.GenreBook" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.GoodReceived" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.GoodReceivedInfo" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.InventoryReport" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.PaymentReceipt" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.Staff" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.sysdiagram" Width="1.5" PointX="7.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.SystemValue" Width="1.5" PointX="7.75" PointY="5.5" IsExpanded="true" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_Bill_Cus" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_Bill_Staff" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_BillInfo_Bill" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_BillInfo_PrD" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_GRInfo_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiNhaSachModel.FK_IR_Book" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_PrD_Genre" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiNhaSachModel.FK_DR_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_PaymentReceived" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiNhaSachModel.FK_GR_Staff" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLiNhaSachModel.FK_GRInfo_GR" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

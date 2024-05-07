@@ -24,5 +24,10 @@ namespace QuanLiNhaSach.View.Admin.CustomerManagement
         {
             InitializeComponent();
         }
+
+        private void CusList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
