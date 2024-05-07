@@ -127,7 +127,7 @@
                     <!--Nhập kho-->
                     <Border Width="135"
                             Height="46"
-                            Margin="0,400,0,14"
+                            Margin="0,370,0,14"
                             HorizontalAlignment="Center"
                             Background="#E0AE8A"
                             BorderBrush="#E0AE8A"

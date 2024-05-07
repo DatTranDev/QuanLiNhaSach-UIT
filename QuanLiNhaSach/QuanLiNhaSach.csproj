@@ -464,8 +464,6 @@
     <Resource Include="Resources\Icon\AddGray_Icon.png" />
     <Resource Include="Resources\Icon\Add_NoBackground.png" />
     <Resource Include="Resources\Icon\Admin_Icon.png" />
-    <Resource Include="Resources\Icon\AppIcon.ico" />
-    <Resource Include="Resources\Icon\appicon.png" />
     <Resource Include="Resources\Icon\BackMenu_Icon.png" />
     <Resource Include="Resources\Icon\Ban_Brown_Icon.png" />
     <Resource Include="Resources\Icon\Ban_White_Icon.png" />
@@ -543,6 +541,10 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icon\ion_cart-brown.png" />
+    <Resource Include="Resources\Icon\ion_cart-white.png" />
+    <Resource Include="Resources\Icon\AppIcon.ico" />
+    <Resource Include="Resources\Icon\appicon.png" />
     <Resource Include="Resources\Icon\import_products.png" />
     <Resource Include="Resources\Icon\Export_excel_white_icon.png" />
     <Resource Include="Resources\Icon\Excel_white_Icon.png" />
