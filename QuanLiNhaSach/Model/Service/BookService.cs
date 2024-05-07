@@ -183,8 +183,6 @@ namespace QuanLiNhaSach.Model.Service
                 MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi khi sửa sản phẩm");
                 return (false, null);
             }
-
-
         }
         //update count product 
         public async Task<(bool, string)> EditCountPrd(int id, int? countDelta)

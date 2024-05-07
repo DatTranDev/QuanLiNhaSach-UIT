@@ -233,8 +233,18 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
         }
         void UpdateDebt()
         {
-            if (PaidBillValue > TotalBillValue && TotalBillValue>0)
+            if (PaidBillValue > TotalBillValue && TotalBillValue>=0)
+            {
                 PaidBillValue = TotalBillValue;
+            }
+            //if (TotalBillValue == 0)
+            //{
+            //    PaidBillValue = 0;
+            //}
+            if (PaidBillValue < 0)
+            {
+                PaidBillValue = 0;
+            }
             Debt = TotalBillValue - PaidBillValue;
         }
         public SaleViewModel() 
@@ -267,7 +277,14 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                 {
                     ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
                     prdList = new List<BookDTO>(ProductList);
-                    ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower()) && (x.GenreName == GenreBox)));
+                    if (GenreBox != "Tất cả thể loại")
+                    {
+                        ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower()) && x.GenreName == GenreBox));
+                    }
+                    else
+                    {
+                        ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower())));
+                    }
                 }
             });
             SearchCusCM = new RelayCommand<object>((p) => { return true; }, async (p) =>

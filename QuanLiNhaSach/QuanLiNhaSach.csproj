@@ -278,6 +278,9 @@
     <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ProductsManager\AddGenre.xaml.cs">
+      <DependentUpon>AddGenre.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\ProductsManager\AddListProduct.xaml.cs">
       <DependentUpon>AddListProduct.xaml</DependentUpon>
     </Compile>
@@ -348,6 +351,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ProductsManager\AddGenre.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -545,6 +552,7 @@
     <Resource Include="Resources\Icon\ion_cart-white.png" />
     <Resource Include="Resources\Icon\AppIcon.ico" />
     <Resource Include="Resources\Icon\appicon.png" />
+    <Resource Include="Resources\Icon\plus_orange_icon.png" />
     <Resource Include="Resources\Icon\import_products.png" />
     <Resource Include="Resources\Icon\Export_excel_white_icon.png" />
     <Resource Include="Resources\Icon\Excel_white_Icon.png" />
