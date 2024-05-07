@@ -61,5 +61,31 @@ namespace QuanLiNhaSach.Model.Service
             }
 
         }
+
+        public async Task<(bool, string)> AddNewGenre(GenreBook newGenre)
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var prD = await context.GenreBook.Where(p => p.DisplayName == newGenre.DisplayName).FirstOrDefaultAsync();
+                    if (prD == null)
+                    {
+                        context.GenreBook.Add(newGenre);
+                        await context.SaveChangesAsync();
+                        return (true, "Thêm thành công");
+                    }
+                    else 
+                    {
+                        return (false, "Đã tồn tại"); 
+                    }
+                }
+            }
+            catch
+            {
+                return (false, null);
+            }
+
+        }
     }
 }

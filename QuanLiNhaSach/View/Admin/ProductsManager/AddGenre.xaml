@@ -1,0 +1,149 @@
+﻿<Window x:Class="QuanLiNhaSach.View.Admin.ProductsManager.AddGenre"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.ProductsManager"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="AddGenre"
+        Name="addnewGenre"
+        Width="300"
+        Height="320"
+        Background="Transparent"
+        AllowsTransparency="True"
+        DataContext="{StaticResource ProductVM}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Window.Resources>
+        <ControlTemplate x:Key="TextBoxAdd"
+                         TargetType="TextBox">
+            <TextBox Width="224"
+                     Height="48"
+                     Margin="0,0,0,0"
+                     Padding="12,2.4"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                     materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
+                     Background="#D9D9D9"
+                     BorderThickness="0.5"
+                     FontFamily="Inter"
+                     FontSize="16" />
+        </ControlTemplate>
+        <ControlTemplate x:Key="TextBoxAddBig"
+                         TargetType="TextBox">
+            <TextBox Width="196"
+                     Height="157"
+                     Margin="0,5,0,0"
+                     Padding="12,2.4"
+                     MinLines="1"
+                     MaxLines="20"
+                     TextWrapping="Wrap"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Top"
+                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                     materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
+                     Background="#D9D9D9"
+                     BorderThickness="0.5"
+                     FontFamily="Inter"
+                     FontSize="16"
+                     VerticalAlignment="Top" />
+        </ControlTemplate>
+        <Style x:Key="TextBlock"
+               TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="Black" />
+            <Setter Property="FontSize"
+                    Value="19.2" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+
+        </Style>
+    </Window.Resources>
+    <Border BorderBrush="#FF9900"
+            BorderThickness="3.5"
+            Background="White"
+            CornerRadius="30">
+
+        <Grid>
+            <Border CornerRadius="32"
+                    Background="#FBFBFB">
+
+                <StackPanel>
+
+
+                    <TextBlock Height="35"
+                               Margin="0,12,0,0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Center"
+                               FontFamily="Inter"
+                               FontSize="26"
+                               FontWeight="Bold"
+                               Foreground="#CC824D"
+                               Text="Thêm danh mục" />
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Height="23"
+                                       Margin="25,10,0,10"
+                                       VerticalAlignment="Top"
+                                       Style="{DynamicResource TextBlock}"
+                                       Text="Tên danh mục" />
+                            <TextBox Text="{Binding Genre}"
+                                     Width="254"
+                                     Height="121"
+                                     Padding="10,7,10,7"
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"
+                                     VerticalContentAlignment="Top"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                     materialDesign:TextFieldAssist.TextFieldCornerRadius="22"
+                                     Background="#D9D9D9"
+                                     BorderThickness="0.5"
+                                     FontFamily="Inter"
+                                     FontSize="18"
+                                     Margin="5,0,0,0" />
+                        </StackPanel>
+
+                    </Grid>
+                    <StackPanel Height="62"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="0,20,0,0">
+                        <Button Command="{Binding CloseWdCM}"
+                                CommandParameter="{Binding ElementName=addnewGenre}"
+                                Width="100"
+                                Height="50"
+                                Margin="10,0,25,0"
+                                materialDesign:ButtonAssist.CornerRadius="22"
+                                Background="#EFD8B4"
+                                BorderThickness="0"
+                                Content="Bỏ qua"
+                                FontSize="20"
+                                FontWeight="Bold" />
+                        <Button Command="{Binding AddNewGenre}"
+                                CommandParameter="{Binding ElementName=addnewGenre}"
+                                Width="100"
+                                Height="50"
+                                materialDesign:ButtonAssist.CornerRadius="22"
+                                Background="#F0BD70"
+                                BorderThickness="0"
+                                Content="Thêm"
+                                FontSize="22"
+                                FontWeight="Bold" />
+
+
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

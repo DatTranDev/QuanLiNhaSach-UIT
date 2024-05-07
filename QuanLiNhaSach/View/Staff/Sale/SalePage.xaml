@@ -485,7 +485,7 @@
                                                                 Width="18"
                                                                 Command="{Binding DataContext.DeleteBillInfoCM, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
                                                                 CommandParameter="{Binding}"
-                                                                Margin="0 22 0 0"
+                                                                Margin="0 5 0 0"
                                                                 Padding="0"
                                                                 BorderBrush="{x:Null}"
                                                                 Background="{x:Null}"
@@ -603,8 +603,8 @@
                                                                        Height="12"
                                                                        Source="/QuanLiNhaSach;component/Resources/Icon/SubtractBlack_Icon.png" />
                                                             </Button>
-                                                            <TextBox Width="22"
-                                                                     MaxWidth="22"
+                                                            <TextBox Width="32"
+                                                                     MaxWidth="32"
                                                                      Margin="10 0 10 0"
                                                                      FontSize="17"
                                                                      Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}">
