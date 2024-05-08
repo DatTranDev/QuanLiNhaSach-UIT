@@ -124,8 +124,8 @@
                             HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
-                            Command="{Binding}"
-                            CommandParameter="{Binding ElementName}"
+                            Command="{Binding RevenueCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
                             Foreground="{x:Null}"
                             Tag="DoanhThuBD">
                             <TextBlock

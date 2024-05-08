@@ -1,5 +1,8 @@
-﻿using QuanLiNhaSach.DTOs;
+﻿using LiveCharts.Wpf;
+using LiveCharts;
+using QuanLiNhaSach.DTOs;
 using QuanLiNhaSach.Model.Service;
+using QuanLiNhaSach.View.Admin.ThongKe.DoanhThu;
 using QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuBan;
 using QuanLiNhaSach.View.MessageBox;
 using System;
@@ -40,10 +43,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand InfoBillCM { get; set; }
         public ICommand CloseWdCM {  get; set; }
         public ICommand DeleteBillCM { get; set; }
+        public ICommand RevenueCM {  get; set; }
 
         public ThongKeViewModel()
         {
-         
+
+            #region Lịch sử thu tiền
             //xây dựng command LichSuThuTienCM
             LichSuThuTienCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
@@ -59,7 +64,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 SelectedDateTo = DateTime.Now;
                 SelectedDateFrom = DateTime.Now.AddDays(-2);
             });
+            #endregion
 
+            #region Lịch sử bán
 
             //lịch sử bán
             LichSuBanCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
@@ -76,7 +83,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 SelectedDateTo = DateTime.Now;
                 SelectedDateFrom = DateTime.Now.AddDays(-2);
             });
+            #endregion
 
+            #region Chi tiết hóa đơn
 
             //chi tiết hóa đơn 
             InfoBillCM = new RelayCommand<BillDTO>((p) => { return true; }, (p) =>
@@ -95,16 +104,18 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                     wd.ShowDialog();
                 }
             });
+            #endregion
 
+            #region close window
 
             //close window
             CloseWdCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 p.Close();
             });
+            #endregion
 
-
-
+            #region xóa hóa đơn
             //xóa 1 hóa đơn
             DeleteBillCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
@@ -125,6 +136,47 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                     }
                 }
             });
+            #endregion
+
+
+            #region DoanhThu
+            RevenueCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+                SumBillTotal = 0;
+                if (p != null)
+                {
+                    p.Content = new DoanhThuTable();
+                    List<int> revenueValues = new List<int>();
+                    List<DateTime> dates = new List<DateTime>();
+                    DateTime currentDate = SelectedDateFrom;
+                    DateTime UpDate = SelectedDateTo.AddDays(1);
+                    while (currentDate <= UpDate)
+                    {
+                        int revenue = await BillService.Ins.getBillByDate(currentDate);
+                        revenueValues.Add(revenue);
+                        SumBillTotal += revenue;
+                        dates.Add(currentDate);
+                        currentDate = currentDate.AddDays(1);
+                    }
+
+                    string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
+                    RevenueSeries = new SeriesCollection
+                    {
+                    new LineSeries
+                    {
+                        Title = "Doanh thu",
+                        Values = new ChartValues<int>(revenueValues),
+                    }
+                    };
+                    Labels = dateStrings;
+                    YFormatter = value =>
+                    {
+                        return value.ToString("N");
+
+                    };
+                }
+            });
+            #endregion
         }
     }
 }

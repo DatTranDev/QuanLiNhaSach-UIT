@@ -10,6 +10,7 @@
     Title="DoanhThuTable"
     d:DesignHeight="702"
     d:DesignWidth="1150"
+    DataContext="{StaticResource ThongKeVM}"
     ShowsNavigationUI="False"
     mc:Ignorable="d">
     <Page.Resources>
