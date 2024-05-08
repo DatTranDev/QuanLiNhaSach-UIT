@@ -15,6 +15,7 @@
     Background="Transparent"
     BorderBrush="Transparent"
     BorderThickness="0"
+    DataContext="{StaticResource ThongKeVM}"
     FontFamily="{DynamicResource MaterialDesignFont}"
     ResizeMode="NoResize"
     TextElement.FontSize="13"
@@ -131,7 +132,7 @@
                             <ListView
                                 Width="600"
                                 Margin="10,0,0,0"
-                                ItemsSource="{Binding ProductList}">
+                                ItemsSource="{Binding BookList}">
                                 <ListView.ItemContainerStyle>
                                     <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -170,7 +171,7 @@
                                                     <TextBlock
                                                         Margin="5,0,0,0"
                                                         FontSize="17"
-                                                        Text="{Binding Product.DisplayName}" />
+                                                        Text="{Binding Book.DisplayName}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -190,7 +191,7 @@
                                                         Margin="0,0,15,0"
                                                         HorizontalAlignment="Center"
                                                         FontSize="17"
-                                                        Text="{Binding Count}" />
+                                                        Text="{Binding Quantity}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
 
@@ -211,7 +212,7 @@
                                                         Margin="0,0,10,0"
                                                         HorizontalAlignment="Center"
                                                         FontSize="17"
-                                                        Text="{Binding Product.Price, Converter={StaticResource PriceConverter}}" />
+                                                        Text="{Binding Book.Price, Converter={StaticResource PriceConverter}}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
 
@@ -277,7 +278,7 @@
                             Margin="0,0,5,0"
                             VerticalAlignment="Top"
                             Style="{DynamicResource TextBlock}"
-                            Text="{Binding BillValue, Converter={StaticResource PriceConverter}}" />
+                            Text="{Binding TotalPrice, Converter={StaticResource PriceConverter}}" />
                         <TextBlock
                             Height="23"
                             HorizontalAlignment="Left"
@@ -305,7 +306,7 @@
                                 Margin="0,0,5,0"
                                 VerticalAlignment="Top"
                                 Style="{DynamicResource TextBlock}"
-                                Text="{Binding BillValue, Converter={StaticResource PriceConverter}}" />
+                                Text="{Binding Paid, Converter={StaticResource PriceConverter}}" />
                             <TextBlock
                                 Height="23"
                                 HorizontalAlignment="Left"
@@ -328,7 +329,7 @@
                                 Margin="0,0,5,0"
                                 VerticalAlignment="Top"
                                 Style="{DynamicResource TextBlock}"
-                                Text="{Binding BillValue, Converter={StaticResource PriceConverter}}" />
+                                Text="{Binding TienConLai, Converter={StaticResource PriceConverter}}" />
                             <TextBlock
                                 Height="23"
                                 HorizontalAlignment="Left"

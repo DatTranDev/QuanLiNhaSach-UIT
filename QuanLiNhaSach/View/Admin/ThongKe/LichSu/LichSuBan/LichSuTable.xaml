@@ -11,18 +11,20 @@
     Title="LichSuTable"
     d:DesignHeight="594"
     d:DesignWidth="1127"
+    DataContext="{StaticResource ThongKeVM}"
     ShowsNavigationUI="False"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:PriceConverter x:Key="PriceConverter" />
         <converters:IndexConverter x:Key="IndexConverter" />
+        <converters:CusNameConverter x:Key="CusNameConverter" />
     </Page.Resources>
 
-    <Grid>
-        <!--  ItemsSource="{Binding BillList}"  -->
+    <Grid Background="white">
         <ListView
             x:Name="billTable"
             Margin="11"
+            ItemsSource="{Binding DanhSachHoaDon}"
             SelectedItem="{Binding SelectedItem}">
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
@@ -65,8 +67,10 @@
                                 <TextBlock
                                     Margin="20,0,0,0"
                                     FontSize="17"
-                                    Text="{Binding Customer}" />
+                                    Text="{Binding Customer.DisplayName, Converter={StaticResource CusNameConverter}}" />
                             </DataTemplate>
+                            <!--  Text="{Binding Customer.DisplayName, Converter={StaticResource CusNameConverter}}" />  -->
+
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
@@ -121,6 +125,7 @@
                                         Background="Transparent"
                                         BorderThickness="0"
                                         Cursor="Hand">
+                                        <Image Source="/QuanLiNhaSach;component/Resources/Icon/Info_Icon.png" />
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonUp">
                                                 <i:InvokeCommandAction Command="{Binding ElementName=billTable, Path=DataContext.InfoBillCM}" />
@@ -134,6 +139,7 @@
                                         Background="Transparent"
                                         BorderThickness="0"
                                         Cursor="Hand">
+                                        <Image Source="/QuanLiNhaSach;component/Resources/Icon/DeleteBlue_Icon.png" />
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonUp">
                                                 <i:InvokeCommandAction Command="{Binding ElementName=billTable, Path=DataContext.DeleteBillCM}" />

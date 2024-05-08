@@ -28,7 +28,7 @@
     </i:Interaction.Triggers>
 
 
-    <Grid Background="#FFFFFF">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="311*" />
             <ColumnDefinition Width="1225*" />
@@ -53,8 +53,9 @@
                             HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
+                            Click="Button_Click"
                             Command="{Binding LichSuThuTienCM}"
-                            CommandParameter="{Binding ElementName}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
                             Foreground="{x:Null}"
                             Tag="LichSuThuTienBD">
                             <TextBlock
@@ -88,8 +89,9 @@
                             HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
-                            Command="{Binding}"
-                            CommandParameter="{Binding ElementName}"
+                            Click="Button_Click"
+                            Command="{Binding LichSuBanCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
                             Foreground="{x:Null}"
                             Tag="LichSuBanBD">
                             <TextBlock
