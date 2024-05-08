@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Data.Entity;
+using QuanLiNhaSach.View.Admin.ThongKe;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM
 {
@@ -250,6 +251,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
             {
                 EditPassWord = p.Password;
             });
+
+
+
+            //thống kê page
+            LoadThongKePage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new ThongKeMainPage(); });
         }
     }
 }

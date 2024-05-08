@@ -262,6 +262,9 @@
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ImportItem.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuBan.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuThuTien.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\ThongKeViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />

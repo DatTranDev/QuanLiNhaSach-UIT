@@ -11,19 +11,25 @@
     Title="LichSuTable"
     d:DesignHeight="594"
     d:DesignWidth="1127"
+    DataContext="{StaticResource ThongKeVM}"
     ShowsNavigationUI="False"
     mc:Ignorable="d">
+
+
+
     <Page.Resources>
         <converters:PriceConverter x:Key="PriceConverter" />
         <converters:IndexConverter x:Key="IndexConverter" />
+        <converters:CusNameConverter x:Key="CusNameConverter" />
     </Page.Resources>
 
-    <Grid>
+    <Grid Background="White">
         <!--  ItemsSource="{Binding BillList}"  -->
         <ListView
-            x:Name="billTable"
+            x:Name="danhSachThuTien"
             Margin="11"
-            SelectedItem="{Binding SelectedItem}">
+            ItemsSource="{Binding DanhSachThuTien}">
+
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -65,7 +71,8 @@
                                 <TextBlock
                                     Margin="20,0,0,0"
                                     FontSize="17"
-                                    Text="{Binding Customer}" />
+                                    Text="{Binding CusName, Converter={StaticResource CusNameConverter}}" />
+                                <!--  Text="{Binding CusName, Converter={StaticResource CusNameConverter}}"  -->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -84,7 +91,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="17"
-                                    Text="{Binding CreateAt, StringFormat='dd/MM/yyyy HH:mm:ss'}" />
+                                    Text="{Binding CreatAt, StringFormat='dd/MM/yyyy HH:mm:ss'}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
 
@@ -104,13 +111,14 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="17"
-                                    Text="{Binding TotalPrice, Converter={StaticResource PriceConverter}}" />
+                                    Text="{Binding AmountReceived, Converter={StaticResource PriceConverter}}" />
+                                <!--    -->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
 
                     </GridViewColumn>
 
-                    <GridViewColumn>
+                    <!--<GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -144,7 +152,7 @@
 
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
                 </GridView>
             </ListView.View>
         </ListView>
