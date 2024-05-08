@@ -256,6 +256,7 @@
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ImportItem.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />
@@ -298,6 +299,15 @@
     </Compile>
     <Compile Include="View\Admin\ProductsManager\test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StaffManagement\AddStaff.xaml.cs">
+      <DependentUpon>AddStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StaffManagement\ModifyStaff.xaml.cs">
+      <DependentUpon>ModifyStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StaffManagement\StaffPage.xaml.cs">
+      <DependentUpon>StaffPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -382,6 +392,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Admin\ProductsManager\test.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\StaffManagement\AddStaff.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -562,6 +576,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icon\IconImport.png" />
+    <Resource Include="Resources\Icon\Edit.png" />
     <Resource Include="Resources\Icon\ion_cart-brown.png" />
     <Resource Include="Resources\Icon\ion_cart-white.png" />
     <Resource Include="Resources\Icon\AppIcon.ico" />
