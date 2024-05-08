@@ -15,11 +15,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
+using QuanLiNhaSach.View.Admin.ThongKe.SachBanChay;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
-    public partial class ThongKeViewModel:BaseViewModel
+    public partial class ThongKeViewModel : BaseViewModel
     {
+
+        #region chọn ngày
         private DateTime _selectedDateFrom;
         public DateTime SelectedDateFrom
         {
@@ -32,18 +35,22 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             get { return _selectedDateTo; }
             set { _selectedDateTo = value; OnPropertyChanged(); }
         }
+        #endregion
 
-
-        public ICommand LichSuThuTienCM {  get; set; }
+        #region các Icommand 
+        public ICommand LichSuThuTienCM { get; set; }
         public ICommand LichSuBanCM { get; set; }
         public ICommand DoanhThuCM { get; set; }
-        public ICommand SachBanChayCM {  get; set; }
+        public ICommand SachBanChayCM { get; set; }
         public ICommand CongNoCM { get; set; }
         public ICommand TonKhoCM { get; set; }
         public ICommand InfoBillCM { get; set; }
-        public ICommand CloseWdCM {  get; set; }
+        public ICommand CloseWdCM { get; set; }
         public ICommand DeleteBillCM { get; set; }
-        public ICommand RevenueCM {  get; set; }
+        public ICommand RevenueCM { get; set; }
+        public ICommand FavorCM { get; set; }
+
+        #endregion
 
         public ThongKeViewModel()
         {
@@ -97,7 +104,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                     StaffName = SelectedItem.Staff.DisplayName;
                     BillDate = SelectedItem.CreateAt.ToString();
                     TotalPrice = SelectedItem.TotalPrice ?? 0;
-                    Paid= SelectedItem.Paid ?? 0;
+                    Paid = SelectedItem.Paid ?? 0;
                     TienConLai = TotalPrice - Paid;
                     BookList = new ObservableCollection<BillInfoDTO>(SelectedItem.BillInfo);
                     ChiTietHoaDon wd = new ChiTietHoaDon();
@@ -138,7 +145,6 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             });
             #endregion
 
-
             #region DoanhThu
             RevenueCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
@@ -177,6 +183,18 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
             });
             #endregion
+
+
+            #region Sách ưa thích
+            FavorCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+                if (p != null)
+                {
+                    p.Content = new SachBanChayTable();
+                    FavorList = await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo));
+                }
+            });
+            #endregion
         }
-    }
+    } 
 }

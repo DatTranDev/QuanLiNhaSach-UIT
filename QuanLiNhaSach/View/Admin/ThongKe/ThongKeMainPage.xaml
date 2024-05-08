@@ -157,8 +157,8 @@
                             HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
-                            Command="{Binding}"
-                            CommandParameter="{Binding ElementName}"
+                            Command="{Binding FavorCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
                             Foreground="{x:Null}"
                             Tag="SachBanChayBD">
                             <TextBlock

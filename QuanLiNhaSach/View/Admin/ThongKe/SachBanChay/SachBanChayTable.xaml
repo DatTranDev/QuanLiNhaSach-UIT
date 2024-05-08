@@ -10,6 +10,7 @@
     Title="MonUaThichTable"
     d:DesignHeight="594"
     d:DesignWidth="1127"
+    DataContext="{StaticResource ThongKeVM}"
     ShowsNavigationUI="False"
     mc:Ignorable="d">
     <Page.Resources>
@@ -17,10 +18,7 @@
         <converters:IndexConverter x:Key="IndexConverter" />
     </Page.Resources>
     <Grid>
-        <ListView
-            Margin="11"
-            ItemsSource="{Binding FavorList}"
-            SelectedItem="{Binding SelectedItem}">
+        <ListView Margin="11" ItemsSource="{Binding FavorList}">
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -82,7 +80,7 @@
                                     Margin="0,0,15,0"
                                     HorizontalAlignment="Center"
                                     FontSize="17"
-                                    Text="{Binding Count}" />
+                                    Text="{Binding Inventory}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
 
