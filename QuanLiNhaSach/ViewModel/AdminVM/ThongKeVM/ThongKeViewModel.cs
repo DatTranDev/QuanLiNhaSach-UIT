@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using QuanLiNhaSach.View.Admin.ThongKe.SachBanChay;
+using QuanLiNhaSach.View.Admin.ThongKe.CongNo;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
@@ -36,6 +37,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             set { _selectedDateTo = value; OnPropertyChanged(); }
         }
         #endregion
+
+
 
         #region các Icommand 
         public ICommand LichSuThuTienCM { get; set; }
@@ -118,7 +121,10 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //close window
             CloseWdCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                p.Close();
+                if (p != null)
+                {
+                    p.Close();
+                }
             });
             #endregion
 
@@ -184,7 +190,6 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             });
             #endregion
 
-
             #region Sách ưa thích
             FavorCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
@@ -192,6 +197,17 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 {
                     p.Content = new SachBanChayTable();
                     FavorList = await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo));
+                }
+            });
+            #endregion
+
+            #region công nợ
+            CongNoCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+                if (p != null)
+                {
+                    p.Content = new CongNoTable();
+                    DebtList = await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
                 }
             });
             #endregion

@@ -191,8 +191,8 @@
                             HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
-                            Command="{Binding}"
-                            CommandParameter="{Binding ElementName}"
+                            Command="{Binding CongNoCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
                             Foreground="{x:Null}"
                             Tag="CongNoBD">
                             <TextBlock
