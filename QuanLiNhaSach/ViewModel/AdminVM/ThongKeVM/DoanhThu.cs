@@ -40,11 +40,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 OnPropertyChanged(nameof(YFormatter));
             }
         }
-        private decimal _sumBillTotal;
-        public decimal SumBillTotal
+        private decimal _sumBillTotalPaid;
+        public decimal SumBillTotalPaid
         {
-            get { return _sumBillTotal; }
-            set { _sumBillTotal = value; OnPropertyChanged(); }
+            get { return _sumBillTotalPaid; }
+            set { _sumBillTotalPaid = value; OnPropertyChanged(); }
         }
         public void GetRevenueData()
         {

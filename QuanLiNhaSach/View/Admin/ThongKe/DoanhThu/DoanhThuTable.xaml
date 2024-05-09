@@ -71,7 +71,7 @@
                             Margin="0,0,5,0"
                             VerticalAlignment="Top"
                             Style="{DynamicResource TextBlock}"
-                            Text="{Binding SumBillTotal, Converter={StaticResource PriceConverter}}" />
+                            Text="{Binding SumBillTotalPaid, Converter={StaticResource PriceConverter}}" />
                         <TextBlock
                             Height="23"
                             HorizontalAlignment="Left"

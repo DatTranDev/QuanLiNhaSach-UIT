@@ -18,6 +18,8 @@ using System.Windows.Markup;
 using QuanLiNhaSach.View.Admin.ThongKe.SachBanChay;
 using QuanLiNhaSach.View.Admin.ThongKe.CongNo;
 using QuanLiNhaSach.View.Admin.ThongKe.TonKho;
+using QuanLiNhaSach.View.Admin.ThongKe;
+using System.Threading;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
@@ -53,46 +55,82 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand DeleteBillCM { get; set; }
         public ICommand RevenueCM { get; set; }
         public ICommand FavorCM { get; set; }
+        public ICommand DateChange { get; set; }
 
+
+
+        bool checkLanDau = false;
         #endregion
-
         public ThongKeViewModel()
         {
 
+            CaseNav = 0;
             #region Lịch sử thu tiền
             //xây dựng command LichSuThuTienCM
             LichSuThuTienCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
+
+                if (p == null) return;
+
+                if (!checkThaoTac && checkLanDau)
+                {
+                    MessageBoxCustom.Show(MessageBoxCustom.Error,"Thao tác quá nhanh!");
+                    return;
+                }
+                checkThaoTac = false;
+
                 DanhSachThuTien = new ObservableCollection<PaymentReceiptDTO>(await Task.Run(() => PaymentReceiptService.Ins.GetAllPayment()));
+
+
                 if (DanhSachThuTien != null)
                 {
                     danhSachThuTien = new List<PaymentReceiptDTO>(DanhSachThuTien);
                 }
-                if (p != null)
+                p.Content = new View.Admin.ThongKe.LichSu.LichSuThuTien.LichSuTable();
+
+                if (!checkLanDau)
                 {
-                    p.Content = new View.Admin.ThongKe.LichSu.LichSuThuTien.LichSuTable();
+                    SelectedDateTo = DateTime.Now;
+                    SelectedDateFrom = DateTime.Now.AddDays(-2);
                 }
-                SelectedDateTo = DateTime.Now;
-                SelectedDateFrom = DateTime.Now.AddDays(-2);
+
+
+                //không cho thao tác quá nhanh 
+                checkThaoTac = true;
+                CaseNav = 0;
+                checkLanDau = true;
+
             });
             #endregion
+
+
 
             #region Lịch sử bán
 
             //lịch sử bán
             LichSuBanCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
+                
+                if (p == null) return;
+
+
+                if (!checkThaoTac)
+                {
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                    return;
+                }
+                checkThaoTac = false;
+
                 DanhSachHoaDon = new ObservableCollection<BillDTO>(await Task.Run(() => BillService.Ins.GetAllBill()));
                 if (DanhSachHoaDon != null)
                 {
                     danhSachHoaDon = new List<BillDTO>(DanhSachHoaDon);
                 }
-                if (p != null)
-                {
-                    p.Content = new View.Admin.ThongKe.LichSu.LichSuBan.LichSuTable();
-                }
-                SelectedDateTo = DateTime.Now;
-                SelectedDateFrom = DateTime.Now.AddDays(-2);
+                p.Content = new View.Admin.ThongKe.LichSu.LichSuBan.LichSuTable();
+
+                checkThaoTac = true;
+                CaseNav = 1;
+
             });
             #endregion
 
@@ -133,6 +171,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //xóa 1 hóa đơn
             DeleteBillCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                if (SelectedItem == null) return;
+
                 DeleteMessage wd = new DeleteMessage();
                 wd.ShowDialog();
                 if (wd.DialogResult == true)
@@ -155,21 +195,154 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             #region DoanhThu
             RevenueCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
-                SumBillTotal = 0;
-                if (p != null)
+
+                if (p == null) return;
+
+
+                if (!checkThaoTac)
                 {
-                    p.Content = new DoanhThuTable();
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                    return;
+                }
+                checkThaoTac = false;
+
+
+                SumBillTotalPaid = 0;
+                p.Content = new DoanhThuTable();
+                List<int> revenueValues = new List<int>();
+                List<DateTime> dates = new List<DateTime>();
+                DateTime currentDate = SelectedDateFrom;
+                DateTime UpDate = SelectedDateTo.AddDays(1);
+                while (currentDate <= UpDate)
+                {
+                    int revenue = await BillService.Ins.getBillByDate(currentDate);
+                    revenueValues.Add(revenue);
+                    SumBillTotalPaid += revenue;
+                    dates.Add(currentDate);
+                    currentDate = currentDate.AddDays(1);
+                }
+
+                string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
+                RevenueSeries = new SeriesCollection
+                {
+                new LineSeries
+                {
+                    Title = "Doanh thu",
+                    Values = new ChartValues<int>(revenueValues),
+                }
+                };
+                Labels = dateStrings;
+                YFormatter = value =>
+                {
+                    return value.ToString("N");
+
+                };
+
+                checkThaoTac = true;
+                CaseNav = 2;
+
+            });
+            #endregion
+
+            #region Sách ưa thích
+            FavorCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+                if (p == null) return;
+                if (!checkThaoTac)
+                {
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                    return;
+                }
+                checkThaoTac = false;
+                p.Content = new SachBanChayTable();
+                FavorList = await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo));
+
+                checkThaoTac = true;
+                CaseNav = 3;
+
+            });
+            #endregion
+
+            #region công nợ
+            CongNoCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+                if (p == null) return;
+                if (!checkThaoTac)
+                {
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                    return;
+                }
+                checkThaoTac = false;
+
+                p.Content = new CongNoTable();
+                DebtList = await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
+               
+                checkThaoTac = true;
+                CaseNav = 4;
+            });
+            #endregion
+
+            #region tồn kho
+            TonKhoCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+                if (p == null) return;
+                if (!checkThaoTac)
+                {
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                    return;
+                }
+                checkThaoTac = false;
+
+                p.Content = new TonKhoTable();
+                InventoryList = await Task.Run(() => ReportService.Ins.GetInventoryReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
+                
+                checkThaoTac = true;
+                CaseNav = 5;
+            });
+            #endregion
+
+
+            #region select date from,to
+            DateChange = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                if (p == null) return;
+
+                if (CaseNav == -1) return;
+
+                //lịch sử thu tiền
+                if (CaseNav == 0)
+                {
+                    if (danhSachThuTien != null)
+                    {
+                        DanhSachThuTien = new ObservableCollection<PaymentReceiptDTO>(danhSachThuTien.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                    }
+                    return;
+                }
+
+
+                //lịch sử bán
+                if (CaseNav == 1)
+                {
+                    if (danhSachHoaDon != null)
+                    {
+                        DanhSachHoaDon = new ObservableCollection<BillDTO>(danhSachHoaDon.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                    }
+                    return;
+                }
+
+                //doanh thu
+                if (CaseNav == 2)
+                {
+                    MessageBox.Show(checkLanDau+"");
                     List<int> revenueValues = new List<int>();
                     List<DateTime> dates = new List<DateTime>();
-                    DateTime currentDate = SelectedDateFrom;
-                    DateTime UpDate = SelectedDateTo.AddDays(1);
-                    while (currentDate <= UpDate)
+
+
+                    for (DateTime currentDate = SelectedDateFrom; currentDate <= SelectedDateTo; currentDate = currentDate.AddDays(1))
                     {
                         int revenue = await BillService.Ins.getBillByDate(currentDate);
                         revenueValues.Add(revenue);
-                        SumBillTotal += revenue;
                         dates.Add(currentDate);
-                        currentDate = currentDate.AddDays(1);
                     }
 
                     string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
@@ -187,42 +360,19 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                         return value.ToString("N");
 
                     };
-                }
-            });
-            #endregion
 
-            #region Sách ưa thích
-            FavorCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
-            {
-                if (p != null)
-                {
-                    p.Content = new SachBanChayTable();
-                    FavorList = await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo));
+                    return;
                 }
-            });
-            #endregion
 
-            #region công nợ
-            CongNoCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
-            {
-                if (p != null)
-                {
-                    p.Content = new CongNoTable();
-                    DebtList = await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
-                }
-            });
-            #endregion
+                //sách ưa thích
+                FavorList = await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo));
 
-            #region tồn kho
-            TonKhoCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
-            {
-                if (p != null)
-                {
-                    p.Content = new TonKhoTable();
-                    InventoryList = await Task.Run(() => ReportService.Ins.GetInventoryReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
-                }
             });
             #endregion
         }
+
+
+        bool checkThaoTac = false;
+     
     } 
 }

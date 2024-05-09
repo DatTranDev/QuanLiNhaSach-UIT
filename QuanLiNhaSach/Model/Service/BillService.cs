@@ -232,20 +232,23 @@ namespace QuanLiNhaSach.Model.Service
             }
 
         }
+
+
+        //trả về tổng tiền thu được trong 1 ngày
         public async Task<int> getBillByDate(DateTime date)
         {
             try
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var billTotal = await context.Bill.Where(p => p.CreateAt.Value.Day == date.Day
+                    var billTotalPaid = await context.Bill.Where(p => p.CreateAt.Value.Day == date.Day
                                                            && p.CreateAt.Value.Month == date.Month
                                                            && p.CreateAt.Value.Year == date.Year
                                                            && p.IsDeleted == false).ToListAsync();
                     int totalPrice = 0;
-                    foreach (var bill in billTotal)
+                    foreach (var bill in billTotalPaid)
                     {
-                        totalPrice = totalPrice + (int)bill.TotalPrice;
+                        totalPrice = totalPrice + (int)bill.Paid;
                     }
                     return totalPrice;
 

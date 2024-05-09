@@ -42,7 +42,7 @@ namespace QuanLiNhaSach.Model.Service
                                        CusName = s.Customer.DisplayName,
                                        CusNumber = s.Customer.PhoneNumber,
                                        CusEmail = s.Customer.Email,
-                                       CreatAt = s.CreatAt,
+                                       CreateAt = s.CreatAt,
                                        AmountReceived = s.AmountReceived,
                                        IsDeleted = s.IsDeleted
                                    }).ToListAsync();
