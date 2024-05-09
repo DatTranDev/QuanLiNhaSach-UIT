@@ -10,6 +10,7 @@
     Title="MonUaThichTable"
     d:DesignHeight="594"
     d:DesignWidth="1127"
+    DataContext="{StaticResource ThongKeVM}"
     ShowsNavigationUI="False"
     mc:Ignorable="d">
     <Page.Resources>
@@ -52,7 +53,7 @@
 
 
         <Grid Grid.Row="2">
-            <ListView Margin="11" SelectedItem="{Binding SelectedItem}">
+            <ListView Margin="11" ItemsSource="{Binding InventoryList}">
                 <ListView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -94,7 +95,7 @@
                                     <TextBlock
                                         Margin="31,0,0,0"
                                         FontSize="17"
-                                        Text="{Binding DisplayName}" />
+                                        Text="{Binding Book.DisplayName}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -114,7 +115,7 @@
                                         Margin="0,0,15,0"
                                         HorizontalAlignment="Center"
                                         FontSize="17"
-                                        Text="{Binding Count}" />
+                                        Text="{Binding FirstIvt}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
 
@@ -134,7 +135,7 @@
                                         Margin="0,0,15,0"
                                         HorizontalAlignment="Center"
                                         FontSize="17"
-                                        Text="{Binding Price, Converter={StaticResource PriceConverter}}" />
+                                        Text="{Binding Arise}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
 
@@ -154,7 +155,7 @@
                                         Margin="0,0,15,0"
                                         HorizontalAlignment="Center"
                                         FontSize="17"
-                                        Text="{Binding Price, Converter={StaticResource PriceConverter}}" />
+                                        Text="{Binding LastIvt}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
 

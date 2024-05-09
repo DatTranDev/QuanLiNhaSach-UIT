@@ -268,6 +268,7 @@
     <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuThuTien.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\SachBanChay.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\ThongKeViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\TonKho.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />

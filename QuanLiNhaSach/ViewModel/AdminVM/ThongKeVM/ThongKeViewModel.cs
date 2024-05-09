@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using QuanLiNhaSach.View.Admin.ThongKe.SachBanChay;
 using QuanLiNhaSach.View.Admin.ThongKe.CongNo;
+using QuanLiNhaSach.View.Admin.ThongKe.TonKho;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
@@ -208,6 +209,17 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 {
                     p.Content = new CongNoTable();
                     DebtList = await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
+                }
+            });
+            #endregion
+
+            #region tồn kho
+            TonKhoCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+                if (p != null)
+                {
+                    p.Content = new TonKhoTable();
+                    InventoryList = await Task.Run(() => ReportService.Ins.GetInventoryReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
                 }
             });
             #endregion
