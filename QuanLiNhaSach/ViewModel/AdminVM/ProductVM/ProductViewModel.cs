@@ -245,6 +245,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
         public ICommand ExportExcel { get; set; }
         public ICommand AddListProduct { get; set; }
         public ICommand OpenAddList { get; set; }   
+        public ICommand AddNewGenre { get; set; }
+        public ICommand OpenAddNewGenre { get; set; }
         private string FormalPrice(string s)
         {
             string valuePrice = "";
@@ -298,6 +300,56 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 ComboList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
                 ComboList.Insert(0, "Tất cả thể loại");
                 GenreBox = "Tất cả thể loại";
+            });
+            AddNewGenre = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                if(Genre!=null)
+                {
+                    string[] lines = Genre.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                    int error = 0;
+                    foreach (string line in lines)
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            GenreBook ab;
+                            try
+                            {
+                                ab = new GenreBook
+                                {
+                                    DisplayName = line,
+                                };
+                            }
+                            catch
+                            {
+                                ab = null;
+                                error++;
+                                continue;
+                            }
+                            if (ab != null)
+                            {
+                                (bool b, string c) = await GenreService.Ins.AddNewGenre(ab);
+                                if (!b)
+                                {
+                                    error++;
+                                }
+                            }
+                        } 
+                        else { error++; }
+                    }
+                    Success wd2 = new Success("Đã thêm thành công " + (lines.Length - error) + " danh mục mới");
+                    wd2.ShowDialog();
+                    GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
+                    ComboList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
+                    ComboList.Insert(0, "Tất cả thể loại");
+                    GenreBox = "Tất cả thể loại";
+                    Genre = null;
+                }
+            });
+            OpenAddNewGenre = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                AddGenre wd = new AddGenre();
+                wd.ShowDialog();
+
             });
             AddSanPhamCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -923,8 +975,16 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 {
                     ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
                     prdList = new List<BookDTO>(ProductList);
-                    ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower()) && x.GenreName==Genre));
-                }
+                    if(GenreBox != "Tất cả thể loại")
+                    {
+                        ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower()) && x.GenreName == GenreBox));
+                    }
+                    else
+                    {
+                        ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => x.DisplayName.ToLower().Contains(p.Text.ToLower())));
+                    }
+                }    
+                   
             });
 
         }

@@ -19,6 +19,10 @@ namespace QuanLiNhaSach.View.MessageBox
     /// </summary>
     public partial class DeleteMessage : Window
     {
+        public DeleteMessage()
+        {
+            InitializeComponent();
+        }
         public DeleteMessage(string s = "Bạn có chắc chắn muốn xóa không")
         {
             InitializeComponent();

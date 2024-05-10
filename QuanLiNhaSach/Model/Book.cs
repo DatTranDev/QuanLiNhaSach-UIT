@@ -31,6 +31,7 @@ namespace QuanLiNhaSach.Model
         public string Description { get; set; }
         public string Image { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> PublishYear { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillInfo> BillInfoes { get; set; }
