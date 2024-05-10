@@ -28,7 +28,8 @@
         <ListView
             x:Name="danhSachThuTien"
             Margin="11"
-            ItemsSource="{Binding DanhSachThuTien}">
+            ItemsSource="{Binding DanhSachThuTien}"
+            SelectedItem="{Binding SelectedItemPaymentRecept}">
 
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
@@ -118,7 +119,9 @@
 
                     </GridViewColumn>
 
-                    <!--<GridViewColumn>
+
+
+                    <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -129,9 +132,10 @@
                                         Background="Transparent"
                                         BorderThickness="0"
                                         Cursor="Hand">
+                                        <Image Source="/QuanLiNhaSach;component/Resources/Icon/Info_Icon.png" />
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=billTable, Path=DataContext.InfoBillCM}" />
+                                                <i:InvokeCommandAction Command="{Binding ElementName=danhSachThuTien, Path=DataContext.InfoPaymentReceptCM}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Border>
@@ -142,9 +146,10 @@
                                         Background="Transparent"
                                         BorderThickness="0"
                                         Cursor="Hand">
+                                        <Image Source="/QuanLiNhaSach;component/Resources/Icon/DeleteBlue_Icon.png" />
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=billTable, Path=DataContext.DeleteBillCM}" />
+                                                <i:InvokeCommandAction Command="{Binding ElementName=danhSachThuTien, Path=DataContext.DeletePaymentReciptCM}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Border>
@@ -152,7 +157,8 @@
 
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>

@@ -18,6 +18,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             set { _danhSachThuTien = value; OnPropertyChanged(nameof(DanhSachThuTien)); }
         }
 
+        //phục vụ xem chi tiết phiếu thu tiền
+        private PaymentReceiptDTO _selectedItemPaymentRecept;
+        public PaymentReceiptDTO SelectedItemPaymentRecept
+        {
+            get { return _selectedItemPaymentRecept; }
+            set { _selectedItemPaymentRecept = value; OnPropertyChanged(nameof(SelectedItemPaymentRecept)); }
+        }
 
 
     }

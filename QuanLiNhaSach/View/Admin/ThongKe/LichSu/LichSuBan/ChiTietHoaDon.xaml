@@ -212,7 +212,7 @@
                                                         Margin="0,0,10,0"
                                                         HorizontalAlignment="Center"
                                                         FontSize="17"
-                                                        Text="{Binding Book.Price, Converter={StaticResource PriceConverter}}" />
+                                                        Text="{Binding PriceItem, Converter={StaticResource PriceConverter}}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
 
@@ -233,7 +233,7 @@
                                                         Margin="0,0,10,0"
                                                         HorizontalAlignment="Center"
                                                         FontSize="17"
-                                                        Text="{Binding PriceItem, Converter={StaticResource PriceConverter}}" />
+                                                        Text="{Binding TotalPrice, Converter={StaticResource PriceConverter}}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
 

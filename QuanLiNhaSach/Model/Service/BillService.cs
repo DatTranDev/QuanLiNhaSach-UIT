@@ -56,6 +56,7 @@ namespace QuanLiNhaSach.Model.Service
                                                         Quantity = x.Quantity,
                                                         Bill = x.Bill,
                                                         Book = x.Book,
+                                                        TotalPrice=x.PriceItem*x.Quantity
                                                     }).ToList(),
                                         IsDeleted = c.IsDeleted
                                     }).OrderByDescending(m => m.CreateAt).ToListAsync();

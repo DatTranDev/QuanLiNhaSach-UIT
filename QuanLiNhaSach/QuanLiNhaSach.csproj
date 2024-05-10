@@ -306,6 +306,9 @@
     <Compile Include="View\Admin\ThongKe\LichSu\LichSuBan\LichSuTable.xaml.cs">
       <DependentUpon>LichSuTable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ThongKe\LichSu\LichSuThuTien\ChiTietPhieuThu.xaml.cs">
+      <DependentUpon>ChiTietPhieuThu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\ThongKe\LichSu\LichSuThuTien\LichSuTable.xaml.cs">
       <DependentUpon>LichSuTable.xaml</DependentUpon>
     </Compile>
@@ -439,6 +442,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\ThongKe\LichSu\LichSuBan\LichSuTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\LichSu\LichSuThuTien\ChiTietPhieuThu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

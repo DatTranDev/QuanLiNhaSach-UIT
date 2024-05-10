@@ -20,6 +20,8 @@ using QuanLiNhaSach.View.Admin.ThongKe.CongNo;
 using QuanLiNhaSach.View.Admin.ThongKe.TonKho;
 using QuanLiNhaSach.View.Admin.ThongKe;
 using System.Threading;
+using QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuThuTien;
+using System.Security.Policy;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
@@ -56,6 +58,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand RevenueCM { get; set; }
         public ICommand FavorCM { get; set; }
         public ICommand DateChange { get; set; }
+        public ICommand InfoPaymentReceptCM { get; set; }
+        public ICommand DeletePaymentReciptCM {  get; set; }
+
 
 
 
@@ -115,7 +120,43 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             #endregion
 
 
+            #region chi tiết phiếu thu tiền
+            InfoPaymentReceptCM = new RelayCommand<PaymentReceiptDTO>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItemPaymentRecept != null)
+                {
+                    ChiTietPhieuThu wd = new ChiTietPhieuThu();
+                    wd.ShowDialog();
+                }
+            });
+            #endregion
 
+
+            #region xóa phiếu thu
+
+            #endregion
+            //xóa 1 hóa đơn
+            DeletePaymentReciptCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                if (SelectedItemPaymentRecept == null) return;
+
+                DeleteMessage wd = new DeleteMessage();
+                wd.ShowDialog();
+                if (wd.DialogResult == true)
+                {
+                    (bool sucess, string messageDelete) = await PaymentReceiptService.Ins.DeletePaymentRecipt(SelectedItemPaymentRecept);
+                    if (sucess)
+                    {
+                        DanhSachThuTien.Remove(SelectedItemPaymentRecept);
+                        danhSachThuTien = new List<PaymentReceiptDTO>(DanhSachThuTien);
+                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Xóa thành công");
+                    }
+                    else
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, messageDelete);
+                    }
+                }
+            });
             #region Lịch sử bán
 
             //lịch sử bán
