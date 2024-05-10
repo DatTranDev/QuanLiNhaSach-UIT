@@ -256,6 +256,7 @@
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ImportItem.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />
@@ -278,6 +279,9 @@
     <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\ProductsManager\AddGenre.xaml.cs">
+      <DependentUpon>AddGenre.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\ProductsManager\AddListProduct.xaml.cs">
       <DependentUpon>AddListProduct.xaml</DependentUpon>
     </Compile>
@@ -296,11 +300,23 @@
     <Compile Include="View\Admin\ProductsManager\test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\StaffManagement\AddStaff.xaml.cs">
+      <DependentUpon>AddStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StaffManagement\ModifyStaff.xaml.cs">
+      <DependentUpon>ModifyStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StaffManagement\StaffPage.xaml.cs">
+      <DependentUpon>StaffPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MessageBox\ConfirmLogout.xaml.cs">
       <DependentUpon>ConfirmLogout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MessageBox\DeleteMessage.xaml.cs">
+      <DependentUpon>DeleteMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MessageBox\Error.xaml.cs">
       <DependentUpon>Error.xaml</DependentUpon>
@@ -351,6 +367,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Admin\ProductsManager\AddGenre.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Admin\ProductsManager\AddListProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -375,6 +395,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Admin\StaffManagement\AddStaff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Admin\StaffManagement\ButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -383,11 +407,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Admin\StaffManagement\ModifyStaff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StaffManagement\StaffPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Login\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MessageBox\ConfirmLogout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MessageBox\DeleteMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -473,7 +509,6 @@
     <Resource Include="Resources\Icon\DeleteBlue_Icon.png" />
     <Resource Include="Resources\Icon\DeleteGray_Icon.png" />
     <Resource Include="Resources\Icon\Delete_Caution.png" />
-    <Resource Include="Resources\Icon\Edit.png" />
     <Resource Include="Resources\Icon\ErrorBrown_Icon.png" />
     <Resource Include="Resources\Icon\ErrorWhite_Icon.png" />
     <Resource Include="Resources\Icon\Help_Icon.png" />
@@ -541,10 +576,13 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icon\IconImport.png" />
+    <Resource Include="Resources\Icon\Edit.png" />
     <Resource Include="Resources\Icon\ion_cart-brown.png" />
     <Resource Include="Resources\Icon\ion_cart-white.png" />
     <Resource Include="Resources\Icon\AppIcon.ico" />
     <Resource Include="Resources\Icon\appicon.png" />
+    <Resource Include="Resources\Icon\plus_orange_icon.png" />
     <Resource Include="Resources\Icon\import_products.png" />
     <Resource Include="Resources\Icon\Export_excel_white_icon.png" />
     <Resource Include="Resources\Icon\Excel_white_Icon.png" />

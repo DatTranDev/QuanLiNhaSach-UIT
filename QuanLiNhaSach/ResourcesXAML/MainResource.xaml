@@ -4,10 +4,12 @@
                     xmlns:viewmodel2="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.ProductVM"
                     xmlns:viewmodel3="clr-namespace:QuanLiNhaSach.ViewModel.StaffVM.SaleVM"
                     xmlns:viewmodel4="clr-namespace:QuanLiNhaSach.ViewModel.StaffVM"
-                    xmlns:viewmodel5="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM">
+                    xmlns:viewmodel5="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM"
+                    xmlns:viewmodel6="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM">
     <viewmodel1:MainAdminViewModel x:Key="MainAdminVM" />
     <viewmodel2:ProductViewModel x:Key="ProductVM" />
     <viewmodel3:SaleViewModel x:Key="SaleVM" />
     <viewmodel4:MainStaffViewModel x:Key="MainStaffVM"/>
     <viewmodel5:CustomerManagementViewModel x:Key="CustomerPageVM"/>
+    <viewmodel6:StaffViewModel x:Key="StaffPageVM" />
 </ResourceDictionary>

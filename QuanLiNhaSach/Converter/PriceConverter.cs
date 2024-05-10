@@ -14,12 +14,19 @@ namespace QuanLiNhaSach.Converter
         {
             if (value is decimal price)
             {
-                string valuePrice;
-                int b = Decimal.ToInt32(price);
-                string c = b.ToString("N");
-                valuePrice = c.Substring(0, c.Length - 3);
-                return valuePrice;
-            }
+                try
+                {
+                    string valuePrice;
+                    int b = Decimal.ToInt32(price);
+                    string c = b.ToString("N");
+                    valuePrice = c.Substring(0, c.Length - 3);
+                    return valuePrice;
+                }
+                catch
+                {
+                    return value;
+                }
+             }
             return value;
         }
 
