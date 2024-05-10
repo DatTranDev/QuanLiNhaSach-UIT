@@ -44,7 +44,7 @@ namespace QuanLiNhaSach.Model.Service
                 mail.Body = "Username:" + username + "\n" + "New password:" + pass;
                 await smtpClient.SendMailAsync(mail);
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
                 MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra, vui lòng nhập lại !");
             }
