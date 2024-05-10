@@ -282,13 +282,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
                 {
                     string mailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
                     string phonePattern = @"^0\d{9}$";
-                    if (!Regex.IsMatch(PhoneNumber, phonePattern))
+                    if (!Regex.IsMatch(EditPhoneNumber, phonePattern))
                     {
                         MessageBoxCustom.Show(MessageBoxCustom.Error, "Số điện thoại không hợp lệ");
                     }
                     else
                     {
-                        if (!Regex.IsMatch(Email, mailPattern))
+                        if (!Regex.IsMatch(EditEmail, mailPattern))
                         {
                             MessageBoxCustom.Show(MessageBoxCustom.Error, "Địa chỉ mail không hợp lệ");
                         }
@@ -301,6 +301,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
                                 Description = EditDescription,
                                 PhoneNumber = EditPhoneNumber,
                                 Email = EditEmail,
+                                Debts = SelectedItem.Debts,
+                                Spend = SelectedItem.Spend,
                                 DisplayName = EditName,
                                 Address = EditAddress,
                                 IsDeleted = false,
