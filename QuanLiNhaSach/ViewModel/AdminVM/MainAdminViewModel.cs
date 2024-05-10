@@ -25,6 +25,8 @@ using QuanLiNhaSach.View.Admin.ThongKe;
 namespace QuanLiNhaSach.ViewModel.AdminVM
 {
     internal class MainAdminViewModel : BaseViewModel
+
+       
     {
         private SeriesCollection _revenueSeries;
         public SeriesCollection RevenueSeries
@@ -148,7 +150,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
         public ICommand OpenHelpPage { get; set; }
         public ICommand LogOutCommand { get; set; }
         public MainAdminViewModel() {
-            FirstLoadCM = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new ProductMain(); });
+            FirstLoadCM = new RelayCommand<Frame>((p) => {
+                if(currentStaff != null)
+                    currentName = currentStaff.DisplayName;
+                return true; }, (p) => { p.Content = new ProductMain(); 
+            });
             LoadKhachHangPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new CustomerPage(); });
             LoadSanPhamPage = new RelayCommand<Frame>((p) => { return true; }, (p)=> { p.Content = new ProductMain(); });
             LoadHeThongPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new SystemPage(); });

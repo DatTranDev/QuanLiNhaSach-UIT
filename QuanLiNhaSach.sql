@@ -123,7 +123,7 @@ create table SystemValue
 	DebtsPolicy bit
 )
 go
-insert into Staff (PassWord, UserName, Gender, Role) values ('admin','admin', 'Nam', N'Quản lí')
+insert into Staff (PassWord, UserName, Gender, Role) values ('admin','21232f297a57a5a743894a0e4a801fc3', 'Nam', N'Quản lí')
 go
 ALter table [dbo].[Systemvalue] add ID int identity(1,1)
 go
