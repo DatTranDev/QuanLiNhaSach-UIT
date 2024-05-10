@@ -16,7 +16,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             set
             {
                 _revenueSeries = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(RevenueSeries));
             }
         }
         private string[] _labels;

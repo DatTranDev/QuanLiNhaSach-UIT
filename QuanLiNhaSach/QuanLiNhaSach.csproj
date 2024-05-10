@@ -172,6 +172,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\CusNameConverter.cs" />
     <Compile Include="Converter\IndexConverter.cs" />
     <Compile Include="Converter\IndexInvoiceConverter.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="ViewModel\AdminVM\ThongKeVM\DoanhThu.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuBan.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuThuTien.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\MotSoPTBoTro.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\SachBanChay.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\StyleButton.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\ThongKeViewModel.cs" />

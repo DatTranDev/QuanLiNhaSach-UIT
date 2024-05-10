@@ -64,7 +64,15 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ThongKeViewModel()
         {
 
+            #region set dữ liệu cho lần đầu mở page thống kê
+            IsBorderForDatePickerVisible = true;
+            setListThang();
+            SelectedThang = "Tháng "+ DateTime.Now.Month;
+            TextBoxYear = DateTime.Now.Year.ToString();
             CaseNav = 0;
+            #endregion
+
+
             #region Lịch sử thu tiền
             //xây dựng command LichSuThuTienCM
             LichSuThuTienCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
@@ -99,6 +107,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 checkThaoTac = true;
                 CaseNav = 0;
                 checkLanDau = true;
+                IsBorderForDatePickerVisible = true;
 
             });
             #endregion
@@ -130,6 +139,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 
                 checkThaoTac = true;
                 CaseNav = 1;
+                IsBorderForDatePickerVisible = true;
 
             });
             #endregion
@@ -240,6 +250,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 
                 checkThaoTac = true;
                 CaseNav = 2;
+                IsBorderForDatePickerVisible = true;
 
             });
             #endregion
@@ -255,10 +266,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
                 checkThaoTac = false;
                 p.Content = new SachBanChayTable();
-                FavorList = await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo));
+                FavorList = new ObservableCollection<BookDTO>( await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo)));
 
                 checkThaoTac = true;
                 CaseNav = 3;
+                IsBorderForDatePickerVisible = true;
 
             });
             #endregion
@@ -275,10 +287,20 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 checkThaoTac = false;
 
                 p.Content = new CongNoTable();
-                DebtList = await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
-               
+
+                SelectedThang = "Tháng " + DateTime.Now.Month;
+                TextBoxYear =DateTime.Now.Year.ToString();
+                month = formatMonth(SelectedThang);
+                year = TextBoxYear;
+
+                DebtList = new ObservableCollection<DebtReportDTO>(await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(formatMonthYear(month,year))));
+                if (DebtList != null)
+                {
+                    debtList = new List<DebtReportDTO>(DebtList);
+                }
                 checkThaoTac = true;
                 CaseNav = 4;
+                IsBorderForDatePickerVisible = false;
             });
             #endregion
 
@@ -294,10 +316,22 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 checkThaoTac = false;
 
                 p.Content = new TonKhoTable();
-                InventoryList = await Task.Run(() => ReportService.Ins.GetInventoryReportByMonth(SelectedDateFrom.ToString("MM-yyyy")));
-                
+
+                SelectedThang = "Tháng " + DateTime.Now.Month;
+                TextBoxYear = DateTime.Now.Year.ToString();
+                month = formatMonth(SelectedThang);
+                year = TextBoxYear;
+
+                InventoryList = new ObservableCollection<InventoryReportDTO>(await Task.Run(() => ReportService.Ins.GetInventoryReportByMonth(formatMonthYear(month, year))));
+                if (InventoryList != null)
+                {
+                    inventoryList = new List<InventoryReportDTO>(InventoryList);
+                }
+
+
                 checkThaoTac = true;
                 CaseNav = 5;
+                IsBorderForDatePickerVisible = false;
             });
             #endregion
 
@@ -333,7 +367,6 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 //doanh thu
                 if (CaseNav == 2)
                 {
-                    MessageBox.Show(checkLanDau+"");
                     List<int> revenueValues = new List<int>();
                     List<DateTime> dates = new List<DateTime>();
 
@@ -365,14 +398,143 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
 
                 //sách ưa thích
-                FavorList = await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo));
 
+                if (CaseNav == 3)
+                {
+                    FavorList = new ObservableCollection<BookDTO>(await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo)));
+                }
             });
             #endregion
         }
 
-
         bool checkThaoTac = false;
-     
-    } 
+
+
+
+
+
+        #region bổ trợ cho lựa chọn thời gian của báo cáo công nợ,tồn kho
+        private bool _isBorderForDatePickerVisible;
+        public bool IsBorderForDatePickerVisible
+        {
+            get { return _isBorderForDatePickerVisible; }
+            set
+            {
+                _isBorderForDatePickerVisible = value;
+                OnPropertyChanged(nameof(IsBorderForDatePickerVisible));
+                IsBorderForTonKhoCongNoVisible = !IsBorderForDatePickerVisible;
+            }
+        }
+
+        private bool _isBorderForTonKhoCongNoVisible;
+        public bool IsBorderForTonKhoCongNoVisible
+        {
+            get { return _isBorderForTonKhoCongNoVisible; }
+            set
+            {
+                _isBorderForTonKhoCongNoVisible = value;
+                OnPropertyChanged(nameof(IsBorderForTonKhoCongNoVisible));
+            }
+        }
+
+        private string month = null;
+        private string year = DateTime.Now.Year.ToString();
+        private ObservableCollection<string> listThang;
+        public ObservableCollection<string> ListThang
+        {
+            get { return listThang; }
+            set
+            {
+                if (listThang != value)
+                {
+                    listThang = value;
+                    OnPropertyChanged(nameof(ListThang));
+                }
+            }
+        }
+
+        private string _selectedThang;
+        public string SelectedThang
+        {
+            get { return _selectedThang; }
+            set
+            {
+                _selectedThang = value;
+                OnPropertyChanged(nameof(SelectedThang));
+                month = formatMonth(SelectedThang);
+
+                if (CaseNav == 4)
+                {
+                    if (debtList != null)
+                    {
+                        DebtList = new ObservableCollection<DebtReportDTO>(debtList.FindAll(d => d.MonthYear == formatMonthYear(month, year)));
+                    }
+                }
+
+                if (CaseNav == 5)
+                {
+                    if (inventoryList != null)
+                    {
+                        InventoryList = new ObservableCollection<InventoryReportDTO>(inventoryList.FindAll(d => d.MonthYear == formatMonthYear(month, year)));
+                    }
+                }
+            }
+        }
+
+
+        private string textBoxYear;
+        public string TextBoxYear
+        {
+            get { return textBoxYear; }
+            set
+            {
+             
+
+                if (value != textBoxYear)
+                {
+                    textBoxYear = value;
+                    if (IsYear(textBoxYear))
+                    {
+                        ValidateTextBoxYear = "";
+                        year = TextBoxYear;
+                        if (CaseNav == 4)
+                        {
+                            if (debtList != null)
+                            {
+                                DebtList = new ObservableCollection<DebtReportDTO>(debtList.FindAll(d => d.MonthYear == formatMonthYear(month, year)));
+                            }
+                        }
+
+                        if (CaseNav == 5)
+                        {
+                            if (inventoryList != null)
+                            {
+                                InventoryList = new ObservableCollection<InventoryReportDTO>(inventoryList.FindAll(d => d.MonthYear == formatMonthYear(month, year)));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ValidateTextBoxYear = "Không hợp lệ!";
+                    }
+                }
+                OnPropertyChanged(nameof(TextBoxYear));
+
+            }
+        }
+
+        private string validateTextBoxYear;
+        public string ValidateTextBoxYear
+        {
+
+            get { return validateTextBoxYear; }
+            set
+            {
+                validateTextBoxYear= value;
+                OnPropertyChanged(nameof(ValidateTextBoxYear));
+            }
+        }
+        #endregion
+
+    }
 }

@@ -2,6 +2,7 @@
     x:Class="QuanLiNhaSach.View.Admin.ThongKe.ThongKeMainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.ThongKe"
@@ -27,6 +28,9 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -240,12 +244,14 @@
 
                 </StackPanel>
 
-                <!--  Box lua chon thoi gian  -->
+                <!--  Box lua chon thoi gian  cho lịch sử thu tiền,lịch sử bán,doanh thu,sách bán chạy  -->
                 <Border
                     Width="190"
-                    Height="210.2"
+                    Height="160"
                     Background="#ffecdf"
-                    CornerRadius="16">
+                    CornerRadius="16"
+                    Visibility="{Binding IsBorderForDatePickerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
                     <StackPanel Width="190" HorizontalAlignment="Center">
                         <TextBlock
                             Margin="20,10,0,10"
@@ -256,16 +262,8 @@
                             Text="Thời gian" />
 
 
-                        <Border
-                            Width="168.5"
-                            Height="46.4"
-                            Margin="0,0,0,8"
-                            Background="White"
-                            CornerRadius="16" />
-
-
-
                         <!--  Từ ngày  -->
+
                         <Border
                             Width="168.5"
                             Height="46.4"
@@ -299,7 +297,9 @@
                         </Border>
 
 
+
                         <!--  Đến ngày  -->
+
                         <Border
                             Width="168.5"
                             Height="46.4"
@@ -332,6 +332,42 @@
                     </StackPanel>
 
                 </Border>
+
+                <!--  Nhập năm cho công nợ,tồn kho  -->
+                <Border
+                    Width="190"
+                    Height="115"
+                    Background="#ffecdf"
+                    CornerRadius="16"
+                    Visibility="{Binding IsBorderForTonKhoCongNoVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <StackPanel Width="190" HorizontalAlignment="Center">
+                        <TextBlock
+                            Margin="0,10,0,15"
+                            FontFamily="Roboto Condensed"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#e0ae8a"
+                            Text="Nhập năm"
+                            TextAlignment="Center" />
+
+                        <TextBox
+                            Width="168.5"
+                            VerticalAlignment="Center"
+                            Background="White"
+                            BorderBrush="#e0ae8a"
+                            FontSize="18"
+                            Text="{Binding TextBoxYear, UpdateSourceTrigger=PropertyChanged}"
+                            TextAlignment="Center" />
+                        <TextBlock
+                            Width="168.5"
+                            Foreground="Red"
+                            Text="{Binding ValidateTextBoxYear}"
+                            TextAlignment="Center" />
+                    </StackPanel>
+
+                </Border>
+
             </StackPanel>
         </Grid>
 

@@ -10,12 +10,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
     public partial class ThongKeViewModel
     {
-        private static List<BillDTO> danhSachHoaDon;
+        private  List<BillDTO> danhSachHoaDon;
         private ObservableCollection<BillDTO> _danhSachHoaDon;
         public ObservableCollection<BillDTO> DanhSachHoaDon
         {
             get { return _danhSachHoaDon; }
-            set { _danhSachHoaDon = value; OnPropertyChanged(); }
+            set { _danhSachHoaDon = value; OnPropertyChanged(nameof(DanhSachHoaDon)); }
         }
 
 
@@ -24,7 +24,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public BillDTO SelectedItem
         {
             get { return _selectedItem; }
-            set { _selectedItem = value; OnPropertyChanged(); }
+            set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); }
         }
 
 
@@ -33,7 +33,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ObservableCollection<BillInfoDTO> BookList
         {
             get { return _bookList; }
-            set { _bookList = value; OnPropertyChanged(); }
+            set { _bookList = value; OnPropertyChanged(nameof(BookList)); }
         }
 
 

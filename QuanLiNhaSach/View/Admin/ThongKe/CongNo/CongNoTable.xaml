@@ -43,12 +43,22 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <TextBlock
+            <!--<TextBlock
                 Margin="200,0"
                 VerticalAlignment="Center"
                 FontSize="30"
                 Style="{DynamicResource TextBlock}"
-                Text="Tháng: 5" />
+                Text="Tháng: 5" />-->
+            <ComboBox
+                Width="170"
+                Margin="238.5,0,718.5,0"
+                BorderBrush="#e0ae8a"
+                FontSize="30"
+                FontWeight="Bold"
+                Foreground="#e0ae8a"
+                ItemsSource="{Binding ListThang}"
+                SelectedItem="{Binding SelectedThang, Mode=TwoWay}"
+                Style="{DynamicResource MaterialDesignComboBox}" />
         </Grid>
 
 

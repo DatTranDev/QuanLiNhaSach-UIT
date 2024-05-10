@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +11,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
     public partial class ThongKeViewModel
     {
-        private int caseNav = -1;
+        private int caseNav;
         public int CaseNav
         {
             get => caseNav;
             set
             {
                 caseNav = value;
-                OnPropertyChanged(nameof(CaseNav));
                 UpdateButtonColors();
             }
         }
@@ -90,38 +91,39 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         }
 
 
+
+        private static SolidColorBrush colorSelect = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xF4, 0xF4));
         private void UpdateButtonColors()
         {
 
             ResetColors();
-            Color highlightColor = Color.FromArgb(0xFF, 0xFF, 0xF4, 0xF4);
             switch (caseNav)
             {
                 case 0:
-                    LichSuThuTienColor = new SolidColorBrush(highlightColor);
+                    LichSuThuTienColor = colorSelect;
                     break;
                 case 1:
-                    LichSuBanColor = new SolidColorBrush(highlightColor);
+                    LichSuBanColor = colorSelect;
                     break;
                 case 2:
-                    DoanhThuColor = new SolidColorBrush(highlightColor);
+                    DoanhThuColor = colorSelect;
                     break;
                 case 3:
-                    SachBanChayColor = new SolidColorBrush(highlightColor);
+                    SachBanChayColor = colorSelect;
                     break;
                 case 4:
-                    CongNoColor = new SolidColorBrush(highlightColor);
+                    CongNoColor = colorSelect;
                     break;
                 case 5:
-                    TonKhoColor = new SolidColorBrush(highlightColor);
+                    TonKhoColor = colorSelect;
                     break;
             }
         }
 
 
+        private static SolidColorBrush defaultColor = new SolidColorBrush(Colors.White);
         private void ResetColors()
         {
-            var defaultColor = new SolidColorBrush(Colors.White);
             LichSuThuTienColor = defaultColor;
             LichSuBanColor = defaultColor;
             DoanhThuColor = defaultColor;

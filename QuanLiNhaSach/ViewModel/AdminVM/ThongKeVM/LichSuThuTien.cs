@@ -10,12 +10,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
     public partial class ThongKeViewModel
     {
-        private static List<PaymentReceiptDTO> danhSachThuTien;
+        private  List<PaymentReceiptDTO> danhSachThuTien;
         private ObservableCollection<PaymentReceiptDTO> _danhSachThuTien;
         public ObservableCollection<PaymentReceiptDTO> DanhSachThuTien
         {
             get { return _danhSachThuTien; }
-            set { _danhSachThuTien = value; OnPropertyChanged(); }
+            set { _danhSachThuTien = value; OnPropertyChanged(nameof(DanhSachThuTien)); }
         }
 
 
