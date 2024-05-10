@@ -14,7 +14,7 @@ namespace QuanLiNhaSach.DTOs
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> IDGenre { get; set; }
         public string GenreName { get; set; }
-        public int PublishYear { get; set; }
+        public Nullable<int> PublishYear { get; set; }
         private Nullable<int> _inventory;
         public Nullable<int> Inventory
         {

@@ -182,9 +182,6 @@
     <Compile Include="DTOs\GoodReceivedInfoDTO.cs" />
     <Compile Include="DTOs\InventoryReportDTO.cs" />
     <Compile Include="DTOs\PaymentReceiptDTO.cs" />
-    <Compile Include="Model\Service\ReportService.cs" />
-    <Compile Include="DTOs\StaffDTO.cs" />
-    <Compile Include="DTOs\SystemValueDTO.cs" />
     <Compile Include="Model\Bill.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -230,6 +227,9 @@
     <Compile Include="Model\PaymentReceipt.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\ReportService.cs" />
+    <Compile Include="DTOs\StaffDTO.cs" />
+    <Compile Include="DTOs\SystemValueDTO.cs" />
     <Compile Include="Model\Service\BillService.cs" />
     <Compile Include="Model\Service\BookService.cs" />
     <Compile Include="Model\Service\CustomerService.cs" />
@@ -566,16 +566,6 @@
     <Resource Include="Resources\Image\BookStore.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.cs</LastGenOutput>
-    </Content>
     <Resource Include="Resources\Icon\IconImport.png" />
     <Resource Include="Resources\Icon\Edit.png" />
     <Resource Include="Resources\Icon\ion_cart-brown.png" />
@@ -587,6 +577,18 @@
     <Resource Include="Resources\Icon\Export_excel_white_icon.png" />
     <Resource Include="Resources\Icon\Excel_white_Icon.png" />
     <Resource Include="View\Admin\ProductsManager\tải xuống.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

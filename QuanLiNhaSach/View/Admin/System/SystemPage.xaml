@@ -5,7 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:QuanLiNhaSach.View"
         mc:Ignorable="d"
-        d:DesignHeight="864" d:DesignWidth="1536"
+        d:DesignHeight="778.4"
+        d:DesignWidth="1536"
         Background="White"
         FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.FontFamily="Roboto Condensed"
@@ -16,13 +17,13 @@
         TextOptions.TextRenderingMode="Auto"
         Title="SystemPage">
 
-    <Grid Background="White">
+    <Grid Background="White" Margin="0 40 0 0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*" />
             <ColumnDefinition Width="50*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Width="638" Height="572" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Width="638" Height="572" HorizontalAlignment="Center" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -148,23 +149,23 @@
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Center"
                     Orientation="Vertical">
-            
-            <StackPanel Orientation="Horizontal">
-                <TextBox Grid.Row="0" Grid.Column="0" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox Grid.Row="0" Grid.Column="0"
+                         Margin="0 0 130 0"
                      Text="Danh mục sản phẩm" 
                      Grid.ColumnSpan="2" 
                      TextAlignment="Center" 
                      FontSize="35"
                      FontWeight="Bold"
-                     Foreground="#E0AE8A"
-                     Margin="180 150 0 0"
+                     Foreground="#E0AE8A"                 
                      BorderThickness="0"
                      />
                 <Button Width="Auto"
-                        Height="Auto"
-                        Margin="100 150 0 0"
-                        Background="White"
-                        BorderThickness="0">
+                    Height="Auto"
+                    Cursor="Hand"
+                    
+                    Background="White"
+                    BorderThickness="0">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="{x:Null}" />
@@ -172,16 +173,14 @@
                             <Setter Property="Foreground" Value="{x:Null}" />
                         </Style>
                     </Button.Style>
-
                     <Button.Content>
                         <Image Width="52.8"
                                Height="53.6"
-                            Source="C:\Users\Tuan Kiet\source\repos\QuanLiNhaSach-UIT\QuanLiNhaSach\Resources\Icon\AddCusBtn.png"/>
+                               Source="/QuanLiNhaSach;component/Resources/Icon/AddCusBtn.png"/>
                     </Button.Content>
-
                 </Button>
-
             </StackPanel>
+            
             <Border BorderThickness="20" 
                     CornerRadius="32"
                     BorderBrush="#E6B89F"
@@ -192,22 +191,20 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="200" Header="STT">
-                                    
+
                                 </GridViewColumn>
 
                                 <GridViewColumn Width="200" Header="Danh mục">
 
                                 </GridViewColumn>
                                 <GridViewColumn Width="200" Header="Số lượng sản phẩm">
-                                    
+
                                 </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </Grid>
             </Border>
-
-
         </StackPanel>
     </Grid>
 

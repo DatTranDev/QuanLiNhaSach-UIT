@@ -19,6 +19,7 @@ using System.Data.Entity;
 using QuanLiNhaSach.View.Admin.ProductsManager;
 using QuanLiNhaSach.View;
 using QuanLiNhaSach.View.Staff.Sale;
+using QuanLiNhaSach.View.Admin.StaffManagement;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM
 {
@@ -151,6 +152,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
             LoadSanPhamPage = new RelayCommand<Frame>((p) => { return true; }, (p)=> { p.Content = new ProductMain(); });
             LoadHeThongPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new SystemPage(); });
             LoadBanHangPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new SalePage(); });
+            LoadNhanVienPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new StaffPage(); });
             OpenAccountWindow = new RelayCommand<object>(null, (p) =>
             {
                 EditBirthDay = currentStaff.BirthDay.ToString();
