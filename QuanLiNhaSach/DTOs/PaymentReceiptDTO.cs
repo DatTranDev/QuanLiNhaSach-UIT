@@ -15,7 +15,7 @@ namespace QuanLiNhaSach.DTOs
         public string CusName { get; set; }
         public string CusNumber { get; set; }
         public string CusEmail { get; set; }
-        public Nullable<System.DateTime> CreatAt { get; set; }
+        public Nullable<System.DateTime> CreateAt { get; set; }
         public Nullable<decimal> AmountReceived { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Customer Customer; 

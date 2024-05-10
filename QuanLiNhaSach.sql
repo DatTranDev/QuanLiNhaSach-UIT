@@ -152,3 +152,27 @@ go
 alter table GoodReceived add
 StaffId int, 
 constraint FK_GR_Staff foreign key (StaffId) references Staff(Id)
+go
+INSERT INTO GenreBook(DisplayName) VALUES
+(N'Sách thiếu nhi'),
+(N'Sách tâm lý, tình cảm'),
+(N'Sách tôn giáo'),
+(N'Sách văn hóa xã hội'),
+(N'Sách lịch sử'),
+(N'Sách văn học viễn tưởng'),
+(N'Sách tiểu sử, tự truyện'),
+(N'Sách kinh dị, bí ẩn'),
+(N'Sách dạy nấu ăn'),
+(N'Sách khoa học công nghệ'),
+(N'Sách truyền cảm hứng');
+go
+INSERT INTO Staff (DisplayName, UserName, PassWord, PhoneNumber, BirthDay, Wage, Email, Gender)
+VALUES (N'Hà Minh Đức', 'minhduc196', 'minhduc196', '0944662775', '2004-06-19', 200000, 'haminhduchaminhduc@gmail.com', 'Nam');
+
+INSERT INTO Customer(DisplayName, Email, PhoneNumber, Address, Description, Debts, Spend)
+VALUES (N'Hà Minh Đức', 'haminhduchaminhduc@gmail.com', '0879917562', N'Thủ Đức', N'Không Fa', 200000, 11837848.00);
+
+INSERT INTO Customer(DisplayName, Spend)
+VALUES (N'Khách lẻ', 20000);
+
+alter table Book add PublishYear int;

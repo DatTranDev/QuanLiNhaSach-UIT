@@ -45,7 +45,7 @@ namespace QuanLiNhaSach.Model.Service
                                         TotalPrice = c.TotalPrice,
                                         Customer = c.Customer,
                                         Paid = c.Paid,
-                                        Staff = c.Staff,                                        
+                                        Staff = c.Staff,
                                         BillInfo = (from x in c.BillInfoes
                                                     where x.IsDeleted == false
                                                     select new BillInfoDTO
@@ -56,6 +56,7 @@ namespace QuanLiNhaSach.Model.Service
                                                         Quantity = x.Quantity,
                                                         Bill = x.Bill,
                                                         Book = x.Book,
+                                                        TotalPrice=x.PriceItem*x.Quantity
                                                     }).ToList(),
                                         IsDeleted = c.IsDeleted
                                     }).OrderByDescending(m => m.CreateAt).ToListAsync();
@@ -70,8 +71,8 @@ namespace QuanLiNhaSach.Model.Service
             }
 
 
-        }       
-        
+        }
+
         public async Task<List<BillDTO>> GetBillBetweenDate(DateTime dateFrom, DateTime dateTo)
         {
             try
@@ -199,14 +200,14 @@ namespace QuanLiNhaSach.Model.Service
                     bill.IDCus = newBill.IDCus;
                     bill.CreateAt = newBill.CreateAt;
                     bill.Paid = newBill.Paid;
-                    bill.TotalPrice = newBill.TotalPrice;                   
+                    bill.TotalPrice = newBill.TotalPrice;
                     foreach (var b in newBill.BillInfo)
                     {
                         var billInfo = await context.BillInfo.Where(p => p.IDBill == b.IDBill && p.IDBook == b.IDBook).FirstOrDefaultAsync();
                         billInfo.IDBook = b.IDBook;
                         billInfo.PriceItem = b.PriceItem;
                         billInfo.IsDeleted = false;
-                        billInfo.IDBook = b.IDBook;                       
+                        billInfo.IDBook = b.IDBook;
                         billInfo.Quantity = b.Quantity;
                         billInfo.Bill = b.Bill;
                         bill.BillInfoes.Add(new BillInfo
@@ -232,20 +233,23 @@ namespace QuanLiNhaSach.Model.Service
             }
 
         }
+
+
+        //trả về tổng tiền thu được trong 1 ngày
         public async Task<int> getBillByDate(DateTime date)
         {
             try
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var billTotal = await context.Bill.Where(p => p.CreateAt.Value.Day == date.Day
+                    var billTotalPaid = await context.Bill.Where(p => p.CreateAt.Value.Day == date.Day
                                                            && p.CreateAt.Value.Month == date.Month
                                                            && p.CreateAt.Value.Year == date.Year
                                                            && p.IsDeleted == false).ToListAsync();
                     int totalPrice = 0;
-                    foreach (var bill in billTotal)
+                    foreach (var bill in billTotalPaid)
                     {
-                        totalPrice = totalPrice + (int)bill.TotalPrice;
+                        totalPrice = totalPrice + (int)bill.Paid;
                     }
                     return totalPrice;
 

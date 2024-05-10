@@ -42,9 +42,10 @@ namespace QuanLiNhaSach.Model.Service
                                        CusName = s.Customer.DisplayName,
                                        CusNumber = s.Customer.PhoneNumber,
                                        CusEmail = s.Customer.Email,
-                                       CreatAt = s.CreatAt,
+                                       CreateAt = s.CreatAt,
                                        AmountReceived = s.AmountReceived,
-                                       IsDeleted = s.IsDeleted
+                                       IsDeleted = s.IsDeleted,
+                                       
                                    }).ToListAsync();
                     return await payList;
                 }
@@ -56,6 +57,34 @@ namespace QuanLiNhaSach.Model.Service
             }
 
         }
+
+
+
+        public async Task<(bool, string)> DeletePaymentRecipt(PaymentReceiptDTO paymentReceiptDTO)
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var phieuThu = await context.PaymentReceipt.Where(p => p.ID == paymentReceiptDTO.ID).FirstOrDefaultAsync();
+                    if (phieuThu == null)
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi xảy ra!");
+                        return (false, null);
+                    }
+                    if (phieuThu.IsDeleted == false) phieuThu.IsDeleted = true;
+
+                    await context.SaveChangesAsync();
+                    return (true, "Xóa thành công");
+                }
+            }
+            catch
+            {
+                MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi xảy ra!");
+                return (false, null);
+            }
+        }
+
         public async Task<(bool, string)> AddNewPay(PaymentReceipt newPay)
         {
             try

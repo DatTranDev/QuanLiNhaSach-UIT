@@ -41,6 +41,7 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Image" Type="varchar(max)" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="PublishYear" Type="int" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -391,6 +392,7 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="PublishYear" Type="Int32" />
           <NavigationProperty Name="BillInfoes" Relationship="Self.FK_BillInfo_PrD" FromRole="Book" ToRole="BillInfo" />
           <NavigationProperty Name="GoodReceivedInfoes" Relationship="Self.FK_GRInfo_Book" FromRole="Book" ToRole="GoodReceivedInfo" />
           <NavigationProperty Name="InventoryReports" Relationship="Self.FK_IR_Book" FromRole="Book" ToRole="InventoryReport" />
@@ -754,6 +756,7 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="PublishYear" ColumnName="PublishYear" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
