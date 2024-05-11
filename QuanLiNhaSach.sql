@@ -176,3 +176,4 @@ INSERT INTO Customer(DisplayName, Spend)
 VALUES (N'Khách lẻ', 20000);
 
 alter table Book add PublishYear int;
+alter table Book add Publisher nvarchar(max);
