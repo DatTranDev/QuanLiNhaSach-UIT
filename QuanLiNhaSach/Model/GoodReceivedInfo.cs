@@ -18,6 +18,7 @@ namespace QuanLiNhaSach.Model
         public int IDBook { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<decimal> TotalPriceItem { get; set; }
     
         public virtual Book Book { get; set; }
         public virtual GoodReceived GoodReceived { get; set; }
