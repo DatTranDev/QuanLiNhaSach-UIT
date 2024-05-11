@@ -589,87 +589,86 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     {
                         using (var package = new ExcelPackage(new FileInfo(FilePath)))
                         {
-                            // Chọn worksheet đầu tiên
-                            var worksheet = package.Workbook.Worksheets[0];
+                            try
+                            {
+                                var worksheet = package.Workbook.Worksheets[0];
 
-                            // Lấy số hàng và số cột của worksheet
-                            int rowCount = worksheet.Dimension.Rows;
-                            int colCount = worksheet.Dimension.Columns;
-                            string input = worksheet.Cells[2, 3].Value.ToString();
-                            string[] parts = input.Split(':'); // Tách chuỗi theo dấu ':'
-                            if (parts.Length >= 2) // Kiểm tra xem có phần tử thứ 2 hay không
-                            {
-                                string dateString = parts[1].Trim(); // Lấy phần tử thứ 2 và loại bỏ dấu cách ở đầu và cuối
-                                DateImport = dateString;
-                            }
-                            // Duyệt qua từng hàng để đọc dữ liệu
-                            for (int row = 5; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
-                            {
-                                // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
-                                try
+                                // Lấy số hàng và số cột của worksheet
+                                int rowCount = worksheet.Dimension.Rows;
+                                int colCount = worksheet.Dimension.Columns;
+                                string input = worksheet.Cells[2, 3].Value.ToString();
+                                string[] parts = input.Split(':'); // Tách chuỗi theo dấu ':'
+                                if (parts.Length >= 2) // Kiểm tra xem có phần tử thứ 2 hay không
                                 {
-                                    BookImport = new ImportItem();
-                                    // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
-                                    BookImport.STT = Convert.ToInt32(worksheet.Cells[row, 1].Value);
-                                    BookImport.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
-                                    BookImport.GenreName = worksheet.Cells[row, 3].Value?.ToString();
-                                    BookImport.Author = worksheet.Cells[row, 4].Value?.ToString();
-                                    BookImport.Count = Convert.ToInt32(worksheet.Cells[row, 5].Value);
-                                    BookImport.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
-                                    // Thêm đối tượng ExcelData vào danh sách
-                                    ListImport.Add(BookImport);
+                                    string dateString = parts[1].Trim(); // Lấy phần tử thứ 2 và loại bỏ dấu cách ở đầu và cuối
+                                    DateImport = dateString;
                                 }
-                                catch
+                                // Duyệt qua từng hàng để đọc dữ liệu
+                                for (int row = 5; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
                                 {
-                                    Error wd5 = new Error("File tải lên không đúng");
-                                    wd5.ShowDialog();
-                                    ListImport = new ObservableCollection<ImportItem>();
-                                    break;
-                                }   
+                                    // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
+                                        BookImport = new ImportItem();
+                                        // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
+                                        BookImport.STT = Convert.ToInt32(worksheet.Cells[row, 1].Value);
+                                        BookImport.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
+                                        BookImport.GenreName = worksheet.Cells[row, 3].Value?.ToString();
+                                        BookImport.Author = worksheet.Cells[row, 4].Value?.ToString();
+                                        BookImport.Count = Convert.ToInt32(worksheet.Cells[row, 5].Value);
+                                        BookImport.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
+                                        // Thêm đối tượng ExcelData vào danh sách
+                                        ListImport.Add(BookImport);
+                                }
+                            }
+                            catch
+                            {
+                                Error wd5 = new Error("File tải lên không đúng");
+                                wd5.ShowDialog();
+                                ListImport = new ObservableCollection<ImportItem>();
                                 
                             }
+                            // Chọn worksheet đầu tiên
+                            
                         }
                     }
                     if (p == "ListNewProduct")
                     {
                         using (var package = new ExcelPackage(new FileInfo(FilePath)))
                         {
-                            // Chọn worksheet đầu tiên
-                            var worksheet = package.Workbook.Worksheets[0];
-
-                            // Lấy số hàng và số cột của worksheet
-                            int rowCount = worksheet.Dimension.Rows;
-                            int colCount = worksheet.Dimension.Columns;
-                            
-                            // Duyệt qua từng hàng để đọc dữ liệu
-                            for (int row = 4; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
+                            try
                             {
-                                // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
-                                try
-                                {
-                                    BookDTO bookDTO = new BookDTO();
-                                    // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
-                                    //bookDTO = Convert.ToInt32(worksheet.Cells[row, 1].Value);
-                                    bookDTO.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
-                                    bookDTO.GenreName = worksheet.Cells[row, 3].Value?.ToString();
-                                    bookDTO.Author = worksheet.Cells[row, 4].Value?.ToString();
-                                    bookDTO.Inventory = Convert.ToInt32(worksheet.Cells[row, 5].Value);
-                                    bookDTO.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
-                                    bookDTO.Description= worksheet.Cells[row, 7].Value?.ToString();
-                                    bookDTO.Image= worksheet.Cells[row, 8].Value?.ToString();
-                                    // Thêm đối tượng ExcelData vào danh sách
-                                    ListAdd.Add(bookDTO);
-                                }
-                                catch
-                                {
-                                    Error wd5 = new Error("File tải lên không đúng");
-                                    wd5.ShowDialog();
-                                    ListAdd = new ObservableCollection<BookDTO>();
-                                    break;
-                                }
+                                // Chọn worksheet đầu tiên
+                                var worksheet = package.Workbook.Worksheets[0];
 
+                                // Lấy số hàng và số cột của worksheet
+                                int rowCount = worksheet.Dimension.Rows;
+                                int colCount = worksheet.Dimension.Columns;
+
+                                // Duyệt qua từng hàng để đọc dữ liệu
+                                for (int row = 4; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
+                                {
+                                    // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
+                                        BookDTO bookDTO = new BookDTO();
+                                        // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
+                                        //bookDTO = Convert.ToInt32(worksheet.Cells[row, 1].Value);
+                                        bookDTO.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
+                                        bookDTO.GenreName = worksheet.Cells[row, 3].Value?.ToString();
+                                        bookDTO.Author = worksheet.Cells[row, 4].Value?.ToString();
+                                        bookDTO.Inventory = Convert.ToInt32(worksheet.Cells[row, 5].Value);
+                                        bookDTO.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
+                                        bookDTO.Description = worksheet.Cells[row, 7].Value?.ToString();
+                                        bookDTO.Image = worksheet.Cells[row, 8].Value?.ToString();
+                                        // Thêm đối tượng ExcelData vào danh sách
+                                        ListAdd.Add(bookDTO);
+                                }
                             }
-                        }
+                            catch
+                            {
+                                Error wd5 = new Error("File tải lên không đúng");
+                                wd5.ShowDialog();
+                                ListAdd = new ObservableCollection<BookDTO>();
+                            }
+                         }
+                           
                     }
 
                 }

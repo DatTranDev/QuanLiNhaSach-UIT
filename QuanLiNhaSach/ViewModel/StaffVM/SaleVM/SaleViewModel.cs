@@ -289,6 +289,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
             });
             SearchCusCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                CusOfBill = null;
                 (Customer a, bool success, string messageSearch) = await CustomerService.Ins.findCusbyPhone(CusInfo);
                 if (a != null)
                 {
@@ -391,13 +392,13 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
 
             DeleteBillInfoCM = new RelayCommand<BillInfoDTO>((p) => { return true; }, (p) => {
                 SelectedBillInfo = p;
-                Warning wd = new Warning("Bạn có muốn xóa hóa đơn này");
-                wd.ShowDialog();
-                if (wd.DialogResult == true)
-                {
+                //Warning wd = new Warning("Bạn có muốn xóa hóa đơn này");
+                //wd.ShowDialog();
+                //if (wd.DialogResult == true)
+                //{
                     TotalBillValue = TotalBillValue - SelectedBillInfo.PriceItem ?? 0;
                     BillInfoList.Remove(SelectedBillInfo);
-                }
+                //}
             });
             SubBillInfoCM = new RelayCommand<BillInfoDTO>((p) => { return true; }, (p) => {
                 SelectedBillInfo = p;
