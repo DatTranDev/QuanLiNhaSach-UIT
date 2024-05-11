@@ -281,6 +281,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => (x.GenreName == GenreBox)));
             }
         }
+        private string FormatAuthor(string input)
+        {
+            string[] names = input.Split(',').Select(name => name.Trim()).ToArray();
+            Array.Sort(names, new CompareWithVietnameseSigns());
+            string sortedNames = string.Join(", ", names);
+            return sortedNames;
+        }    
         public ProductViewModel()
         {
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
@@ -454,7 +461,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         flag = false;
                         break;
                     }
-                    (bool a, Book b) = await BookService.Ins.findIdBook(item.DisplayName, item.GenreName, item.Author);
+                    (bool a, Book b) = await BookService.Ins.findIdBook(item.DisplayName, item.GenreName, item.Author, item.Publisher, (int)item.PublishYear);
                     if(a)
                     {
                         Error wd = new Error("Sản phẩm đã tại dòng thứ " + (i + 1) +" đã tồn tại");
@@ -596,7 +603,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                 // Lấy số hàng và số cột của worksheet
                                 int rowCount = worksheet.Dimension.Rows;
                                 int colCount = worksheet.Dimension.Columns;
-                                string input = worksheet.Cells[2, 3].Value.ToString();
+                                string input = worksheet.Cells[2, 4].Value.ToString();
                                 string[] parts = input.Split(':'); // Tách chuỗi theo dấu ':'
                                 if (parts.Length >= 2) // Kiểm tra xem có phần tử thứ 2 hay không
                                 {
@@ -613,8 +620,10 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                         BookImport.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
                                         BookImport.GenreName = worksheet.Cells[row, 3].Value?.ToString();
                                         BookImport.Author = worksheet.Cells[row, 4].Value?.ToString();
-                                        BookImport.Count = Convert.ToInt32(worksheet.Cells[row, 5].Value);
-                                        BookImport.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
+                                        BookImport.Publisher = worksheet.Cells[row, 5].Value?.ToString();
+                                        BookImport.PublishYear = Convert.ToInt32(worksheet.Cells[row, 6].Value);
+                                        BookImport.Count = Convert.ToInt32(worksheet.Cells[row, 7].Value);
+                                        BookImport.Price = Convert.ToDecimal(worksheet.Cells[row, 8].Value);
                                         // Thêm đối tượng ExcelData vào danh sách
                                         ListImport.Add(BookImport);
                                 }
@@ -698,22 +707,18 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     bool flag = true;
                     for (int i = 0; i < ListImport.Count; i++)
                     {
-                        if (ListImport[i].DisplayName == null || ListImport[i].GenreName == null || ListImport[i].Author == null)
+                        if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
                         {
-                            if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
-                            {
-                                continue;
-                            }
-                            else
-                            {
+                            continue;
+                        }
+                        if (ListImport[i].DisplayName == null || ListImport[i].GenreName == null || ListImport[i].Author == null || ListImport[i].PublishYear==null || ListImport[i].Publisher==null)
+                        {
                                 flag = false;
                                 Error wd3 = new Error("Nhập thiếu thông tin tại STT: " + ListImport[i].STT);
                                 wd3.ShowDialog();
                                 break;
-                            }
-
                         }
-                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author);
+                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author, ListImport[i].Publisher, ListImport[i].PublishYear);
                         if (!a)
                         {
                             flag = false;
@@ -749,7 +754,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             }
                             ImportItem item = ListImport[i];
 
-                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author);
+                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author, ListImport[i].Publisher, ListImport[i].PublishYear);
                             if (a)
                             {
                                 if (b.Price < ListImport[i].Price)

@@ -202,13 +202,13 @@
                                         <StackPanel Width="229"
                                                     Height="354">
 
-                                            <Image MaxHeight="170"
+                                            <Image MaxHeight="150"
                                                    MaxWidth="200"
                                                    Margin="0,10,0,0"
                                                    Source="{Binding Image}"
-                                                   Height="176"
+                                                   Height="150"
                                                    Width="205" />
-                                            <StackPanel Height="100">
+                                            <StackPanel Height="120">
                                                 <TextBlock TextWrapping="Wrap"
                                                            Margin="15,15,0,0"
                                                            HorizontalAlignment="Left"
@@ -224,21 +224,67 @@
                                                                Margin="15,5,0,0"
                                                                HorizontalAlignment="Left"
                                                                FontFamily="Poppins"
-                                                               FontSize="14"
+                                                               FontSize="12"
                                                                FontWeight="Regular"
                                                                Text="Tác giả: "
                                                                Grid.Row="1" />
 
-                                                    <TextBlock TextWrapping="Wrap"
+                                                    <TextBlock TextWrapping="NoWrap"
+                                                               TextTrimming="CharacterEllipsis"
                                                                Margin="0,5,0,0"
                                                                HorizontalAlignment="Left"
                                                                FontFamily="Poppins"
-                                                               FontSize="14"
+                                                               FontSize="12"
                                                                FontWeight="Regular"
                                                                Text="{Binding Author}"
                                                                Grid.Row="1"
-                                                               Width="180" />
+                                                               MaxWidth="150" />
                                                 </DockPanel>
+                                                <DockPanel>
+
+                                                    <TextBlock TextWrapping="Wrap"
+                                                               Margin="15,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="12"
+                                                               FontWeight="Regular"
+                                                               Text="Nhà XB: "
+                                                               Grid.Row="1" />
+
+                                                    <TextBlock TextWrapping="NoWrap"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Margin="0,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="12"
+                                                               FontWeight="Regular"
+                                                               Text="{Binding Publisher}"
+                                                               Grid.Row="1"
+                                                               MaxWidth="150" />
+                                                </DockPanel>
+                                                <DockPanel>
+
+                                                    <TextBlock TextWrapping="Wrap"
+                                                               Margin="15,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="12"
+                                                               FontWeight="Regular"
+                                                               Text="Năm XB: "
+                                                               Grid.Row="1" />
+
+                                                    <TextBlock TextWrapping="NoWrap"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Margin="0,5,0,0"
+                                                               HorizontalAlignment="Left"
+                                                               FontFamily="Poppins"
+                                                               FontSize="12"
+                                                               FontWeight="Regular"
+                                                               Text="{Binding PublishYear}"
+                                                               Grid.Row="1"
+                                                               MaxWidth="150" />
+                                                </DockPanel>
+
 
                                             </StackPanel>
 

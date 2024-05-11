@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="Import_products"
         Name="ImportPrd"
-        Width="1130"
+        Width="1280"
         Height="660"
         Background="Transparent"
         AllowsTransparency="True"
@@ -69,7 +69,7 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border Width="1000" Margin="0,20,0,0">
+            <Border Width="1200" Margin="0,20,0,0">
                 <StackPanel>
                     <Border Height="40"
                             Background="#FFF2E9">
@@ -118,18 +118,24 @@
                                                     Binding="{Binding Path=DisplayName}"
                                                     IsReadOnly="False"
                                                     HeaderStringFormat=""
-                                                    Width="273"/>
+                                                    Width="250"/>
                                 <DataGridTextColumn Header="Thể loại"
-                                                    Width="260"
+                                                    Width="210"
                                                     Binding="{Binding Path= GenreName}" />
                                 <DataGridTextColumn Header="Tác giả"
-                                                    Width="180"
+                                                    Width="190"
                                                     Binding="{Binding Path=Author}" />
+                                <DataGridTextColumn Header="Nhà xuất bản"
+                                                    Width="180"
+                                                    Binding="{Binding Path=Publisher}" />
+                                <DataGridTextColumn Header="Năm xuát bản"
+                                                    Width="100"
+                                                    Binding="{Binding Path=PublishYear}" />
                                 <DataGridTextColumn Header="Số lượng"
-                                                    Width="85"
+                                                    Width="80"
                                                     Binding="{Binding Path=Count}" />
                                 <DataGridTextColumn Header="Đơn giá nhập"
-                                                    Width="150"
+                                                    Width="140"
                                                     Binding="{Binding Path=Price}" />
                             </DataGrid.Columns>
                         </DataGrid>

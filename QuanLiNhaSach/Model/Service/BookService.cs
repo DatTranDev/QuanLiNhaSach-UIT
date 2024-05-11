@@ -2,6 +2,7 @@
 using QuanLiNhaSach.View.MessageBox;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -218,13 +219,13 @@ namespace QuanLiNhaSach.Model.Service
             }
         }
 
-        public async Task<(bool, Book)> findIdBook(string Name, string Genre, string Author)
+        public async Task<(bool, Book)> findIdBook(string Name, string Genre, string Author, string Publisher, int publishYear)
         {
             try
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var book = await context.Book.Where(p => p.DisplayName==Name && p.GenreBook.DisplayName==Genre && p.Author==Author).FirstOrDefaultAsync();
+                    var book = await context.Book.Where(p => p.DisplayName==Name && p.GenreBook.DisplayName==Genre && p.Author==Author && p.Publisher==Publisher && p.PublishYear==publishYear).FirstOrDefaultAsync();
                     if (book == null)
                     {
                         return (false, null);
