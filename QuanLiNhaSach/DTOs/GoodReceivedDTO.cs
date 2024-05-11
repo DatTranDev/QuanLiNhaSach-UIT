@@ -13,6 +13,7 @@ namespace QuanLiNhaSach.DTOs
         public Nullable<System.DateTime> CreateAt { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public int StaffId { get; set; }
+        public Nullable<decimal> Total {  get; set; }
         public Staff Staff { get; set; }
         public List<GoodReceivedInfoDTO> GoodReceivedInfo { get; set; }
     }

@@ -41,6 +41,7 @@ namespace QuanLiNhaSach.Model.Service
                                         CreateAt = c.CreatAt,          
                                         StaffId = (int)c.StaffId,
                                         Staff = c.Staff,
+                                        Total = c.Total,
                                         GoodReceivedInfo = (from x in c.GoodReceivedInfoes
                                                     where x.IsDeleted == false
                                                     select new GoodReceivedInfoDTO
@@ -49,6 +50,7 @@ namespace QuanLiNhaSach.Model.Service
                                                         IDBook = x.IDBook,
                                                         Quantity = x.Quantity,
                                                         GoodReceived = x.GoodReceived,
+                                                        TotalPriceItem = x.TotalPriceItem,
                                                         Book = x.Book,
                                                         BookAuthor = x.Book.Author,
                                                         BookGenre = x.Book.GenreBook.DisplayName,
@@ -114,7 +116,9 @@ namespace QuanLiNhaSach.Model.Service
                         ID = curID,                       
                         IsDeleted = false,                       
                         CreatAt = newGR.CreateAt,
-                        StaffId = newGR.StaffId
+                        StaffId = newGR.StaffId,
+                        Total = newGR.Total,
+
                     };
 
                     List<GoodReceivedInfo> billInfoList = new List<GoodReceivedInfo>();
@@ -126,7 +130,9 @@ namespace QuanLiNhaSach.Model.Service
                             IDGoodReceived = curID,
                             IDBook = bI.IDBook,
                             IsDeleted = false,
-                            Quantity = bI.Quantity
+                            Quantity = bI.Quantity,
+                            TotalPriceItem = bI.TotalPriceItem,
+                           
                         };
                         //(bool success, string msg) = await BookService.Ins.EditCountPrd(bI.IDBook, -bI.Quantity);
                         //if (!success)

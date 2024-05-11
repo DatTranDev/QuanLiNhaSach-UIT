@@ -30,6 +30,7 @@ namespace QuanLiNhaSach.DTOs
         public string BookGenre { get; set; }
         public Nullable<decimal> BookPrice { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<decimal> TotalPriceItem { get; set; }
         public GoodReceived GoodReceived { get; set; }
         public Book Book { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;

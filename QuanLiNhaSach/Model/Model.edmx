@@ -84,6 +84,7 @@
           <Property Name="CreatAt" Type="smalldatetime" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="StaffId" Type="int" />
+          <Property Name="Total" Type="money" />
         </EntityType>
         <EntityType Name="GoodReceivedInfo">
           <Key>
@@ -94,6 +95,7 @@
           <Property Name="IDBook" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="TotalPriceItem" Type="money" />
         </EntityType>
         <EntityType Name="InventoryReport">
           <Key>
@@ -445,6 +447,7 @@
           <Property Name="CreatAt" Type="DateTime" Precision="0" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="StaffId" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_GR_Staff" FromRole="GoodReceived" ToRole="Staff" />
           <NavigationProperty Name="GoodReceivedInfoes" Relationship="Self.FK_GRInfo_GR" FromRole="GoodReceived" ToRole="GoodReceivedInfo" />
         </EntityType>
@@ -457,6 +460,7 @@
           <Property Name="IDBook" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="TotalPriceItem" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Book" Relationship="Self.FK_GRInfo_Book" FromRole="GoodReceivedInfo" ToRole="Book" />
           <NavigationProperty Name="GoodReceived" Relationship="Self.FK_GRInfo_GR" FromRole="GoodReceivedInfo" ToRole="GoodReceived" />
         </EntityType>
@@ -805,6 +809,7 @@
                 <ScalarProperty Name="CreatAt" ColumnName="CreatAt" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -815,6 +820,7 @@
                 <ScalarProperty Name="IDBook" ColumnName="IDBook" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="TotalPriceItem" ColumnName="TotalPriceItem" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
