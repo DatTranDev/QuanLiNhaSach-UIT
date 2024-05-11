@@ -39,6 +39,20 @@ namespace QuanLiNhaSach.DTOs
                 }
             }
         }
+
+        private Nullable<decimal> _totalPrice;
+        public Nullable<decimal> TotalPrice
+        {
+            get { return _totalPrice; }
+            set
+            {
+                if (_totalPrice != value)
+                {
+                    _totalPrice = value;
+                    OnPropertyChanged(nameof(TotalPrice));
+                }
+            }
+        }
         public Nullable<bool> IsDeleted { get; set; }
         public Bill Bill { get; set; }
         public Book Book { get; set; }

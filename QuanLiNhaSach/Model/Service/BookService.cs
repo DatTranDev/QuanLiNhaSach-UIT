@@ -46,6 +46,8 @@ namespace QuanLiNhaSach.Model.Service
                                            GenreName = c.GenreBook.DisplayName,
                                            Inventory = c.Inventory,
                                            Author = c.Author,
+                                           PublishYear = c.PublishYear,
+                                           Publisher = c.Publisher,
                                            Description = c.Description,
                                            Image = c.Image,
                                            IsDeleted = c.IsDeleted,
@@ -75,6 +77,8 @@ namespace QuanLiNhaSach.Model.Service
                                            IDGenre = c.IDGenre,
                                            GenreName = c.GenreBook.DisplayName,
                                            Inventory = c.Inventory,
+                                           PublishYear= c.PublishYear,
+                                           Publisher = c.Publisher,
                                            Author = c.Author,
                                            Description = c.Description,
                                            Image = c.Image,
@@ -109,6 +113,8 @@ namespace QuanLiNhaSach.Model.Service
                             prD.IDGenre = newPrD.IDGenre;
                             prD.GenreBook = newPrD.GenreBook;
                             prD.Inventory = newPrD.Inventory;
+                            prD.PublishYear = newPrD.PublishYear;
+                            prD.Publisher = newPrD.Publisher;
                             prD.Author = newPrD.Author;
                             prD.Description = newPrD.Description;
                             prD.Image = newPrD.Image;
@@ -171,6 +177,8 @@ namespace QuanLiNhaSach.Model.Service
                     prD.GenreBook = newPrD.GenreBook;
                     prD.Inventory = newPrD.Inventory;
                     prD.Author = newPrD.Author;
+                    prD.PublishYear = newPrD.PublishYear;
+                    prD.Publisher = newPrD.Publisher;
                     prD.Description = newPrD.Description;
                     prD.Image = newPrD.Image;
                     prD.IsDeleted = false;

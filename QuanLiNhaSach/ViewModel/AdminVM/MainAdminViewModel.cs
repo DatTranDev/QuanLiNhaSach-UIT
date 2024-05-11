@@ -16,10 +16,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Data.Entity;
+using QuanLiNhaSach.View.Admin.ProductsManager;
+using QuanLiNhaSach.View;
+using QuanLiNhaSach.View.Staff.Sale;
+using QuanLiNhaSach.View.Admin.StaffManagement;
+using QuanLiNhaSach.View.Admin.ThongKe;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM
 {
     internal class MainAdminViewModel : BaseViewModel
+
+       
     {
         private SeriesCollection _revenueSeries;
         public SeriesCollection RevenueSeries
@@ -137,12 +144,23 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
         public ICommand LoadSanPhamPage { get; set; }
         public ICommand LoadThongKePage { get; set; } 
         public ICommand LoadHeThongPage { get; set; }
+        public ICommand LoadBanHangPage { get; set; }
         public ICommand OpenAccountWindow { get; set; }
         public ICommand EditStaffCommand { get; set; }
         public ICommand OpenHelpPage { get; set; }
         public ICommand LogOutCommand { get; set; }
         public MainAdminViewModel() {
+            FirstLoadCM = new RelayCommand<Frame>((p) => {
+                if(currentStaff != null)
+                    currentName = currentStaff.DisplayName;
+                return true; }, (p) => { p.Content = new ProductMain(); 
+            });
             LoadKhachHangPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new CustomerPage(); });
+            LoadSanPhamPage = new RelayCommand<Frame>((p) => { return true; }, (p)=> { p.Content = new ProductMain(); });
+            LoadHeThongPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new SystemPage(); });
+            LoadBanHangPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new SalePage(); });
+            LoadNhanVienPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new StaffPage(); });
+            LoadThongKePage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new ThongKeMainPage(); });
             OpenAccountWindow = new RelayCommand<object>(null, (p) =>
             {
                 EditBirthDay = currentStaff.BirthDay.ToString();
@@ -250,6 +268,10 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
             {
                 EditPassWord = p.Password;
             });
+
+
+
+            //thống kê page
         }
     }
 }

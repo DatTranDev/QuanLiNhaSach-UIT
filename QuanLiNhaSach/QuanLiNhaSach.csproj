@@ -74,6 +74,9 @@
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -148,6 +151,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -166,6 +172,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\CusNameConverter.cs" />
     <Compile Include="Converter\IndexConverter.cs" />
     <Compile Include="Converter\IndexInvoiceConverter.cs" />
@@ -182,9 +189,6 @@
     <Compile Include="DTOs\GoodReceivedInfoDTO.cs" />
     <Compile Include="DTOs\InventoryReportDTO.cs" />
     <Compile Include="DTOs\PaymentReceiptDTO.cs" />
-    <Compile Include="Model\Service\ReportService.cs" />
-    <Compile Include="DTOs\StaffDTO.cs" />
-    <Compile Include="DTOs\SystemValueDTO.cs" />
     <Compile Include="Model\Bill.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -230,6 +234,9 @@
     <Compile Include="Model\PaymentReceipt.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\ReportService.cs" />
+    <Compile Include="DTOs\StaffDTO.cs" />
+    <Compile Include="DTOs\SystemValueDTO.cs" />
     <Compile Include="Model\Service\BillService.cs" />
     <Compile Include="Model\Service\BookService.cs" />
     <Compile Include="Model\Service\CustomerService.cs" />
@@ -256,10 +263,22 @@
     <Compile Include="ViewModel\AdminVM\MainAdminViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ImportItem.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\CongNo.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\DoanhThu.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuBan.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuThuTien.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\MotSoPTBoTro.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\SachBanChay.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\StyleButton.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\ThongKeViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\TonKho.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\LoginVM\LoginViewModel.cs" />
     <Compile Include="ViewModel\MessageBoxVM\MessageBoxViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\SaleVM\SaleViewModel.cs" />
+    <Compile Include="ViewModel\SystemVM\SystemViewModel.cs" />
     <Compile Include="View\Admin\AccountInfomation.xaml.cs">
       <DependentUpon>AccountInfomation.xaml</DependentUpon>
     </Compile>
@@ -277,6 +296,33 @@
     </Compile>
     <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\CongNo\CongNoTable.xaml.cs">
+      <DependentUpon>CongNoTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\DoanhThu\DoanhThuTable.xaml.cs">
+      <DependentUpon>DoanhThuTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\LichSu\LichSuBan\ChiTietHoaDon.xaml.cs">
+      <DependentUpon>ChiTietHoaDon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\LichSu\LichSuBan\LichSuTable.xaml.cs">
+      <DependentUpon>LichSuTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\LichSu\LichSuThuTien\ChiTietPhieuThu.xaml.cs">
+      <DependentUpon>ChiTietPhieuThu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\LichSu\LichSuThuTien\LichSuTable.xaml.cs">
+      <DependentUpon>LichSuTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\SachBanChay\SachBanChayTable.xaml.cs">
+      <DependentUpon>SachBanChayTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\ThongKeMainPage.xaml.cs">
+      <DependentUpon>ThongKeMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\TonKho\TonKhoTable.xaml.cs">
+      <DependentUpon>TonKhoTable.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\ProductsManager\AddGenre.xaml.cs">
       <DependentUpon>AddGenre.xaml</DependentUpon>
@@ -299,11 +345,26 @@
     <Compile Include="View\Admin\ProductsManager\test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\StaffManagement\AddStaff.xaml.cs">
+      <DependentUpon>AddStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StaffManagement\ModifyStaff.xaml.cs">
+      <DependentUpon>ModifyStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StaffManagement\StaffPage.xaml.cs">
+      <DependentUpon>StaffPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Login\ForgotPassword.xaml.cs">
+      <DependentUpon>ForgotPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MessageBox\ConfirmLogout.xaml.cs">
       <DependentUpon>ConfirmLogout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MessageBox\DeleteMessage.xaml.cs">
+      <DependentUpon>DeleteMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MessageBox\Error.xaml.cs">
       <DependentUpon>Error.xaml</DependentUpon>
@@ -382,6 +443,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Admin\StaffManagement\AddStaff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Admin\StaffManagement\ButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -390,11 +455,63 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Admin\ThongKe\CongNo\CongNoTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\DoanhThu\DoanhThuTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\LichSu\LichSuBan\ChiTietHoaDon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\LichSu\LichSuBan\LichSuTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\LichSu\LichSuThuTien\ChiTietPhieuThu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\LichSu\LichSuThuTien\LichSuTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\SachBanChay\SachBanChayTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\ThongKeMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\TonKho\TonKhoTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StaffManagement\ModifyStaff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StaffManagement\StaffPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Login\ForgotPassword.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Login\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MessageBox\ConfirmLogout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MessageBox\DeleteMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -462,8 +579,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\LoginVM\" />
-    <Folder Include="ViewModel\SystemVM\" />
+    <Content Include="Model\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\AddBlack_Icon.png" />
@@ -471,8 +596,6 @@
     <Resource Include="Resources\Icon\AddGray_Icon.png" />
     <Resource Include="Resources\Icon\Add_NoBackground.png" />
     <Resource Include="Resources\Icon\Admin_Icon.png" />
-    <Resource Include="Resources\Icon\AppIcon.ico" />
-    <Resource Include="Resources\Icon\appicon.png" />
     <Resource Include="Resources\Icon\BackMenu_Icon.png" />
     <Resource Include="Resources\Icon\Ban_Brown_Icon.png" />
     <Resource Include="Resources\Icon\Ban_White_Icon.png" />
@@ -482,7 +605,6 @@
     <Resource Include="Resources\Icon\DeleteBlue_Icon.png" />
     <Resource Include="Resources\Icon\DeleteGray_Icon.png" />
     <Resource Include="Resources\Icon\Delete_Caution.png" />
-    <Resource Include="Resources\Icon\Edit.png" />
     <Resource Include="Resources\Icon\ErrorBrown_Icon.png" />
     <Resource Include="Resources\Icon\ErrorWhite_Icon.png" />
     <Resource Include="Resources\Icon\Help_Icon.png" />
@@ -540,21 +662,21 @@
     <Resource Include="Resources\Image\BookStore.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.cs</LastGenOutput>
-    </Content>
+    <Resource Include="Resources\Icon\IconImport.png" />
+    <Resource Include="Resources\Icon\Edit.png" />
+    <Resource Include="Resources\Icon\ion_cart-brown.png" />
+    <Resource Include="Resources\Icon\ion_cart-white.png" />
+    <Resource Include="Resources\Icon\AppIcon.ico" />
+    <Resource Include="Resources\Icon\appicon.png" />
     <Resource Include="Resources\Icon\plus_orange_icon.png" />
     <Resource Include="Resources\Icon\import_products.png" />
     <Resource Include="Resources\Icon\Export_excel_white_icon.png" />
     <Resource Include="Resources\Icon\Excel_white_Icon.png" />
     <Resource Include="View\Admin\ProductsManager\tải xuống.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\BookLogo.png" />
+    <Resource Include="Resources\Image\BookStore.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

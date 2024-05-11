@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c7baac98e2da4bb980df7ac5e63bc6b4" Name="Diagram1">
+      <Diagram DiagramId="e538943b2a9942d8a4d75b49366b128e" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLiNhaSachModel.Bill" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLiNhaSachModel.BillInfo" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLiNhaSachModel.Book" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiNhaSachModel.Book" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLiNhaSachModel.Customer" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLiNhaSachModel.DebtReport" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLiNhaSachModel.GenreBook" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />

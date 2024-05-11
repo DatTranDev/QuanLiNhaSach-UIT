@@ -1,0 +1,394 @@
+﻿<Page
+    x:Class="QuanLiNhaSach.View.Admin.ThongKe.ThongKeMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.ThongKe"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="ThongKeMainPage"
+    d:DesignHeight="800"
+    d:DesignWidth="1536"
+    Background="{DynamicResource MaterialDesignPaper}"
+    DataContext="{StaticResource ThongKeVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    ShowsNavigationUI="False"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LichSuThuTienCM}" CommandParameter="{Binding ElementName=TableFrame}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="311*" />
+            <ColumnDefinition Width="1225*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="10">
+            <StackPanel Margin="10,20,10,20">
+                <!--  List lua chon loai thong ke  -->
+                <StackPanel Margin="0,14,0,0">
+
+                    <!--  Lịch sử thu tiền  -->
+                    <Border
+                        x:Name="LichSuThuTienBD"
+                        Width="180"
+                        Height="46"
+                        Margin="0,0,0,10"
+                        Background="{Binding LichSuThuTienColor}"
+                        CornerRadius="16">
+                        <Button
+                            Width="180"
+                            Height="46"
+                            Padding="0"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Command="{Binding LichSuThuTienCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
+                            Foreground="{x:Null}"
+                            Tag="LichSuThuTienBD">
+                            <TextBlock
+                                Margin="40,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="DemiBold"
+                                Foreground="#E0AE8A"
+                                Text="Lịch sử thu tiền" />
+                        </Button>
+                    </Border>
+
+
+
+                    <!--  Lịch sử bán  -->
+                    <Border
+                        x:Name="LichSuBanBD"
+                        Width="180"
+                        Height="46"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="{Binding LichSuBanColor}"
+                        CornerRadius="16">
+                        <Button
+                            Width="180"
+                            Height="46"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Command="{Binding LichSuBanCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
+                            Foreground="{x:Null}"
+                            Tag="LichSuBanBD">
+                            <TextBlock
+                                Margin="40,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="DemiBold"
+                                Foreground="#E0AE8A"
+                                Text="Lịch sử bán" />
+                        </Button>
+                    </Border>
+
+
+
+                    <!--  Doanh thu  -->
+                    <Border
+                        x:Name="DoanhThuBD"
+                        Width="180"
+                        Height="46"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="{Binding DoanhThuColor}"
+                        CornerRadius="16">
+                        <Button
+                            Width="180"
+                            Height="46"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Command="{Binding RevenueCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
+                            Foreground="{x:Null}"
+                            Tag="DoanhThuBD">
+                            <TextBlock
+                                Margin="40,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="DemiBold"
+                                Foreground="#E0AE8A"
+                                Text="Doanh thu" />
+
+                        </Button>
+                    </Border>
+
+                    <!--  Sách bán chạy  -->
+                    <Border
+                        x:Name="SachBanChayBD"
+                        Width="180"
+                        Height="46"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="{Binding SachBanChayColor}"
+                        CornerRadius="16">
+                        <Button
+                            Width="180"
+                            Height="46"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Command="{Binding FavorCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
+                            Foreground="{x:Null}"
+                            Tag="SachBanChayBD">
+                            <TextBlock
+                                Margin="40,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="DemiBold"
+                                Foreground="#E0AE8A"
+                                Text="Sách bán chạy" />
+                        </Button>
+                    </Border>
+
+
+
+                    <!--  Công nợ  -->
+                    <Border
+                        x:Name="CongNoBD"
+                        Width="180"
+                        Height="46"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="{Binding CongNoColor}"
+                        CornerRadius="16">
+                        <Button
+                            Width="180"
+                            Height="46"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Command="{Binding CongNoCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
+                            Foreground="{x:Null}"
+                            Tag="CongNoBD">
+                            <TextBlock
+                                Margin="40,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="DemiBold"
+                                Foreground="#E0AE8A"
+                                Text="Công nợ" />
+                        </Button>
+                    </Border>
+
+
+
+                    <!--  Tồn kho  -->
+                    <Border
+                        x:Name="TonKhoBD"
+                        Width="180"
+                        Height="46"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="{Binding TonKhoColor}"
+                        CornerRadius="16">
+                        <Button
+                            Width="180"
+                            Height="46"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Command="{Binding TonKhoCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
+                            Foreground="{x:Null}"
+                            Tag="TonKhoBD">
+                            <TextBlock
+                                Margin="40,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="DemiBold"
+                                Foreground="#E0AE8A"
+                                Text="Tồn kho" />
+                        </Button>
+                    </Border>
+
+                </StackPanel>
+
+                <!--  Box lua chon thoi gian  cho lịch sử thu tiền,lịch sử bán,doanh thu,sách bán chạy  -->
+                <Border
+                    Width="190"
+                    Height="160"
+                    Background="#ffecdf"
+                    CornerRadius="16"
+                    Visibility="{Binding IsBorderForDatePickerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <StackPanel Width="190" HorizontalAlignment="Center">
+                        <TextBlock
+                            Margin="20,10,0,10"
+                            FontFamily="Roboto Condensed"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#e0ae8a"
+                            Text="Thời gian" />
+
+
+                        <!--  Từ ngày  -->
+
+                        <Border
+                            Width="168.5"
+                            Height="46.4"
+                            Margin="0,0,0,8"
+                            Background="White"
+                            CornerRadius="16">
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock
+                                    Height="17"
+                                    Margin="10,0,20,0"
+                                    FontFamily="Roboto"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="#e0ae8a"
+                                    Text="Từ" />
+                                <DatePicker
+                                    x:Name="DatePicker1"
+                                    Width="100"
+                                    materialDesign:CalendarAssist.IsHeaderVisible="False"
+                                    materialDesign:HintAssist.Hint="Ngày"
+                                    SelectedDate="{Binding SelectedDateFrom, StringFormat=dd/MM/yyyy, Mode=TwoWay}"
+                                    SelectedDateFormat="Short">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectedDateChanged">
+                                            <i:InvokeCommandAction Command="{Binding DateChange}" CommandParameter="{Binding ElementName=DatePicker1}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </DatePicker>
+                            </StackPanel>
+
+                        </Border>
+
+
+
+                        <!--  Đến ngày  -->
+
+                        <Border
+                            Width="168.5"
+                            Height="46.4"
+                            Background="White"
+                            CornerRadius="16">
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock
+                                    Height="17"
+                                    Margin="10,0,10,0"
+                                    FontFamily="Roboto"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="#e0ae8a"
+                                    Text="Đến" />
+                                <DatePicker
+                                    x:Name="DatePicker2"
+                                    Width="100"
+                                    materialDesign:CalendarAssist.IsHeaderVisible="False"
+                                    materialDesign:HintAssist.Hint="Ngày"
+                                    SelectedDate="{Binding SelectedDateTo, StringFormat=dd/MM/yyyy, Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectedDateChanged">
+                                            <i:InvokeCommandAction Command="{Binding DateChange}" CommandParameter="{Binding ElementName=DatePicker2}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </DatePicker>
+                            </StackPanel>
+
+                        </Border>
+                    </StackPanel>
+
+                </Border>
+
+                <!--  Nhập năm cho công nợ,tồn kho  -->
+                <Border
+                    Width="190"
+                    Height="115"
+                    Background="#ffecdf"
+                    CornerRadius="16"
+                    Visibility="{Binding IsBorderForTonKhoCongNoVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <StackPanel Width="190" HorizontalAlignment="Center">
+                        <TextBlock
+                            Margin="0,10,0,15"
+                            FontFamily="Roboto Condensed"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#e0ae8a"
+                            Text="Nhập năm"
+                            TextAlignment="Center" />
+
+                        <TextBox
+                            Width="168.5"
+                            VerticalAlignment="Center"
+                            Background="White"
+                            BorderBrush="#e0ae8a"
+                            FontSize="18"
+                            Text="{Binding TextBoxYear, UpdateSourceTrigger=PropertyChanged}"
+                            TextAlignment="Center" />
+                        <TextBlock
+                            Width="168.5"
+                            Foreground="Red"
+                            Text="{Binding ValidateTextBoxYear}"
+                            TextAlignment="Center" />
+                    </StackPanel>
+
+                </Border>
+
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Border
+                Width="1153"
+                Height="652"
+                Margin="0,45,20,0"
+                VerticalAlignment="Top"
+                Background="#E6B89F"
+                CornerRadius="55.29"
+                Opacity="0.58">
+                <Border
+                    Margin="24"
+                    Background="White"
+                    CornerRadius="32">
+                    <Frame x:Name="TableFrame" />
+                </Border>
+
+            </Border>
+        </Grid>
+
+    </Grid>
+</Page>

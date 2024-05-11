@@ -27,6 +27,7 @@
     </i:Interaction.Triggers>
     <Page.Resources>
         <converters:PriceConverter x:Key="PriceConverter"></converters:PriceConverter>
+        <converters:IndexConverter x:Key="IndexConverter"></converters:IndexConverter>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -108,7 +109,7 @@
                     <ListView.View>
                         <GridView>
 
-                            <GridViewColumn Width="106.4" Header="ID">
+                            <GridViewColumn Width="106.4" Header="STT">
                                 <GridViewColumn.HeaderContainerStyle>
                                     <Style TargetType="{x:Type GridViewColumnHeader}">
                                         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -121,7 +122,7 @@
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             FontSize="17.6"
-                                            Text="{Binding ID}" />      
+                                            Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}, UpdateSourceTrigger=PropertyChanged}" />      
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

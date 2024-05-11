@@ -25,6 +25,43 @@ namespace QuanLiNhaSach.Model.Service
             }
             private set => _ins = value;
         }
+        //public async Task<List<BookDTO>> GetTop10SalerBetween(DateTime from, DateTime to)
+        //{
+        //    try
+        //    {
+        //        using (var context = new QuanLiNhaSachEntities())
+        //        {
+        //            var prodStatistic = context.BillInfo.Where(b => b.Bill.CreateAt >= from && b.Bill.CreateAt <= to && b.IsDeleted == false)
+        //            .GroupBy(pBill => pBill.IDBook)
+        //            .Select(gr => new
+        //            {
+        //                IDProduct = gr.Key,
+        //                Revenue = gr.Sum(pBill => (Decimal?)(pBill.PriceItem)) ?? 0,
+        //                SalesQuantity = gr.Sum(pBill => (int?)pBill.Quantity) ?? 0
+        //            })
+        //            .OrderByDescending(m => m.SalesQuantity).Take(10)
+        //            .Join(
+        //            context.Book,
+        //            statis => statis.IDProduct,
+        //            prod => prod.ID,
+        //            (statis, prod) => new BookDTO
+        //            {
+        //                ID = prod.ID,
+        //                DisplayName = prod.DisplayName,
+        //                Price = statis.Revenue,
+        //                Inventory = statis.SalesQuantity
+        //            }).ToListAsync();
+
+        //            return await prodStatistic;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
+        //        return null;
+        //    }
+        //}
+
         public async Task<List<BookDTO>> GetTop10SalerBetween(DateTime from, DateTime to)
         {
             try
@@ -36,7 +73,7 @@ namespace QuanLiNhaSach.Model.Service
                     .Select(gr => new
                     {
                         IDProduct = gr.Key,
-                        Revenue = gr.Sum(pBill => (Decimal?)(pBill.PriceItem)) ?? 0,
+                        Revenue = gr.Sum(pBill => (Decimal?)(pBill.PriceItem * pBill.Quantity)) ?? 0,
                         SalesQuantity = gr.Sum(pBill => (int?)pBill.Quantity) ?? 0
                     })
                     .OrderByDescending(m => m.SalesQuantity).Take(10)
@@ -61,6 +98,7 @@ namespace QuanLiNhaSach.Model.Service
                 return null;
             }
         }
+
 
     }
 }

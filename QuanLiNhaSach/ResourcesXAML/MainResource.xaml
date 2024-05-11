@@ -3,9 +3,20 @@
                     xmlns:viewmodel1="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM"
                     xmlns:viewmodel2="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.ProductVM"
                     xmlns:viewmodel3="clr-namespace:QuanLiNhaSach.ViewModel.StaffVM.SaleVM"
-                    xmlns:viewmodel4="clr-namespace:QuanLiNhaSach.ViewModel.StaffVM">
-    <viewmodel1:MainAdminViewModel x:Key="MainAdminVM" />
-    <viewmodel2:ProductViewModel x:Key="ProductVM" />
-    <viewmodel3:SaleViewModel x:Key="SaleVM" />
-    <viewmodel4:MainStaffViewModel x:Key="MainStaffVM" />
+                    xmlns:viewmodel4="clr-namespace:QuanLiNhaSach.ViewModel.StaffVM"
+                    xmlns:viewmodel5="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM"
+                    xmlns:viewmodel6="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM"
+					xmlns:viewmodel7="clr-namespace:QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM"
+                    xmlns:viewmodel8="clr-namespace:QuanLiNhaSach.ViewModel.LoginVM"
+                    xmlns:viewmodel9="clr-namespace:QuanLiNhaSach.ViewModel.SystemVM"		
+                    >
+    <viewmodel1:MainAdminViewModel x:Key="MainAdminVM"/>
+    <viewmodel2:ProductViewModel x:Key="ProductVM"/>
+    <viewmodel3:SaleViewModel x:Key="SaleVM"/>
+    <viewmodel4:MainStaffViewModel x:Key="MainStaffVM"/>
+    <viewmodel5:CustomerManagementViewModel x:Key="CustomerPageVM"/>
+    <viewmodel6:StaffViewModel x:Key="StaffPageVM" />
+    <viewmodel7:ThongKeViewModel x:Key="ThongKeVM" />
+    <viewmodel8:LoginViewModel x:Key="LoginVM"/>
+    <viewmodel9:SystemViewModel x:Key="SystemVM"/>   
 </ResourceDictionary>

@@ -34,7 +34,7 @@ namespace QuanLiNhaSach.Utils
             string code = "";
             string inital = "QWERTYUIOPASDFGHJKLZXCVBNM123456789";
             Random rand = new Random();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 code = code.Insert(i, inital[rand.Next(0, inital.Length - 1)].ToString());
             }
