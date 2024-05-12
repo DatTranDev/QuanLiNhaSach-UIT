@@ -35,7 +35,7 @@
 
 
                     <!--  Add SanPham btn  -->
-                    <Border Width="180"
+                    <!--<Border Width="180"
                             Height="46"
                             Margin="0,14,0,14"
                             HorizontalAlignment="Center"
@@ -66,12 +66,12 @@
                                 </TextBlock>
                             </StackPanel>
                         </Button>
-                    </Border>
+                    </Border>-->
 
                     <!--  Search btn  -->
                     <Border Width="180"
                             Height="46"
-                            Margin="0,14,0,14"
+                            Margin="0,30,0,14"
                             HorizontalAlignment="Center"
                             Background="#FFF4F4"
                             BorderBrush="#E0AE8A"
@@ -127,7 +127,7 @@
                     <!--Nhập kho-->
                     <Border Width="135"
                             Height="46"
-                            Margin="0,370,0,14"
+                            Margin="0,430,0,14"
                             HorizontalAlignment="Center"
                             Background="#E0AE8A"
                             BorderBrush="#E0AE8A"
@@ -250,65 +250,114 @@
 
                                 <Image MaxHeight="193"
                                        MaxWidth="225"
-                                       Margin="0,15,0,0"
+                                       Margin="0,10,0,0"
                                        Source="{Binding Image}"
-                                       Height="195"
+                                       Height="152"
                                        Width="215" />
-                                
 
 
-                                <TextBlock TextWrapping="Wrap"
-                                           Margin="25,6,0,0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Top"
-                                           FontFamily="Poppins"
-                                           FontSize="16"
-                                           FontWeight="SemiBold"
-                                           Text="{Binding DisplayName}"
-                                           Grid.Row="1" />
-                                <DockPanel Margin="0,5,0,0">
+                                <StackPanel Height="105">
                                     <TextBlock TextWrapping="Wrap"
-                                               Margin="25,3,0,0"
+                                               Margin="25,10,0,0"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Top"
                                                FontFamily="Poppins"
-                                               FontSize="12"
-                                               FontWeight="Light"
-                                               Text="Tác giả: "
+                                               FontSize="16"
+                                               MaxWidth="200"
+                                               FontWeight="SemiBold"
+                                               Text="{Binding DisplayName}"
                                                Grid.Row="1" />
+                                    <DockPanel Margin="0,2,0,0">
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Margin="25,3,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   FontFamily="Poppins"
+                                                   FontSize="12"
+                                                   FontWeight="Regular"
+                                                   Text="Tác giả: "
+                                                   Grid.Row="1" />
+                                        <TextBlock TextWrapping="NoWrap"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Margin="0,3,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   FontFamily="Poppins"
+                                                   MaxWidth="150"
+                                                   FontSize="12"
+                                                   FontWeight="Regular"
+                                                   Text="{Binding Author}"
+                                                   Grid.Row="1" />
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0,0,0,0">
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Margin="25,3,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   FontFamily="Poppins"
+                                                   FontSize="12"
+                                                   FontWeight="Regular"
+                                                   Text="Nhà xuất bản: "
+                                                   Grid.Row="1" />
+                                        <TextBlock TextWrapping="NoWrap"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Margin="0,3,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   MaxWidth="135"
+                                                   FontFamily="Poppins"
+                                                   FontSize="12"
+                                                   FontWeight="Regular"
+                                                   Text="{Binding Publisher}"
+                                                   Grid.Row="1" />
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0,0,0,0">
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Margin="25,3,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   FontFamily="Poppins"
+                                                   FontSize="12"
+                                                   FontWeight="Regular"
+                                                   Text="Năm xuất bản: "
+                                                   Grid.Row="1" />
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Margin="0,3,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   FontFamily="Poppins"
+                                                   FontSize="12"
+                                                   FontWeight="Regular"
+                                                   Text="{Binding PublishYear}"
+                                                   Grid.Row="1" />
+                                    </DockPanel>
+                                    
+                                </StackPanel>
+
+                                <DockPanel Margin="0 5 0 -5">
                                     <TextBlock TextWrapping="Wrap"
-                                               Margin="0,3,0,0"
+                                               Margin="25,0,0,0"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Top"
                                                FontFamily="Poppins"
                                                FontSize="12"
-                                               FontWeight="Light"
-                                               Text="{Binding Author}"
-                                               Grid.Row="1" />
-                                </DockPanel>
-                                <DockPanel>
-                                    <TextBlock TextWrapping="Wrap"
-                                               Margin="25,5,0,0"
-                                               HorizontalAlignment="Left"
-                                               VerticalAlignment="Top"
-                                               FontFamily="Poppins"
-                                               FontSize="12"
-                                               FontWeight="Light"
+                                               FontWeight="Regular"
                                                Text="Tồn: "
                                                Grid.Row="1" />
                                     <TextBlock TextWrapping="Wrap"
-                                               Margin="0,5,0,0"
+                                               Margin="0,0,0,0"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Top"
                                                FontFamily="Poppins"
                                                FontSize="12"
-                                               FontWeight="Light"
+                                               FontWeight="Regular"
                                                Text="{Binding Inventory}"
                                                Grid.Row="1" />
                                 </DockPanel>
-
-                                <DockPanel Grid.Row="2"
-                                           Margin="25,5,15,5"
+                                <DockPanel 
+                                           Margin="25,0,15,3"
                                            LastChildFill="False">
                                     <TextBlock HorizontalAlignment="Left"
                                                VerticalAlignment="Center"

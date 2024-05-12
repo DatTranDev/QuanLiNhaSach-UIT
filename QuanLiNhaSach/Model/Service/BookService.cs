@@ -2,6 +2,7 @@
 using QuanLiNhaSach.View.MessageBox;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -103,7 +104,7 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var prD = await context.Book.Where(p => p.DisplayName == newPrD.DisplayName).FirstOrDefaultAsync();
+                    var prD = await context.Book.Where(p => p.DisplayName == newPrD.DisplayName && p.Publisher==newPrD.Publisher && p.PublishYear==newPrD.PublishYear && p.Author== newPrD.Author &&p.IDGenre==newPrD.IDGenre).FirstOrDefaultAsync();
                     if (prD != null)
                     {
                         if (prD.IsDeleted == true)
@@ -111,7 +112,6 @@ namespace QuanLiNhaSach.Model.Service
                             prD.DisplayName = newPrD.DisplayName;
                             prD.Price = newPrD.Price;
                             prD.IDGenre = newPrD.IDGenre;
-                            prD.GenreBook = newPrD.GenreBook;
                             prD.Inventory = newPrD.Inventory;
                             prD.PublishYear = newPrD.PublishYear;
                             prD.Publisher = newPrD.Publisher;
@@ -218,13 +218,13 @@ namespace QuanLiNhaSach.Model.Service
             }
         }
 
-        public async Task<(bool, Book)> findIdBook(string Name, string Genre, string Author)
+        public async Task<(bool, Book)> findIdBook(string Name, string Genre, string Author, string Publisher, int publishYear)
         {
             try
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var book = await context.Book.Where(p => p.DisplayName==Name && p.GenreBook.DisplayName==Genre && p.Author==Author).FirstOrDefaultAsync();
+                    var book = await context.Book.Where(p => p.DisplayName==Name && p.GenreBook.DisplayName==Genre && p.Author==Author && p.Publisher==Publisher && p.PublishYear==publishYear).FirstOrDefaultAsync();
                     if (book == null)
                     {
                         return (false, null);

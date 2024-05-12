@@ -14,5 +14,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
         public string GenreName { get; set; }
         public string Author { get; set; }
         public int Count { get; set; }
+        public int PublishYear { get; set; }
+        public string Publisher {  get; set; }
     }
 }
