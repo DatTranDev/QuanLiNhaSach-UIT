@@ -134,11 +134,11 @@ namespace QuanLiNhaSach.Model.Service
                             TotalPriceItem = bI.TotalPriceItem,
                            
                         };
-                        //(bool success, string msg) = await BookService.Ins.EditCountPrd(bI.IDBook, -bI.Quantity);
-                        //if (!success)
-                        //{
-                        //    return (false, null);
-                        //}
+                        (bool success, string msg) = await BookService.Ins.EditCountPrd(bI.IDBook, -bI.Quantity);
+                        if (!success)
+                        {
+                            return (false, null);
+                        }
                         billInfoList.Add(billInfo);
 
                     }

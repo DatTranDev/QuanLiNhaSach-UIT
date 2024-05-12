@@ -310,6 +310,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             });
             AddNewGenre = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                //Mỗi cái một dòng
                 if(Genre!=null)
                 {
                     string[] lines = Genre.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
@@ -702,11 +703,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         CreateAt = date,
                         Staff = this.Staff,
                         StaffId = this.Staff.ID,
+                        Total=0,
                         GoodReceivedInfo = new List<GoodReceivedInfoDTO>()
                     };
                     bool flag = true;
                     for (int i = 0; i < ListImport.Count; i++)
                     {
+                        ImportItem item = ListImport[i];
                         if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
                         {
                             continue;
@@ -718,13 +721,65 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                 wd3.ShowDialog();
                                 break;
                         }
-                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author, ListImport[i].Publisher, ListImport[i].PublishYear);
+                        int id;
+                        GenreBook genrePrD = new GenreBook();
+                        (id, genrePrD) = await GenreService.Ins.FindGenrePrD(item.GenreName);
+                        if (id == -1)
+                        {
+                            GenreBook newGenre = new GenreBook
+                            {
+                                DisplayName = item.GenreName,
+                            };
+                            (bool a1, string b1)= await GenreService.Ins.AddNewGenre(newGenre);
+                            if(!a1 && b1==null)
+                            {
+                                flag = false;
+                                Error wd3 = new Error("Xảy ra lỗi tại STT1: " + ListImport[i].STT);
+                                wd3.ShowDialog();
+                                break;
+                            } 
+
+                        }
+
+                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
                         if (!a)
                         {
-                            flag = false;
-                            Error wd = new Error("Thông tin nhập sai tại STT: " + ListImport[i].STT);
-                            wd.ShowDialog();
-                            break;
+
+                            int id2;
+                            GenreBook genre1= new GenreBook();
+                            (id2, genre1) = await GenreService.Ins.FindGenrePrD(item.GenreName);
+                            if (id2 == -1)
+                            {
+                                Error wd = new Error("Xảy ra lỗi tại STT2: " + item.STT);
+                                wd.ShowDialog();
+                                flag = false;
+                                break;
+                            }
+                            else
+                            {
+                                Book newBook = new Book
+                                {
+                                    DisplayName = item.DisplayName,
+                                    IDGenre = id2,
+                                    Image= "/QuanLiNhaSach;component/Resources/Image/Book_Default.png",
+                                    Author = FormatAuthor(item.Author),
+                                    Publisher = item.Publisher,
+                                    PublishYear = item.PublishYear,
+                                    Price = item.Price,
+                                    Description="",
+                                    Inventory=0,
+                                    IsDeleted= false,
+                                    
+                                };
+                                (bool a2, string b2) = await BookService.Ins.AddNewPrD(newBook);
+                                if(!a2)
+                                {
+                                    Error wd = new Error("Xảy ra lỗi tại STT3: " + item.STT);
+                                    wd.ShowDialog();
+                                    flag = false;
+                                    break;
+                                }
+                            }    
                         }
                         else
                         {
@@ -742,8 +797,16 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                 wd2.ShowDialog();
                                 break;
                             }
+                            if(b.Price!=item.Price)
+                            {
+                                flag = false;
+                                Error wd3 = new Error("STT " + ListImport[i].STT + " có giá nhập sai");
+                                wd3.ShowDialog();
+                                break;
+                            }    
                         }
                     }
+                    //Bắt đầu thêm
                     if (flag)
                     {
                         for (int i = 0; i < ListImport.Count; i++)
@@ -754,34 +817,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             }
                             ImportItem item = ListImport[i];
 
-                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author, ListImport[i].Publisher, ListImport[i].PublishYear);
+                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName,FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
                             if (a)
                             {
-                                if (b.Price < ListImport[i].Price)
-                                {
-                                    b.Price = ListImport[i].Price;
-                                }
-                                b.Inventory += ListImport[i].Count;
-                                Book newPrD = new Book
-                                {
-                                    ID = b.ID,
-                                    DisplayName = b.DisplayName,
-                                    IDGenre = b.IDGenre,
-                                    Price = (decimal)b.Price,
-                                    Inventory = b.Inventory,
-                                    Author = b.Author,
-                                    Image = b.Image,
-                                    Description = b.Description,
-                                    IsDeleted = false,
-                                };
-                                (bool c, string s) = await BookService.Ins.EditPrD(newPrD, b.ID);
-                                if (!c)
-                                {
-                                    flag = false;
-                                    break;
-                                }
-                                else
-                                {
                                     receivedInfo = new GoodReceivedInfoDTO
                                     {
                                         IDBook = b.ID,
@@ -790,10 +828,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                         BookName = item.DisplayName,
                                         BookGenre = item.GenreName,
                                         BookPrice = item.Price,
+                                        TotalPriceItem=item.Price*item.Count,
                                         IsDeleted = false,
                                     };
                                     GoodReceived.GoodReceivedInfo.Add(receivedInfo);
-                                }
+                                    GoodReceived.Total+=receivedInfo.TotalPriceItem;
                             }
                         }
                     }
