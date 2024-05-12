@@ -870,8 +870,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     {
                         // Tạo một worksheet mới
                         ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Books");
-                        worksheet.Cells["C1"].Value = "Danh sách sách";
-                        var cell = worksheet.Cells["C1"];
+                        worksheet.Cells["D1"].Value = "Danh sách sách";
+                        var cell = worksheet.Cells["D1"];
 
                         // Đặt cỡ chữ và in đậm
                         cell.Style.Font.Size = 20;
@@ -881,7 +881,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         worksheet.Cells["B3"].Value = "Tên sách";
                         worksheet.Cells["C3"].Value = "Thể loại";
                         worksheet.Cells["D3"].Value = "Tác giả";
-                        worksheet.Cells["E3"].Value = "Số lượng";
+                        worksheet.Cells["E3"].Value = "Nhà xuất bản";
+                        worksheet.Cells["F3"].Value = "Năm xuất bản";
+                        worksheet.Cells["G3"].Value = "Số lượng";
 
                         // Ghi dữ liệu từ danh sách vào worksheet
                         for (int i = 0; i < ProductList.Count; i++)
@@ -891,9 +893,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             worksheet.Cells[i + 4, 2].Value = book.DisplayName;
                             worksheet.Cells[i + 4, 3].Value = book.GenreName;
                             worksheet.Cells[i + 4, 4].Value = book.Author;
-                            worksheet.Cells[i + 4, 5].Value = book.Inventory;
+                            worksheet.Cells[i + 4, 5].Value = book.Publisher;
+                            worksheet.Cells[i + 4, 6].Value = book.PublishYear;
+                            worksheet.Cells[i + 4, 7].Value = book.Inventory;
                         }
-                        var table = worksheet.Tables.Add(new ExcelAddressBase(3, 1,ProductList.Count + 3, 5), "Book");
+                        var table = worksheet.Tables.Add(new ExcelAddressBase(3, 1,ProductList.Count + 3, 7), "Book");
 
                         // Định dạng bảng
                        
