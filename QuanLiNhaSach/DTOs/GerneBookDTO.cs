@@ -11,6 +11,7 @@ namespace QuanLiNhaSach.DTOs
         public int ID { get; set; }
         public string DisplayName { get; set; }
         public int Quantity { get; set; }
+        public bool IsDeleted { get; set; }
 
         public GenreBookDTO(int iD, string displayName, int quantity)
         {

@@ -179,3 +179,4 @@ alter table Book add PublishYear int;
 alter table Book add Publisher nvarchar(max);
 alter table GoodReceived add Total money;
 alter table GoodReceivedInfo add TotalPriceItem money;
+alter table GenreBook add IsDeleted bit default 0;
