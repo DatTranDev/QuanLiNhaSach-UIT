@@ -281,6 +281,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 ProductList = new ObservableCollection<BookDTO>(prdList.FindAll(x => (x.GenreName == GenreBox)));
             }
         }
+        private string FormatAuthor(string input)
+        {
+            string[] names = input.Split(',').Select(name => name.Trim()).ToArray();
+            Array.Sort(names, new CompareWithVietnameseSigns());
+            string sortedNames = string.Join(", ", names);
+            return sortedNames;
+        }    
         public ProductViewModel()
         {
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
@@ -303,6 +310,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             });
             AddNewGenre = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                //Mỗi cái một dòng
                 if(Genre!=null)
                 {
                     string[] lines = Genre.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
@@ -454,7 +462,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         flag = false;
                         break;
                     }
-                    (bool a, Book b) = await BookService.Ins.findIdBook(item.DisplayName, item.GenreName, item.Author);
+                    (bool a, Book b) = await BookService.Ins.findIdBook(item.DisplayName, item.GenreName, item.Author, item.Publisher, (int)item.PublishYear);
                     if(a)
                     {
                         Error wd = new Error("Sản phẩm đã tại dòng thứ " + (i + 1) +" đã tồn tại");
@@ -589,87 +597,88 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     {
                         using (var package = new ExcelPackage(new FileInfo(FilePath)))
                         {
-                            // Chọn worksheet đầu tiên
-                            var worksheet = package.Workbook.Worksheets[0];
+                            try
+                            {
+                                var worksheet = package.Workbook.Worksheets[0];
 
-                            // Lấy số hàng và số cột của worksheet
-                            int rowCount = worksheet.Dimension.Rows;
-                            int colCount = worksheet.Dimension.Columns;
-                            string input = worksheet.Cells[2, 3].Value.ToString();
-                            string[] parts = input.Split(':'); // Tách chuỗi theo dấu ':'
-                            if (parts.Length >= 2) // Kiểm tra xem có phần tử thứ 2 hay không
-                            {
-                                string dateString = parts[1].Trim(); // Lấy phần tử thứ 2 và loại bỏ dấu cách ở đầu và cuối
-                                DateImport = dateString;
-                            }
-                            // Duyệt qua từng hàng để đọc dữ liệu
-                            for (int row = 5; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
-                            {
-                                // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
-                                try
+                                // Lấy số hàng và số cột của worksheet
+                                int rowCount = worksheet.Dimension.Rows;
+                                int colCount = worksheet.Dimension.Columns;
+                                string input = worksheet.Cells[2, 4].Value.ToString();
+                                string[] parts = input.Split(':'); // Tách chuỗi theo dấu ':'
+                                if (parts.Length >= 2) // Kiểm tra xem có phần tử thứ 2 hay không
                                 {
-                                    BookImport = new ImportItem();
-                                    // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
-                                    BookImport.STT = Convert.ToInt32(worksheet.Cells[row, 1].Value);
-                                    BookImport.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
-                                    BookImport.GenreName = worksheet.Cells[row, 3].Value?.ToString();
-                                    BookImport.Author = worksheet.Cells[row, 4].Value?.ToString();
-                                    BookImport.Count = Convert.ToInt32(worksheet.Cells[row, 5].Value);
-                                    BookImport.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
-                                    // Thêm đối tượng ExcelData vào danh sách
-                                    ListImport.Add(BookImport);
+                                    string dateString = parts[1].Trim(); // Lấy phần tử thứ 2 và loại bỏ dấu cách ở đầu và cuối
+                                    DateImport = dateString;
                                 }
-                                catch
+                                // Duyệt qua từng hàng để đọc dữ liệu
+                                for (int row = 5; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
                                 {
-                                    Error wd5 = new Error("File tải lên không đúng");
-                                    wd5.ShowDialog();
-                                    ListImport = new ObservableCollection<ImportItem>();
-                                    break;
-                                }   
+                                    // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
+                                        BookImport = new ImportItem();
+                                        // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
+                                        BookImport.STT = Convert.ToInt32(worksheet.Cells[row, 1].Value);
+                                        BookImport.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
+                                        BookImport.GenreName = worksheet.Cells[row, 3].Value?.ToString();
+                                        BookImport.Author = worksheet.Cells[row, 4].Value?.ToString();
+                                        BookImport.Publisher = worksheet.Cells[row, 5].Value?.ToString();
+                                        BookImport.PublishYear = Convert.ToInt32(worksheet.Cells[row, 6].Value);
+                                        BookImport.Count = Convert.ToInt32(worksheet.Cells[row, 7].Value);
+                                        BookImport.Price = Convert.ToDecimal(worksheet.Cells[row, 8].Value);
+                                        // Thêm đối tượng ExcelData vào danh sách
+                                        ListImport.Add(BookImport);
+                                }
+                            }
+                            catch
+                            {
+                                Error wd5 = new Error("File tải lên không đúng");
+                                wd5.ShowDialog();
+                                ListImport = new ObservableCollection<ImportItem>();
                                 
                             }
+                            // Chọn worksheet đầu tiên
+                            
                         }
                     }
                     if (p == "ListNewProduct")
                     {
                         using (var package = new ExcelPackage(new FileInfo(FilePath)))
                         {
-                            // Chọn worksheet đầu tiên
-                            var worksheet = package.Workbook.Worksheets[0];
-
-                            // Lấy số hàng và số cột của worksheet
-                            int rowCount = worksheet.Dimension.Rows;
-                            int colCount = worksheet.Dimension.Columns;
-                            
-                            // Duyệt qua từng hàng để đọc dữ liệu
-                            for (int row = 4; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
+                            try
                             {
-                                // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
-                                try
-                                {
-                                    BookDTO bookDTO = new BookDTO();
-                                    // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
-                                    //bookDTO = Convert.ToInt32(worksheet.Cells[row, 1].Value);
-                                    bookDTO.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
-                                    bookDTO.GenreName = worksheet.Cells[row, 3].Value?.ToString();
-                                    bookDTO.Author = worksheet.Cells[row, 4].Value?.ToString();
-                                    bookDTO.Inventory = Convert.ToInt32(worksheet.Cells[row, 5].Value);
-                                    bookDTO.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
-                                    bookDTO.Description= worksheet.Cells[row, 7].Value?.ToString();
-                                    bookDTO.Image= worksheet.Cells[row, 8].Value?.ToString();
-                                    // Thêm đối tượng ExcelData vào danh sách
-                                    ListAdd.Add(bookDTO);
-                                }
-                                catch
-                                {
-                                    Error wd5 = new Error("File tải lên không đúng");
-                                    wd5.ShowDialog();
-                                    ListAdd = new ObservableCollection<BookDTO>();
-                                    break;
-                                }
+                                // Chọn worksheet đầu tiên
+                                var worksheet = package.Workbook.Worksheets[0];
 
+                                // Lấy số hàng và số cột của worksheet
+                                int rowCount = worksheet.Dimension.Rows;
+                                int colCount = worksheet.Dimension.Columns;
+
+                                // Duyệt qua từng hàng để đọc dữ liệu
+                                for (int row = 4; row <= rowCount; row++) // Bắt đầu từ hàng thứ 2, vì hàng đầu tiên thường là tiêu đề
+                                {
+                                    // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
+                                        BookDTO bookDTO = new BookDTO();
+                                        // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
+                                        //bookDTO = Convert.ToInt32(worksheet.Cells[row, 1].Value);
+                                        bookDTO.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
+                                        bookDTO.GenreName = worksheet.Cells[row, 3].Value?.ToString();
+                                        bookDTO.Author = worksheet.Cells[row, 4].Value?.ToString();
+                                        bookDTO.Inventory = Convert.ToInt32(worksheet.Cells[row, 5].Value);
+                                        bookDTO.Price = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
+                                        bookDTO.Description = worksheet.Cells[row, 7].Value?.ToString();
+                                        bookDTO.Image = worksheet.Cells[row, 8].Value?.ToString();
+                                        // Thêm đối tượng ExcelData vào danh sách
+                                        ListAdd.Add(bookDTO);
+                                }
                             }
-                        }
+                            catch
+                            {
+                                Error wd5 = new Error("File tải lên không đúng");
+                                wd5.ShowDialog();
+                                ListAdd = new ObservableCollection<BookDTO>();
+                            }
+                         }
+                           
                     }
 
                 }
@@ -694,33 +703,83 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         CreateAt = date,
                         Staff = this.Staff,
                         StaffId = this.Staff.ID,
+                        Total=0,
                         GoodReceivedInfo = new List<GoodReceivedInfoDTO>()
                     };
                     bool flag = true;
                     for (int i = 0; i < ListImport.Count; i++)
                     {
-                        if (ListImport[i].DisplayName == null || ListImport[i].GenreName == null || ListImport[i].Author == null)
+                        ImportItem item = ListImport[i];
+                        if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
                         {
-                            if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
-                            {
-                                continue;
-                            }
-                            else
-                            {
+                            continue;
+                        }
+                        if (ListImport[i].DisplayName == null || ListImport[i].GenreName == null || ListImport[i].Author == null || ListImport[i].PublishYear==null || ListImport[i].Publisher==null)
+                        {
                                 flag = false;
                                 Error wd3 = new Error("Nhập thiếu thông tin tại STT: " + ListImport[i].STT);
                                 wd3.ShowDialog();
                                 break;
-                            }
+                        }
+                        int id;
+                        GenreBook genrePrD = new GenreBook();
+                        (id, genrePrD) = await GenreService.Ins.FindGenrePrD(item.GenreName);
+                        if (id == -1)
+                        {
+                            GenreBook newGenre = new GenreBook
+                            {
+                                DisplayName = item.GenreName,
+                            };
+                            (bool a1, string b1)= await GenreService.Ins.AddNewGenre(newGenre);
+                            if(!a1 && b1==null)
+                            {
+                                flag = false;
+                                Error wd3 = new Error("Xảy ra lỗi tại STT1: " + ListImport[i].STT);
+                                wd3.ShowDialog();
+                                break;
+                            } 
 
                         }
-                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author);
+
+                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
                         if (!a)
                         {
-                            flag = false;
-                            Error wd = new Error("Thông tin nhập sai tại STT: " + ListImport[i].STT);
-                            wd.ShowDialog();
-                            break;
+
+                            int id2;
+                            GenreBook genre1= new GenreBook();
+                            (id2, genre1) = await GenreService.Ins.FindGenrePrD(item.GenreName);
+                            if (id2 == -1)
+                            {
+                                Error wd = new Error("Xảy ra lỗi tại STT2: " + item.STT);
+                                wd.ShowDialog();
+                                flag = false;
+                                break;
+                            }
+                            else
+                            {
+                                Book newBook = new Book
+                                {
+                                    DisplayName = item.DisplayName,
+                                    IDGenre = id2,
+                                    Image= "/QuanLiNhaSach;component/Resources/Image/Book_Default.png",
+                                    Author = FormatAuthor(item.Author),
+                                    Publisher = item.Publisher,
+                                    PublishYear = item.PublishYear,
+                                    Price = item.Price,
+                                    Description="",
+                                    Inventory=0,
+                                    IsDeleted= false,
+                                    
+                                };
+                                (bool a2, string b2) = await BookService.Ins.AddNewPrD(newBook);
+                                if(!a2)
+                                {
+                                    Error wd = new Error("Xảy ra lỗi tại STT3: " + item.STT);
+                                    wd.ShowDialog();
+                                    flag = false;
+                                    break;
+                                }
+                            }    
                         }
                         else
                         {
@@ -738,8 +797,16 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                 wd2.ShowDialog();
                                 break;
                             }
+                            if(b.Price!=item.Price)
+                            {
+                                flag = false;
+                                Error wd3 = new Error("STT " + ListImport[i].STT + " có giá nhập sai");
+                                wd3.ShowDialog();
+                                break;
+                            }    
                         }
                     }
+                    //Bắt đầu thêm
                     if (flag)
                     {
                         for (int i = 0; i < ListImport.Count; i++)
@@ -750,34 +817,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             }
                             ImportItem item = ListImport[i];
 
-                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, ListImport[i].Author);
+                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName,FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
                             if (a)
                             {
-                                if (b.Price < ListImport[i].Price)
-                                {
-                                    b.Price = ListImport[i].Price;
-                                }
-                                b.Inventory += ListImport[i].Count;
-                                Book newPrD = new Book
-                                {
-                                    ID = b.ID,
-                                    DisplayName = b.DisplayName,
-                                    IDGenre = b.IDGenre,
-                                    Price = (decimal)b.Price,
-                                    Inventory = b.Inventory,
-                                    Author = b.Author,
-                                    Image = b.Image,
-                                    Description = b.Description,
-                                    IsDeleted = false,
-                                };
-                                (bool c, string s) = await BookService.Ins.EditPrD(newPrD, b.ID);
-                                if (!c)
-                                {
-                                    flag = false;
-                                    break;
-                                }
-                                else
-                                {
                                     receivedInfo = new GoodReceivedInfoDTO
                                     {
                                         IDBook = b.ID,
@@ -786,10 +828,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                         BookName = item.DisplayName,
                                         BookGenre = item.GenreName,
                                         BookPrice = item.Price,
+                                        TotalPriceItem=item.Price*item.Count,
                                         IsDeleted = false,
                                     };
                                     GoodReceived.GoodReceivedInfo.Add(receivedInfo);
-                                }
+                                    GoodReceived.Total+=receivedInfo.TotalPriceItem;
                             }
                         }
                     }
@@ -827,8 +870,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     {
                         // Tạo một worksheet mới
                         ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Books");
-                        worksheet.Cells["C1"].Value = "Danh sách sách";
-                        var cell = worksheet.Cells["C1"];
+                        worksheet.Cells["D1"].Value = "Danh sách sách";
+                        var cell = worksheet.Cells["D1"];
 
                         // Đặt cỡ chữ và in đậm
                         cell.Style.Font.Size = 20;
@@ -838,7 +881,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         worksheet.Cells["B3"].Value = "Tên sách";
                         worksheet.Cells["C3"].Value = "Thể loại";
                         worksheet.Cells["D3"].Value = "Tác giả";
-                        worksheet.Cells["E3"].Value = "Số lượng";
+                        worksheet.Cells["E3"].Value = "Nhà xuất bản";
+                        worksheet.Cells["F3"].Value = "Năm xuất bản";
+                        worksheet.Cells["G3"].Value = "Số lượng";
 
                         // Ghi dữ liệu từ danh sách vào worksheet
                         for (int i = 0; i < ProductList.Count; i++)
@@ -848,9 +893,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             worksheet.Cells[i + 4, 2].Value = book.DisplayName;
                             worksheet.Cells[i + 4, 3].Value = book.GenreName;
                             worksheet.Cells[i + 4, 4].Value = book.Author;
-                            worksheet.Cells[i + 4, 5].Value = book.Inventory;
+                            worksheet.Cells[i + 4, 5].Value = book.Publisher;
+                            worksheet.Cells[i + 4, 6].Value = book.PublishYear;
+                            worksheet.Cells[i + 4, 7].Value = book.Inventory;
                         }
-                        var table = worksheet.Tables.Add(new ExcelAddressBase(3, 1,ProductList.Count + 3, 5), "Book");
+                        var table = worksheet.Tables.Add(new ExcelAddressBase(3, 1,ProductList.Count + 3, 7), "Book");
 
                         // Định dạng bảng
                        
