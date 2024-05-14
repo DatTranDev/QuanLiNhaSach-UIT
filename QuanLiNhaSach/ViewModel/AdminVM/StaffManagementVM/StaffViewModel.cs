@@ -17,6 +17,10 @@ using System.Windows;
 using Microsoft.Win32;
 using System.IO;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Windows.Media;
+using System.Drawing;
+using System.Data.Common;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
 {
@@ -33,6 +37,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                 staffObservation = value; OnPropertyChanged(nameof(StaffObservation));
                 OnPropertyChanged(nameof(Count));
             }
+        }
+        private ObservableCollection<StaffDTO>ListImportStaff; //ListView source
+        public ObservableCollection<StaffDTO> listImportStaff
+        {
+            get { return ListImportStaff; }
+            set { ListImportStaff = value; OnPropertyChanged(); }
         }
         public int Count => StaffObservation?.Count ?? 0;
 
@@ -275,6 +285,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
         public ICommand SearchStaff { get; }
         public ICommand AddStaffCommand { get; }
         public ICommand ImportStaffCommand {  get; }
+        public ICommand ExportStaffCommand { get; }
         public ICommand PasswordChangedCommand { get; }
         public ICommand ConfirmPasswordChangedCommand { get; }
         public ICommand DeleteStaffCommand { get; }
@@ -375,8 +386,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                 }
 
             });
-            ImportStaffCommand = new RelayCommand<Button>((p) => { return true; }, async (p) =>
+            ImportStaffCommand = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
                 if (openFileDialog.ShowDialog() == true)
@@ -389,48 +401,276 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                             ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // Lấy sheet đầu tiên
                             int rowCount = worksheet.Dimension.Rows;
                             int colCount = worksheet.Dimension.Columns;
-
                             // Duyệt qua từng dòng để đọc dữ liệu
+                            listImportStaff = new ObservableCollection<StaffDTO>();
                             for (int row = 5; row <= rowCount; row++) // Bắt đầu từ hàng 5 để bỏ qua header
                             {
-                                
-                                Staff staff = new Staff();
-
-                                staff.DisplayName = worksheet.Cells[row, 1].Value?.ToString();
-                                staff.Email = worksheet.Cells[row, 2].Value?.ToString();
-                                staff.PhoneNumber = worksheet.Cells[row, 3].Value?.ToString();
-                                staff.Role = worksheet.Cells[row, 4].Value?.ToString();
-                                staff.Wage = Convert.ToDecimal(worksheet.Cells[row, 5].Value);
-                                staff.Gender = worksheet.Cells[row, 6].Value?.ToString();
-                                staff.BirthDay = Convert.ToDateTime(worksheet.Cells[row, 7].Value);
-                                staff.StartDate = Convert.ToDateTime(worksheet.Cells[row, 8].Value);
-                                staff.Status = worksheet.Cells[row, 9].Value?.ToString();
-                                staff.UserName = worksheet.Cells[row, 10].Value?.ToString();
-                                staff.PassWord = worksheet.Cells[row, 11].Value?.ToString();
-
-                                //them vao database
-                                (bool IsAdded, string messageAdd) = await StaffService.Ins.AddNewStaff(staff);
-                                if (IsAdded) {
-                                    StaffObservation = new ObservableCollection<StaffDTO>(await StaffService.Ins.GetAllStaff());
-                                }
-                                else
+                                try
                                 {
-                                    MessageBoxCustom.Show(MessageBoxCustom.Error, messageAdd);
+                                    StaffDTO staff = new StaffDTO();
+                                    staff.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
+                                    staff.Email = worksheet.Cells[row, 3].Value?.ToString();
+                                    staff.PhoneNumber = worksheet.Cells[row, 4].Value?.ToString();
+                                    staff.Role = worksheet.Cells[row, 5].Value?.ToString();
+                                    staff.Wage = Convert.ToDecimal(worksheet.Cells[row, 6].Value);
+                                    staff.Gender = worksheet.Cells[row, 7].Value?.ToString();
+                                    string Date = worksheet.Cells[row, 8].Value?.ToString();
+                                    DateTime dateBirthDay;
+                                    String[] DateFormat = { "dd/MM/yyyy", "d/M/yyyy", "d/MM/yyyy", "dd/M/yyyy", "dd/MM/yyyy h:mm:ss tt", "d/M/yyyy h:mm:ss tt",
+                                    "d/MM/yyyy h:mm:ss tt", "dd/M/yyyy h:mm:ss tt"};
+                                    if (DateTime.TryParseExact(Date, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateBirthDay))
+                                    {
+                                        staff.BirthDay = dateBirthDay;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Invalid date format.");
+                                    }
+                                    string DateStart = worksheet.Cells[row, 9].Value?.ToString();
+                                    DateTime dateStart;
+                                    if (DateTime.TryParseExact(DateStart, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateStart))
+                                    {
+                                        staff.StartDate = dateStart;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Invalid date format.");
+                                    }
+                                    staff.Status = worksheet.Cells[row, 10].Value?.ToString();
+                                    staff.UserName = worksheet.Cells[row, 11].Value?.ToString();
+                                    staff.PassWord = worksheet.Cells[row, 12].Value?.ToString();
+                                    listImportStaff.Add(staff);
+                                }
+                                catch
+                                {
+                                    Error wd5 = new Error("Dữ liệu trong File tải lên không đúng");
+                                    wd5.ShowDialog();
+                                    listImportStaff = new ObservableCollection<StaffDTO>();
                                     return;
                                 }
-                                
-                            }
 
-                            MessageBox.Show("Import thành công!");
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Lỗi khi import dữ liệu từ tệp Excel: " + ex.Message);
                     }
+
+                    string EmailError = "Email đã tồn tại";
+                    string PhoneNumberError = "Số điện thoại đã tồn tại";
+                    string UserNameError = "Tài khoản đã tồn tại";
+                    for (int i = 0; i < listImportStaff.Count; i++)
+                    {
+                        //gan du lieu cho viewmodel bang null de dam bao k check sai
+                        DisplayName = null;
+                        StartDate = DateTime.Now;
+                        UserName = null;
+                        PassWord = null;
+                        PhoneNumber = null;
+                        BirthDay = DateTime.Now;
+                        Wage = null;
+                        Status = null;
+                        Email = null;
+                        Gender = null;
+                        Role = null;
+                        ConfirmPassWord = null;
+                        //gan du lieu tung phan tu vao de thao tac
+                        DisplayName = listImportStaff[i].DisplayName;
+                        StartDate = (DateTime)listImportStaff[i].StartDate;
+                        UserName = listImportStaff[i].UserName;
+                        PassWord = listImportStaff[i].PassWord;
+                        PhoneNumber = listImportStaff[i].PhoneNumber;
+                        BirthDay = (DateTime)listImportStaff[i].BirthDay;
+                        Wage = listImportStaff[i].Wage.ToString();
+                        Status = listImportStaff[i].Status;
+                        Email = listImportStaff[i].Email;
+                        Gender = listImportStaff[i].Gender;
+                        Role = listImportStaff[i].Role;
+                        ConfirmPassWord = listImportStaff[i].PassWord;
+
+                        //check ngoai le
+                        int iWage = 0;
+                        if (DisplayName == null || UserName == null || PassWord == null
+                        || PhoneNumber == null || Wage == null || Status == null || Email == null
+                        || Gender == null || Role == null || !int.TryParse(Wage.Replace(".", ""), out iWage)
+                        || DisplayName == "" || UserName == "" || PassWord == ""
+                        || PhoneNumber == "" || Wage == "" || Status == "" || Email == ""
+                        || Gender == "" || Role == "")
+                        {
+                            MessageBoxCustom.Show(MessageBoxCustom.Error, "Bạn đang nhập thiếu hoặc sai thông tin của nhân viên thứ " + (i + 1) + " trong file Excel");
+                            listImportStaff = new ObservableCollection<StaffDTO>();
+                            return;
+                        }
+
+
+                        else
+                        {
+                            if (PassWord != ConfirmPassWord)
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Xác nhận mật khẩu không đúng của nhân viên thứ " + (i + 1) + " trong file Excel");
+                                listImportStaff = new ObservableCollection<StaffDTO>();
+                                return;
+                            }
+                            if (DateTime.Compare(BirthDay, new DateTime(1900, 1, 1)) < 0 || DateTime.Compare(BirthDay, DateTime.Now) > 0)
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày sinh không hợp lệ của nhân viên thứ " + (i + 1) + " trong file Excel");
+                                listImportStaff = new ObservableCollection<StaffDTO>();
+                                return;
+                            }
+
+                            else if (DateTime.Compare(StartDate, new DateTime(1900, 1, 1)) < 0 || DateTime.Compare(StartDate, DateTime.Now) > 0)
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày bắt đầu không hợp lệ của nhân viên thứ " + i + " trong file Excel");
+                                listImportStaff = new ObservableCollection<StaffDTO>();
+                                return;
+                            }
+
+                            else if (StartDate.Year - (BirthDay).Year < 16)
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Đảm bảo nhân viên thứ " + (i + 1) + " vào làm trên 16 tuổi");
+                                listImportStaff = new ObservableCollection<StaffDTO>();
+                                return;
+                            }
+                            string pass = Helper.MD5Hash(this.PassWord);
+
+                            Staff newStaff = new Staff
+                            {
+                                DisplayName = this.DisplayName,
+                                StartDate = this.StartDate,
+                                UserName = this.UserName,
+                                PassWord = pass,
+                                PhoneNumber = this.PhoneNumber,
+                                BirthDay = this.BirthDay,
+                                Wage = iWage,
+                                Status = this.Status,
+                                Email = this.Email,
+                                Gender = this.Gender,
+                                Role = this.Role,
+                                IsDeleted = false
+                            };
+                            (bool IsAdded, string messageAdd) = await StaffService.Ins.AddNewStaff(newStaff);
+                            if (!IsAdded&& messageAdd.Equals(EmailError))
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error,"Nhân viên thứ "+(i+1)+" có "+ messageAdd);
+                                return;
+                            }else if(!IsAdded && messageAdd.Equals(PhoneNumberError))
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên thứ " + (i + 1) + " có "+ messageAdd);
+                                return;
+                            }
+                            else if(!IsAdded && messageAdd.Equals(UserNameError))
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên thứ " + (i + 1) + " có "+messageAdd);
+                                return;
+                            }
+                        }
+                    }
+                    StaffObservation = new ObservableCollection<StaffDTO>(await StaffService.Ins.GetAllStaff());
+                    MessageBoxCustom.Show(MessageBoxCustom.Success, "Bạn đã thêm danh sách thành công nhân viên từ Excel");
                 }
             });
-                OpenAddWindowCommand = new RelayCommand<Page>((mainStaffWindow) => { return true; }, (mainStaffWindow) =>
+            ExportStaffCommand = new RelayCommand<Page>((p) => { return true; }, async (p) =>
+            {
+                var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+                // Hiển thị hộp thoại chọn thư mục và lấy kết quả
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    string selectedFolderPath = dialog.SelectedPath;
+                    // tạo excel
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    using (ExcelPackage package = new ExcelPackage())
+                    {
+                        // Tạo một worksheet mới
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Staff");
+
+                        // Merge hàng từ hàng 1,2 từ cột A -> L
+                        var mergedCells = worksheet.Cells["A1:L2"];
+                        mergedCells.Merge = true;
+                        //set text 
+                        mergedCells.Value = "Danh sách nhân viên";
+                        mergedCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        mergedCells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                        // Thiết lập cỡ chữ và in đậm
+                        mergedCells.Style.Font.Size = 24;
+                        mergedCells.Style.Font.Bold = true;
+                        mergedCells.Style.Font.Color.SetColor(System.Drawing.Color.Red);
+
+                        //thiet lap mau nen
+                        mergedCells.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        mergedCells.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
+
+                        //ghi tieu de cho cot
+                        string[] columnHeaders = { "ID","Họ tên", "Email", "Số điện thoại", "Chức vụ", "Lương", "Giới tính", "Ngày sinh", "Ngày bắt đầu", 
+                            "Trạng thái", "Tài khoản", "Mật khẩu" };
+                        for (int i = 0; i < columnHeaders.Length; i++)
+                        {
+                            worksheet.Cells[3, i + 1].Value = columnHeaders[i];
+                            worksheet.Cells[3, i + 1].Style.Font.Size = 14; // Thiết lập cỡ chữ 14
+                            worksheet.Cells[3, i + 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            worksheet.Cells[3, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightSkyBlue);
+                        }
+
+
+                        // Ghi dữ liệu từ danh sách vào worksheet
+                        for (int i = 0; i < StaffObservation.Count; i++)
+                        {
+                            var employee = StaffObservation[i];
+                            worksheet.Cells[i + 4, 1].Value = employee.ID;
+                            worksheet.Cells[i + 4, 2].Value = employee.DisplayName;
+                            worksheet.Cells[i + 4, 3].Value = employee.Email;
+                            worksheet.Cells[i + 4, 4].Value = employee.PhoneNumber;
+                            worksheet.Cells[i + 4, 5].Value = employee.Role;
+                            worksheet.Cells[i + 4, 6].Value = employee.Wage;
+                            worksheet.Cells[i + 4, 7].Value = employee.Gender;
+                            DateTime? birthDate = employee.BirthDay;
+                            if (birthDate.HasValue)
+                            {
+                                worksheet.Cells[i + 4, 8].Value = birthDate.Value.ToString("dd/MM/yyyy");
+                            }
+                            else
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên có mã "+employee.ID+" không có ngày sinh");
+                                return;
+                            }
+                            DateTime? startDate = employee.StartDate;
+                            if (startDate.HasValue)
+                            {
+                                worksheet.Cells[i + 4, 9].Value = startDate.Value.ToString("dd/MM/yyyy");
+                            }
+                            else
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên có mã " + employee.ID + " không có ngày bắt đầu");
+                                return;
+                            }
+                            worksheet.Cells[i + 4, 10].Value = employee.Status;
+                            worksheet.Cells[i + 4, 11].Value = employee.UserName;
+                            worksheet.Cells[i + 4, 12].Value = employee.PassWord;
+
+                            //can trai cho all noi dung cua cot 
+                            for (int j = 1; j <= 12; j++)
+                            {
+                                worksheet.Cells[i + 4, j].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            }
+                        }
+
+                        // Định dạng bảng
+
+                        worksheet.Cells.AutoFitColumns();
+
+                        DateTime date = DateTime.Now;
+                        string filePath = Path.Combine(selectedFolderPath, "ListStaff.xlsx");
+                        package.SaveAs(new FileInfo(filePath));
+                        Success wd = new Success($"Tệp Excel đã được lưu vào: {filePath}");
+                        wd.ShowDialog();
+                    }
+
+                }
+            });
+            OpenAddWindowCommand = new RelayCommand<Page>((mainStaffWindow) => { return true; }, (mainStaffWindow) =>
             {
                 DisplayName = null;
                 StartDate = DateTime.Now;

@@ -34,5 +34,7 @@ namespace QuanLiNhaSach.View.Admin.StaffManagement
         {
             (DataContext as StaffViewModel).DeleteStaffCommand.Execute(new object());
         }
+
+       
     }
 }
