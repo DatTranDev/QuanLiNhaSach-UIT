@@ -34,9 +34,9 @@
         <converters:IndexConverter x:Key="IndexConverter"></converters:IndexConverter>
         <converters:PriceConverter x:Key="PriceConverter"></converters:PriceConverter>
         <converters:InputPriceConvert x:Key="InputPriceConverter"></converters:InputPriceConvert>
-        <converters:SalePriceConvert x:Key="SalePriceConverter"  ></converters:SalePriceConvert>
+        <converters:SalePriceConvert x:Key="SalePriceConverter"></converters:SalePriceConvert>
     </Page.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="53"></RowDefinition>
@@ -91,7 +91,8 @@
         <Grid Margin="15 0 5 20"
               Grid.Row="1">
             <Border CornerRadius="20"
-                    Background="White">
+                    Background="White"
+                    Margin="0,0,0,-10">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="55" />
@@ -158,7 +159,7 @@
                                   Margin="4,0,4,0"
                                   VerticalScrollBarVisibility="Auto"
                                   PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
-                                  Height="640"
+                                  Height="635"
                                   VerticalAlignment="Top">
                         <ListView x:Name="SanPhamList"
                                   VerticalAlignment="Top"
@@ -323,18 +324,17 @@
                                                                FontFamily="Poppins"
                                                                FontSize="16"
                                                                FontWeight="Bold"
-                                                               Foreground="#EA6A12"
-                                                              >
-                                                        
-                                                            <TextBlock.Text>
-                                                                <MultiBinding Converter="{StaticResource SalePriceConverter}">
+                                                               Foreground="#EA6A12">
+
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{StaticResource SalePriceConverter}">
                                                                 <Binding Path="Price" />
-                                                                    <Binding Path="DataContext.SystemValue.Profit"
-                                                                             RelativeSource="{RelativeSource AncestorType={x:Type Page}}" />
-                                                                </MultiBinding>
-                                                            </TextBlock.Text>
- </TextBlock>
-                                                 
+                                                                <Binding Path="DataContext.SystemValue.Profit"
+                                                                         RelativeSource="{RelativeSource AncestorType={x:Type Page}}" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+
                                                     <TextBlock Margin="0,0,0,0"
                                                                HorizontalAlignment="Left"
                                                                VerticalAlignment="Center"
@@ -407,7 +407,7 @@
                   Panel.ZIndex="1"
                   Background="White" />
             <Border CornerRadius="20"
-                    Margin="5,0,15,20"
+                    Margin="5,0,15,9"
                     Background="White">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -699,7 +699,7 @@
                                                     <DataTemplate>
                                                         <TextBlock FontSize="17"
                                                                    Text="{ Binding Book.Price, Converter={StaticResource PriceConverter}}">
-                                                           
+
                                                         </TextBlock>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
@@ -805,18 +805,19 @@
                                    VerticalAlignment="Top" />
                     </StackPanel>
                     <StackPanel Grid.Row="4"
-                                Margin="280,0,0,5"
+                                Margin="360,0,0,0"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Left"
-                                VerticalAlignment="Center">
-                        <Button Margin="0 0 30 0"
+                                VerticalAlignment="Top"
+                                >
+                        <Button Margin="0 0 20 0"
                                 Name="EndBillButton"
                                 Command="{Binding EndBill}"
                                 CommandParameter="{Binding ElementName=TabFrame}"
-                                Width="170"
-                                Height="62"
+                                Width="155"
+                                Height="55"
                                 IsEnabled="{Binding PayEnabled}"
-                                materialDesign:ButtonAssist.CornerRadius="24"
+                                materialDesign:ButtonAssist.CornerRadius="22"
                                 Background="#F0BD70"
                                 BorderThickness="0"
                                 Content="Kết thúc"
@@ -825,10 +826,10 @@
                         <Button x:Name="Pay_btn"
                                 Command="{Binding PayBill}"
                                 CommandParameter="{Binding ElementName=TabFrame}"
-                                Width="200"
+                                Width="175"
                                 IsEnabled="{Binding PayEnabled}"
-                                Height="62"
-                                materialDesign:ButtonAssist.CornerRadius="24"
+                                Height="55"
+                                materialDesign:ButtonAssist.CornerRadius="22"
                                 Background="#F0BD70"
                                 BorderThickness="0"
                                 Content="{Binding PayContent}"
