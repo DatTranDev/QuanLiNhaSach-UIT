@@ -652,7 +652,6 @@
     <Resource Include="Resources\Image\BookStore.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\IconImport.png" />
     <Resource Include="Resources\Icon\Edit.png" />
     <Resource Include="Resources\Icon\ion_cart-brown.png" />
     <Resource Include="Resources\Icon\ion_cart-white.png" />
@@ -679,6 +678,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icon\Icon_ImportStaff.png" />
+    <Resource Include="Resources\Icon\Icon_ExportStaff.png" />
     <Resource Include="Resources\Image\Book_Default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
