@@ -281,6 +281,7 @@
     <Compile Include="ViewModel\StaffVM\MainStaffViewModel.cs" />
     <Compile Include="ViewModel\StaffVM\SaleVM\SaleViewModel.cs" />
     <Compile Include="ViewModel\SystemVM\SystemViewModel.cs" />
+    <Compile Include="ViewModel\SystemVM\Validation\StringValidationRule.cs" />
     <Compile Include="View\Admin\AccountInfomation.xaml.cs">
       <DependentUpon>AccountInfomation.xaml</DependentUpon>
     </Compile>
@@ -298,6 +299,15 @@
     </Compile>
     <Compile Include="View\Admin\MainAdminWindow.xaml.cs">
       <DependentUpon>MainAdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\System_\AddDanhMuc.xaml.cs">
+      <DependentUpon>AddDanhMuc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\System_\EditDanhMuc.xaml.cs">
+      <DependentUpon>EditDanhMuc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\System_\SystemPage.xaml.cs">
+      <DependentUpon>SystemPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\ThongKe\CongNo\CongNoTable.xaml.cs">
       <DependentUpon>CongNoTable.xaml</DependentUpon>
@@ -391,9 +401,6 @@
     <Compile Include="View\Staff\Sale\SalePage.xaml.cs">
       <DependentUpon>SalePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Admin\System\SystemPage.xaml.cs">
-      <DependentUpon>SystemPage.xaml</DependentUpon>
-    </Compile>
     <Page Include="ResourcesXAML\MainResource.xaml">
       <Generator>ResXFileCodeGenerator</Generator>
     </Page>
@@ -454,6 +461,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\MainAdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\System_\AddDanhMuc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\System_\EditDanhMuc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\System_\SystemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -538,10 +557,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Staff\Sale\SalePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\System\SystemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -681,6 +696,7 @@
     </Content>
     <Resource Include="Resources\Image\Book_Default.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

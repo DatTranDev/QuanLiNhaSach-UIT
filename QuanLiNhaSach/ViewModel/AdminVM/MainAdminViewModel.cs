@@ -21,6 +21,7 @@ using QuanLiNhaSach.View;
 using QuanLiNhaSach.View.Staff.Sale;
 using QuanLiNhaSach.View.Admin.StaffManagement;
 using QuanLiNhaSach.View.Admin.ThongKe;
+using QuanLiNhaSach.View.Admin.System_;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM
 {

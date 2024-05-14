@@ -11,7 +11,7 @@ namespace QuanLiNhaSach.Model
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class GenreBook
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,11 +19,11 @@ namespace QuanLiNhaSach.Model
         {
             this.Books = new HashSet<Book>();
         }
-    
-        public int ID { get; set; }
+
+        public Nullable<int> ID { get; set; }
         public string DisplayName { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book> Books { get; set; }
     }
