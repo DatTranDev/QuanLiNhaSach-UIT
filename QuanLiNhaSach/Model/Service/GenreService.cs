@@ -27,7 +27,7 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var prD = await context.GenreBook.Where(p => p.DisplayName == name).FirstOrDefaultAsync();
+                    var prD = await context.GenreBook.Where(p => p.DisplayName == name&&p.IsDeleted !=true).FirstOrDefaultAsync();
                     if (prD == null)
                     {
                         return (-1, null);
@@ -50,7 +50,7 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var productGenreList = (from c in context.GenreBook select c.DisplayName).ToListAsync();
+                    var productGenreList = (from c in context.GenreBook.Where(p=>p.IsDeleted != true) select c.DisplayName ).ToListAsync();
                     return await productGenreList;
                 }
             }
@@ -68,7 +68,7 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var prD = await context.GenreBook.Where(p => p.DisplayName == newGenre.DisplayName).FirstOrDefaultAsync();
+                    var prD = await context.GenreBook.Where(p => p.DisplayName == newGenre.DisplayName && p.IsDeleted != true).FirstOrDefaultAsync();
                     if (prD == null)
                     {
                         context.GenreBook.Add(newGenre);
@@ -87,5 +87,56 @@ namespace QuanLiNhaSach.Model.Service
             }
 
         }
+        public async Task<(bool, string)> EditGenre(GenreBook editedGenre)
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var existingGenre = await context.GenreBook.FirstOrDefaultAsync(p => p.ID == editedGenre.ID && p.IsDeleted != true);
+                    if (existingGenre != null)
+                    {
+                        existingGenre.DisplayName = editedGenre.DisplayName;                     
+                        await context.SaveChangesAsync();
+                        return (true, "Chỉnh sửa thành công");
+                    }
+                    else
+                    {
+                        return (false, "Thể loại không tồn tại hoặc đã bị xóa");
+                    }
+                }
+            }
+            catch
+            {
+                return (false, null);
+            }
+        }
+
+        public async Task<(bool, string)> DeleteGenre(int genreId)
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var genreToDelete = await context.GenreBook.FirstOrDefaultAsync(p => p.ID == genreId && p.IsDeleted != true);
+                    if (genreToDelete != null)
+                    {
+                        genreToDelete.IsDeleted = true;
+                        await context.SaveChangesAsync();
+                        return (true, "Đã xóa thể loại");
+                    }
+                    else
+                    {
+                        return (false, "Thể loại không tồn tại hoặc đã bị xóa");
+                    }
+                }
+            }
+            catch
+            {
+                return (false, null);
+            }
+        }
+
+
     }
 }

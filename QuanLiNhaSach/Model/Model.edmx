@@ -75,6 +75,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="GoodReceived">
           <Key>
@@ -437,6 +438,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Books" Relationship="Self.FK_PrD_Genre" FromRole="GenreBook" ToRole="Book" />
         </EntityType>
         <EntityType Name="GoodReceived">
@@ -799,6 +801,7 @@
               <MappingFragment StoreEntitySet="GenreBook">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
