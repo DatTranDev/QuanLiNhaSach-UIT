@@ -18,7 +18,7 @@ namespace QuanLiNhaSach.Converter
             {
                 // Thực hiện phép nhân và chuyển đổi kiểu dữ liệu
                 string valuePrice;
-                int b = Decimal.ToInt32((decimal)(price * (decimal)(1+multiplier)));
+                int b = (int)Math.Round((decimal)(price * (decimal)(1+multiplier)));
                 string c = b.ToString("N");
                 valuePrice = c.Substring(0, c.Length - 3);
                 return valuePrice;

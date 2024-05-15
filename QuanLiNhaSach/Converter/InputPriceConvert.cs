@@ -16,7 +16,7 @@ namespace QuanLiNhaSach.Converter
             {
                 return string.Format("{0:#,0}", value);
             }
-            return value;
+            return 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -31,7 +31,7 @@ namespace QuanLiNhaSach.Converter
                     return result;
                 }
             }
-            return value;
+            return 0;
         }
     }
 }
