@@ -200,7 +200,7 @@
                                             Padding="0"
                                             Background="{x:Null}"
                                             BorderBrush="{x:Null}"
-                                            Command="{Binding UploadImageCM}"
+                                            Command="{Binding EditImageCM}"
                                             Foreground="{x:Null}">
                                         <Image Width="25"
                                                HorizontalAlignment="Left"
