@@ -271,7 +271,15 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
             });
 
 
-
+            LogOutCommand = new RelayCommand<Window>(null, (p) =>
+            {
+                ConfirmLogout confirmLogOut = new ConfirmLogout();
+                confirmLogOut.ShowDialog();
+                if (confirmLogOut.DialogResult == true)
+                {
+                    p.Close();
+                }
+            });
             //thống kê page
         }
     }

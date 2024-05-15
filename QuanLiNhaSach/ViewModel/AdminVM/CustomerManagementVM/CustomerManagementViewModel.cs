@@ -377,6 +377,10 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
                     (bool sc1, string mess1) = await PaymentReceiptService.Ins.AddNewPay(paymentReceipt);
                     if(sc1&&sc) {
                         MessageBoxCustom.Show(MessageBoxCustom.Success, "Cập nhật thành công");
+                        CustomerList = new ObservableCollection<CustomerDTO>(await Task.Run(() => CustomerService.Ins.GetAllCus()));
+                        if (CustomerList != null)
+                            cusList = new List<CustomerDTO>(CustomerList);
+
                     }
                     p.Close();
                 }

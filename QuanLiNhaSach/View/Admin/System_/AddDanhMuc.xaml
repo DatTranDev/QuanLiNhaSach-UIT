@@ -42,7 +42,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="77" />
-                        <RowDefinition Height="250" />
+                        <RowDefinition Height="140" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBlock
@@ -77,7 +77,7 @@
                                  FontFamily="Inter"
                                  FontSize="14"
                                  Text="{Binding ConfirmDisplayName}" />
-                            <TextBlock
+                            <!--<TextBlock
                                  Margin="73.6,20.8,0,20.8"
                                  VerticalAlignment="Top"
                                  Style="{DynamicResource TextBlockLogin}"
@@ -98,7 +98,7 @@
                                  FontFamily="Inter"
                                  FontSize="14"
                                  IsEnabled="False"
-                                 Text="{Binding ConfirmQuantity}" />
+                                 Text="{Binding ConfirmQuantity}" />-->
 
                         </StackPanel>
 

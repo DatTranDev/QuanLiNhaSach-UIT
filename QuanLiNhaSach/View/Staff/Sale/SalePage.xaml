@@ -411,12 +411,12 @@
                     Background="White">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="55" />
+                        <RowDefinition Height="45" />
                         <RowDefinition Height="Auto"
-                                       MinHeight="475" />
+                                       MinHeight="465" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"
-                                       MinHeight="106" />
+                                       MinHeight="100" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
