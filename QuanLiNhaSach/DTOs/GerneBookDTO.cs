@@ -8,16 +8,17 @@ namespace QuanLiNhaSach.DTOs
 {
     public class GenreBookDTO
     {
+        public Nullable<int> STT { get; set; }
         public int ID { get; set; }
         public string DisplayName { get; set; }
         public int Quantity { get; set; }
-        public bool IsDeleted { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
 
-        public GenreBookDTO(int iD, string displayName, int quantity)
-        {
-            ID = iD;
-            DisplayName = displayName;
-            Quantity = quantity;
-        }
+        //public GenreBookDTO(int iD, string displayName, int quantity)
+        //{
+        //    ID = iD;
+        //    DisplayName = displayName;
+        //    Quantity = quantity;
+        //}
     }
 }
