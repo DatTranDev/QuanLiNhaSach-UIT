@@ -20,6 +20,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System;
+using QuanLiNhaSach.ViewModel.AdminVM;
 
 namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
 {
@@ -251,6 +252,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
         {
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                currentStaff = MainAdminViewModel.currentStaff;
                 SystemValue= new SystemValue();
                 SystemValue = await SystemValueService.Ins.GetData();
                 ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
@@ -327,7 +329,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                     {
                         ID = SelectedPrdItem.ID,
                         DisplayName = SelectedPrdItem.DisplayName,
-                        Price = SelectedPrdItem.Price * (decimal)(1 + SystemValue.Profit),
+                        Price = Math.Round((decimal)(SelectedPrdItem.Price * (decimal)(1 + SystemValue.Profit))),
                         IDGenre = SelectedPrdItem.IDGenre,
                         Inventory = SelectedPrdItem.Inventory,
                         Author = SelectedPrdItem.Author,
@@ -342,7 +344,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
 
                         IDBook = SelectedPrdItem.ID,
                         IsDeleted = SelectedPrdItem.IsDeleted,
-                        PriceItem = SelectedPrdItem.Price * (decimal)(1+SystemValue.Profit),
+                        PriceItem = Math.Round((decimal)(SelectedPrdItem.Price * (decimal)(1+SystemValue.Profit))),
                         Quantity = 1,
                         Book = a
                     };
@@ -447,7 +449,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                         }
                         else
                         {
-                            (Customer b, bool success2, string messageSearch1) = await CustomerService.Ins.findCusbyID(2);
+                            (Customer b, bool success2, string messageSearch1) = await CustomerService.Ins.findCusbyName("Khách lẻ");
                             if(success2)
                             {
                                CusOfBill = b;

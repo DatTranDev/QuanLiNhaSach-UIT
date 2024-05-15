@@ -350,7 +350,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
                 DebtAddress = SelectedItem.Address;
                 DebtEmail = SelectedItem.Email;
                 DebtPhoneNumber = SelectedItem.PhoneNumber;
+                DebtMoney = "";
                 DebtDay = DateTime.Now;
+                
                 DebtingWindow wd = new DebtingWindow();
                 wd.ShowDialog();
             });
@@ -363,7 +365,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
                 }
                 else
                 {
-                    (bool sc, string mess) = await CustomerService.Ins.updateDebts(decimal.Parse(DebtMoney), SelectedItem.ID);
+                    decimal a = -decimal.Parse(DebtMoney);
+                    (bool sc, string mess) = await CustomerService.Ins.updateDebts(a, SelectedItem.ID);
 
                     PaymentReceipt paymentReceipt = new PaymentReceipt {
                         IDCus = SelectedItem.ID,
