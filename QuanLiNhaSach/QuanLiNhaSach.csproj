@@ -94,6 +94,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
       <Private>True</Private>
@@ -651,7 +652,6 @@
     <Resource Include="Resources\Image\BookStore.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\IconImport.png" />
     <Resource Include="Resources\Icon\Edit.png" />
     <Resource Include="Resources\Icon\ion_cart-brown.png" />
     <Resource Include="Resources\Icon\ion_cart-white.png" />
@@ -678,6 +678,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icon\Icon_ImportStaff.png" />
+    <Resource Include="Resources\Icon\Icon_ExportStaff.png" />
     <Resource Include="Resources\Image\Book_Default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

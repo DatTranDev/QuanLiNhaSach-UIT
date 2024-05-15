@@ -113,27 +113,31 @@
                         <ImageBrush ImageSource="/QuanLiNhaSach;component/Resources/Icon/AddCusBtn.png" />
                     </Button.Background>
                 </Button>
-                <!--  Button import  -->
-                <Grid>
-                    <Border
-                        Width="150"
-                        Height="50"
-                        CornerRadius="10">
-                        <ComboBox
-                            Width="150"
-                            Height="50"
-                            Text="Excel"
-                            Margin="0,0,30,0"
-                            BorderThickness="0"
-                            Background="#E6B89F">       
-                            <ComboBoxItem Content="Import"/>
-                            <ComboBoxItem Content="Export"/>
-                        </ComboBox>
-                    </Border>
-                </Grid>
-                
+                <!--  button import -->
+                <Button
+                     Width="48"
+                     Height="48"
+                     Margin="0,0,24,0"
+                     BorderThickness="0"
+                     Command="{Binding ImportStaffCommand}"
+                     CommandParameter="{Binding ElementName=staffPage}" >    
+                    <Button.Background>
+                        <ImageBrush ImageSource="/QuanLiNhaSach;component/Resources/Icon/Icon_ImportStaff.png" />
+                    </Button.Background>
+                </Button>
+                <!--  button export -->
+                <Button
+                      Width="48"
+                      Height="48"
+                      Margin="0,0,24,0"
+                      BorderThickness="0"
+                      Command="{Binding ExportStaffCommand}"
+                      CommandParameter="{Binding ElementName=staffPage}" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/QuanLiNhaSach;component/Resources/Icon/Icon_ExportStaff.png" />
+                    </Button.Background>
+                </Button>
             </StackPanel>
-
         </Grid>
 
         <!--  Staff Table  -->
@@ -176,7 +180,7 @@
                             <DataGridTemplateColumn.Header>
                                 <TextBlock Text="ID" Foreground="Black"></TextBlock>
                             </DataGridTemplateColumn.Header>
-                                <DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock
                                 
