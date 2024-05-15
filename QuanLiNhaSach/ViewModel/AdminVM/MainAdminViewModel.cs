@@ -21,6 +21,7 @@ using QuanLiNhaSach.View;
 using QuanLiNhaSach.View.Staff.Sale;
 using QuanLiNhaSach.View.Admin.StaffManagement;
 using QuanLiNhaSach.View.Admin.ThongKe;
+using QuanLiNhaSach.View.Admin.System_;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM
 {
@@ -270,7 +271,15 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
             });
 
 
-
+            LogOutCommand = new RelayCommand<Window>(null, (p) =>
+            {
+                ConfirmLogout confirmLogOut = new ConfirmLogout();
+                confirmLogOut.ShowDialog();
+                if (confirmLogOut.DialogResult == true)
+                {
+                    p.Close();
+                }
+            });
             //thống kê page
         }
     }

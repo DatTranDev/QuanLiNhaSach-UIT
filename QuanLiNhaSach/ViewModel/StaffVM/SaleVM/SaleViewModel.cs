@@ -21,6 +21,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System;
 using QuanLiNhaSach.ViewModel.AdminVM;
+using System.Diagnostics;
 
 namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
 {
@@ -386,11 +387,11 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                 }
 
             });
-            //AddCustomerCM = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-            //    AddCustomerWindow wd = new AddCustomerWindow();
-            //    wd.ShowDialog();
-            //});
+            AddCustomerCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                AddCustomerWindow wd = new AddCustomerWindow();
+                wd.ShowDialog();
+            });
 
             DeleteBillInfoCM = new RelayCommand<BillInfoDTO>((p) => { return true; }, (p) => {
                 SelectedBillInfo = p;
@@ -465,44 +466,60 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                         SelectedBill.Paid = PaidBillValue;
 
                         // Lâu
-                        if(CusOfBill.ID==2 && Debt>0)
+                        if(CusOfBill.DisplayName == "Khách lẻ" && Debt>0)
                         {
                             Error wd3= new Error("Khách lẻ không được nợ");
                             wd3.ShowDialog();
                             PayEnabled = true;
                             PayContent = "Thanh toán";
-                        }
-                    else
-                    {
-                        (bool isAdded, string messageAdd) = await BillService.Ins.AddNewBill(SelectedBill);
-                        if (isAdded)
-                        {
-                            (bool suc, string mEdit) = await CustomerService.Ins.updateSpend(TotalBillValue, CusOfBill.ID);
-                            if (!suc) MessageBoxCustom.Show(MessageBoxCustom.Error, "Chỉnh sửa chi tiêu khách hàng thất bại!");
-                            if (Debt > 0)
-                            {
-                                (bool success, string message) = await CustomerService.Ins.updateDebts(Debt, CusOfBill.ID);
-                                if (!suc) MessageBoxCustom.Show(MessageBoxCustom.Error, "Chỉnh sửa nợ khách hàng thất bại!");
-                            }
-                            PayContent = "Đã thanh toán";
-                            MessageBoxCustom.Show(MessageBoxCustom.Success, "Thành công");
-                            new InvoicePrint().ShowDialog();
-                            resetData();
-                            Brush = null;
-                            PayEnabled = false;
-                            PayContent = "Thanh toán";
-                            EndEnable = false;
-                            EndBackGround = null;
-                            FirstLoadCM.Execute(null);
-                        }
+                        }    
                         else
                         {
-                            MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
-                            PayContent = "Thanh toán";
-                        }
+                            if(CusOfBill.Debts + Debt > SystemValue.MaxDebts)
+                            {
+                                string valuePrice;
+                                int b = Decimal.ToInt32((decimal)SystemValue.MaxDebts);
+                                string c = b.ToString("N");
+                                valuePrice = c.Substring(0, c.Length - 3);
+                            
+                            Error wd3 = new Error("Tổng nợ không được quá " + SystemValue.MaxDebts);
+                                wd3.ShowDialog();
+                                PayEnabled = true;
+                                PayContent = "Thanh toán";
+                            }
+                            else
+                            {
+                                (bool isAdded, string messageAdd) = await BillService.Ins.AddNewBill(SelectedBill);
+                                if (isAdded)
+                                {
+                                    (bool suc, string mEdit) = await CustomerService.Ins.updateSpend(TotalBillValue, CusOfBill.ID);
+                                    if (!suc) MessageBoxCustom.Show(MessageBoxCustom.Error, "Chỉnh sửa chi tiêu khách hàng thất bại!");
+                                    if (Debt > 0)
+                                    {
+                                        (bool success, string message) = await CustomerService.Ins.updateDebts(Debt, CusOfBill.ID);
+                                        if (!suc) MessageBoxCustom.Show(MessageBoxCustom.Error, "Chỉnh sửa nợ khách hàng thất bại!");
+                                    }
+                                    PayContent = "Đã thanh toán";
+                                    MessageBoxCustom.Show(MessageBoxCustom.Success, "Thành công");
+                                    new InvoicePrint().ShowDialog();
+                                    resetData();
+                                    Brush = null;
+                                    PayEnabled = false;
+                                    PayContent = "Thanh toán";
+                                    EndEnable = false;
+                                    EndBackGround = null;
+                                    FirstLoadCM.Execute(null);
+                                }
+                                else
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
+                                    PayContent = "Thanh toán";
+                                }
+                            }
 
-                        //prdEnable = false;
-                    }
+                            //prdEnable = false;
+                        }
+                    
                 }         
             });
 

@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuanLiNhaSach.DTOs;
+
 
 namespace QuanLiNhaSach.Model.Service
 {
@@ -27,12 +29,12 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var prD = await context.GenreBook.Where(p => p.DisplayName == name&&p.IsDeleted !=true).FirstOrDefaultAsync();
+                    var prD = await context.GenreBook.Where(p => p.DisplayName == name && p.IsDeleted != true).FirstOrDefaultAsync();
                     if (prD == null)
                     {
                         return (-1, null);
                     }
-                    return (prD.ID, prD);
+                    return ((int)prD.ID, prD);
                 }
             }
             catch
@@ -41,7 +43,7 @@ namespace QuanLiNhaSach.Model.Service
                 return (-1, null);
             }
 
-        }        
+        }
 
         // Get all genre prD
         public async Task<List<string>> GetAllGenreBook()
@@ -50,16 +52,17 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var productGenreList = (from c in context.GenreBook.Where(p=>p.IsDeleted != true) select c.DisplayName ).ToListAsync();
-                    return await productGenreList;
+                    var productGenreList = await (from c in context.GenreBook
+                                                  where c.IsDeleted != true
+                                                  select c.DisplayName).ToListAsync();
+                    return productGenreList;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
                 return null;
             }
-
         }
 
         public async Task<(bool, string)> AddNewGenre(GenreBook newGenre)
@@ -73,70 +76,70 @@ namespace QuanLiNhaSach.Model.Service
                     {
                         context.GenreBook.Add(newGenre);
                         await context.SaveChangesAsync();
-                        return (true, "Thêm thành công");
+
+                        return (true, "Thêm thành công.");
                     }
-                    else 
+                    else
                     {
-                        return (false, "Đã tồn tại"); 
+                        return (false, "Đã tồn tại.");
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return (false, null);
             }
 
         }
-        public async Task<(bool, string)> EditGenre(GenreBook editedGenre)
+        public async Task<(bool, string)> EditGenre(GenreBook selectedGenre)
+        {
+
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    bool IsExistID = await context.GenreBook.AnyAsync(p => p.DisplayName == selectedGenre.DisplayName && p.ID == selectedGenre.ID && p.IsDeleted != true);
+
+                    if (IsExistID)
+                    {
+                        return (false, "Danh mục đã tồn tại.");
+                    }
+                    var genre = await context.GenreBook.Where(p => p.ID == selectedGenre.ID).FirstOrDefaultAsync();
+                    genre.DisplayName = selectedGenre.DisplayName;
+                    await context.SaveChangesAsync();
+                    return (true, "Cập nhật thành công.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi!");
+                return (false, null);
+            }
+        }
+
+        public async Task<(bool, string)> DeleteGenre(GenreBook selectedGenre)
         {
             try
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var existingGenre = await context.GenreBook.FirstOrDefaultAsync(p => p.ID == editedGenre.ID && p.IsDeleted != true);
-                    if (existingGenre != null)
+                    var genreToDelete = await context.GenreBook.FirstOrDefaultAsync(g => g.ID == selectedGenre.ID && g.DisplayName == selectedGenre.DisplayName);
+                    if (genreToDelete == null)
                     {
-                        existingGenre.DisplayName = editedGenre.DisplayName;                     
-                        await context.SaveChangesAsync();
-                        return (true, "Chỉnh sửa thành công");
+                        return (false, "Không tìm thấy thể loại sách để xóa.");
                     }
-                    else
-                    {
-                        return (false, "Thể loại không tồn tại hoặc đã bị xóa");
-                    }
+
+                    // Perform soft delete (mark as deleted)
+                    genreToDelete.IsDeleted = true;
+
+                    await context.SaveChangesAsync();
+                    return (true, "Xóa thể loại sách thành công.");
                 }
             }
-            catch
+            catch (Exception)
             {
-                return (false, null);
+                return (false, "Xảy ra lỗi khi xóa thể loại sách.");
             }
         }
-
-        public async Task<(bool, string)> DeleteGenre(int genreId)
-        {
-            try
-            {
-                using (var context = new QuanLiNhaSachEntities())
-                {
-                    var genreToDelete = await context.GenreBook.FirstOrDefaultAsync(p => p.ID == genreId && p.IsDeleted != true);
-                    if (genreToDelete != null)
-                    {
-                        genreToDelete.IsDeleted = true;
-                        await context.SaveChangesAsync();
-                        return (true, "Đã xóa thể loại");
-                    }
-                    else
-                    {
-                        return (false, "Thể loại không tồn tại hoặc đã bị xóa");
-                    }
-                }
-            }
-            catch
-            {
-                return (false, null);
-            }
-        }
-
-
     }
 }

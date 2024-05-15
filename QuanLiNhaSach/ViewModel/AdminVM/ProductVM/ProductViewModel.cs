@@ -471,6 +471,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         break;
                     }    
                 }
+                
                 if (flag)
                 {
                     for (int i = 0; i < ListAdd.Count; i++)
