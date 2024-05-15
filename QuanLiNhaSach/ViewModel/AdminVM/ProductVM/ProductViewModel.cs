@@ -722,6 +722,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                 wd3.ShowDialog();
                                 break;
                         }
+                        if (ListImport[i].Count < SystemValue.MinReceived)
+                        {
+                            flag = false;
+                            Error wd2 = new Error("STT " + ListImport[i].STT + " có số lượng nhập không đủ");
+                            wd2.ShowDialog();
+                            break;
+                        }
                         int id;
                         GenreBook genrePrD = new GenreBook();
                         (id, genrePrD) = await GenreService.Ins.FindGenrePrD(item.GenreName);
@@ -741,7 +748,6 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             } 
 
                         }
-
                         (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
                         if (!a)
                         {
@@ -789,13 +795,6 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                 flag = false;
                                 Error wd1 = new Error("STT " + ListImport[i].STT + " ở kho vẫn còn hàng");
                                 wd1.ShowDialog();
-                                break;
-                            }
-                            if (ListImport[i].Count < SystemValue.MinReceived)
-                            {
-                                flag = false;
-                                Error wd2 = new Error("STT " + ListImport[i].STT + " có số lượng nhập không đủ");
-                                wd2.ShowDialog();
                                 break;
                             }
                             if(b.Price!=item.Price)
@@ -953,11 +952,6 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
 
                         GenreBook genrePrD = new GenreBook();
                         (id, genrePrD) = await GenreService.Ins.FindGenrePrD(EditGenre);
-                        if (OriginImage != EditImage)
-                        {
-                            await CloudService.Ins.DeleteImage(OriginImage);
-                            EditImage = await CloudService.Ins.UploadImage(EditImage);
-                        }
 
                         Book newPrD = new Book
                         {
