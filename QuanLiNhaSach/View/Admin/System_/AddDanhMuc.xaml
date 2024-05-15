@@ -7,7 +7,7 @@
         x:Name="AddDanhMucWindow"
         Title="AddDanhMucWindow"
         Width="500"
-        Height="Auto"
+        Height="300"
         AllowsTransparency="True"
         Background="Transparent"
         DataContext="{StaticResource SystemVM}"

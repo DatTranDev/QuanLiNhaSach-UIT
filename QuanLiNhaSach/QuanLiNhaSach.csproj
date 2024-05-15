@@ -676,7 +676,6 @@
     <Resource Include="Resources\Icon\import_products.png" />
     <Resource Include="Resources\Icon\Export_excel_white_icon.png" />
     <Resource Include="Resources\Icon\Excel_white_Icon.png" />
-    <Resource Include="View\Admin\ProductsManager\tải xuống.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\BookLogo.png" />

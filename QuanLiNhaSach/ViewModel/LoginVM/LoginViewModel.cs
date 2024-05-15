@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CloudinaryDotNet.Core;
 
 namespace QuanLiNhaSach.ViewModel.LoginVM
 {
@@ -79,7 +80,7 @@ namespace QuanLiNhaSach.ViewModel.LoginVM
                 ForgotPassword wd = new ForgotPassword();
                 wd.ShowDialog();
             });
-            SendCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            SendCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
             {
                 string newPass = Helper.randomCode();
                 (bool updateSuccess, string message, string username) = await StaffService.Ins.UpdatePassword(forgotEmail, newPass);
@@ -90,6 +91,7 @@ namespace QuanLiNhaSach.ViewModel.LoginVM
                 else
                 {
                     await LoginService.Ins.sendEmail(forgotEmail, newPass, username);
+                    p.Close();
                     MessageBoxCustom.Show(MessageBoxCustom.Success, "Đã gửi email thành công");
                 }
 

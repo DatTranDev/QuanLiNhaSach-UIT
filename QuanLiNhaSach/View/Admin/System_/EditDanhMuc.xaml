@@ -8,7 +8,7 @@
         x:Name="EditDanhMucWindow"
         Title="EditDanhMucWindow"
         Width="500"
-        Height="Auto"
+        Height="320"
         AllowsTransparency="True"
         Background="Transparent"
         DataContext="{StaticResource SystemVM}"
@@ -43,7 +43,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="77" />
-                        <RowDefinition Height="250" />
+                        <RowDefinition Height="150" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBlock
@@ -78,7 +78,7 @@
                                  FontFamily="Inter"
                                  FontSize="14"
                                  Text="{Binding EditDisplayName}" />
-                            <TextBlock
+                            <!--<TextBlock
                                  x:Name="quantityTextBox"
                                  Margin="73.6,20.8,0,20.8"
                                  VerticalAlignment="Top"
@@ -99,7 +99,7 @@
                                  FontFamily="Inter"
                                  FontSize="14"
                                  Text="{Binding SelectedItem.Quantity}"
-                                 IsEnabled="False"/>
+                                 IsEnabled="False"/>-->
 
                         </StackPanel>
 
