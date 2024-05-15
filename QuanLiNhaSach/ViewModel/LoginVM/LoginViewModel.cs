@@ -136,8 +136,8 @@ namespace QuanLiNhaSach.ViewModel.LoginVM
                         }
                         else
                         {
-                            MainStaffWindow st = new MainStaffWindow();
-                            MainStaffViewModel.currentStaff = curStaff;
+                            MainAdminWindow st = new MainAdminWindow();
+                            MainAdminViewModel.currentStaff = curStaff;
                             st.Owner = p;
                             st.Show();
                         }

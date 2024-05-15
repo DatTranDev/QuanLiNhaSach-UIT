@@ -343,13 +343,12 @@
 
 
                     </RadioButton>
-
-                    <!--  NhanVien-Menu_btn  -->
+                    <!--  BanHang-Menu_btn  -->
                     <RadioButton
-                x:Name="NVbtn"
-                Command="{Binding LoadNhanVienPage}"
-                CommandParameter="{Binding ElementName=MainFrame}"
-                Cursor="Hand">
+    x:Name="BanHangbtn"
+    Command="{Binding LoadBanHangPage}"
+    CommandParameter="{Binding ElementName=MainFrame}"
+    Cursor="Hand">
                         <RadioButton.Style>
                             <Style TargetType="RadioButton">
                                 <Setter Property="Height" Value="58" />
@@ -358,30 +357,30 @@
                                         <ControlTemplate TargetType="RadioButton">
 
                                             <Border
-                                        x:Name="border"
-                                        Height="58"
-                                        CornerRadius="16">
+        x:Name="border"
+        Height="58"
+        CornerRadius="16">
                                                 <StackPanel Cursor="Hand" Orientation="Horizontal">
                                                     <Image
-                                                x:Name="image"
-                                                Width="27"
-                                                Height="30"
-                                                Margin="24,0,0,0"
-                                                Source="/QuanLiNhaSach;component/Resources/Icon/NhanVien_Brown_Icon.png" />
+                x:Name="image"
+                Width="27"
+                Height="30"
+                Margin="24,0,0,0"
+                Source="/QuanLiNhaSach;component/Resources/Icon/ion_cart-brown.png" />
                                                     <TextBlock
-                                                x:Name="text"
-                                                Margin="13,0,0,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="18"
-                                                Foreground="#FFE0AE8A"
-                                                Text="Nhân viên" />
+                x:Name="text"
+                Margin="13,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Foreground="#FFE0AE8A"
+                Text="Bán hàng" />
                                                 </StackPanel>
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsChecked" Value="True">
                                                     <Setter TargetName="border" Property="Background" Value="#FFE0AE8A" />
                                                     <Setter TargetName="text" Property="Foreground" Value="White" />
-                                                    <Setter TargetName="image" Property="Source" Value="/QuanLiNhaSach;component/Resources/Icon/NhanVien_White_Icon.png" />
+                                                    <Setter TargetName="image" Property="Source" Value="/QuanLiNhaSach;component/Resources/Icon/ion_cart-white.png" />
                                                 </Trigger>
                                                 <Trigger Property="IsChecked" Value="False">
                                                     <Setter TargetName="border" Property="Background" Value="White" />
@@ -447,6 +446,58 @@
 
                     </RadioButton>
 
+                    <!--  NhanVien-Menu_btn  -->
+                    <RadioButton
+    Visibility="{Binding IsNhanVien}"
+    x:Name="NVbtn"
+    Command="{Binding LoadNhanVienPage}"
+    CommandParameter="{Binding ElementName=MainFrame}"
+    Cursor="Hand">
+                        <RadioButton.Style>
+                            <Style TargetType="RadioButton">
+                                <Setter Property="Height" Value="58" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="RadioButton">
+
+                                            <Border
+    x:Name="border"
+    Height="58"
+    CornerRadius="16">
+                                                <StackPanel Cursor="Hand" Orientation="Horizontal">
+                                                    <Image
+            x:Name="image"
+            Width="27"
+            Height="30"
+            Margin="24,0,0,0"
+            Source="/QuanLiNhaSach;component/Resources/Icon/NhanVien_Brown_Icon.png" />
+                                                    <TextBlock
+            x:Name="text"
+            Margin="13,0,0,0"
+            VerticalAlignment="Center"
+            FontSize="18"
+            Foreground="#FFE0AE8A"
+            Text="Nhân viên" />
+                                                </StackPanel>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#FFE0AE8A" />
+                                                    <Setter TargetName="text" Property="Foreground" Value="White" />
+                                                    <Setter TargetName="image" Property="Source" Value="/QuanLiNhaSach;component/Resources/Icon/NhanVien_White_Icon.png" />
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Setter TargetName="border" Property="Background" Value="White" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </RadioButton.Style>
+
+                    </RadioButton>
+
                     <!--  ThongKe-Menu_btn  -->
                     <RadioButton
                         x:Name="ThongKebtn"
@@ -500,6 +551,7 @@
 
                     <!--  HeThong-Menu_btn  -->
                     <RadioButton
+                        Visibility="{Binding IsNhanVien}"
                         x:Name="HeThongbtn"
                         Command="{Binding LoadHeThongPage}"
                         CommandParameter="{Binding ElementName=MainFrame}"
@@ -549,56 +601,7 @@
 
                     </RadioButton>
 
-                    <!--  BanHang-Menu_btn  -->
-                    <RadioButton
-                        x:Name="BanHangbtn"
-                        Command="{Binding LoadBanHangPage}"
-                        CommandParameter="{Binding ElementName=MainFrame}"
-                        Cursor="Hand">          
-                        <RadioButton.Style>
-                            <Style TargetType="RadioButton">
-                                <Setter Property="Height" Value="58" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="RadioButton">
-
-                                            <Border
-                            x:Name="border"
-                            Height="58"
-                            CornerRadius="16">
-                                                <StackPanel Cursor="Hand" Orientation="Horizontal">
-                                                    <Image
-                                    x:Name="image"
-                                    Width="27"
-                                    Height="30"
-                                    Margin="24,0,0,0"
-                                    Source="/QuanLiNhaSach;component/Resources/Icon/ion_cart-brown.png" />
-                                                    <TextBlock
-                                    x:Name="text"
-                                    Margin="13,0,0,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="18"
-                                    Foreground="#FFE0AE8A"
-                                    Text="Bán hàng" />
-                                                </StackPanel>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsChecked" Value="True">
-                                                    <Setter TargetName="border" Property="Background" Value="#FFE0AE8A" />
-                                                    <Setter TargetName="text" Property="Foreground" Value="White" />
-                                                    <Setter TargetName="image" Property="Source" Value="/QuanLiNhaSach;component/Resources/Icon/ion_cart-white.png" />
-                                                </Trigger>
-                                                <Trigger Property="IsChecked" Value="False">
-                                                    <Setter TargetName="border" Property="Background" Value="White" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </RadioButton.Style>
-
-                    </RadioButton>
+                    
 
                 </StackPanel>
             </Grid>

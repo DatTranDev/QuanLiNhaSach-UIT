@@ -17,7 +17,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Data.Entity;
 using QuanLiNhaSach.View.Admin.ProductsManager;
-using QuanLiNhaSach.View;
 using QuanLiNhaSach.View.Staff.Sale;
 using QuanLiNhaSach.View.Admin.StaffManagement;
 using QuanLiNhaSach.View.Admin.ThongKe;
@@ -29,13 +28,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
 
        
     {
-        private SeriesCollection _revenueSeries;
-        public SeriesCollection RevenueSeries
-        {
-            get { return _revenueSeries; }
-            set { _revenueSeries = value; OnPropertyChanged(); }
+        private string _isNhanVien;
+        public string IsNhanVien { 
+            get { return _isNhanVien; }
+            set { _isNhanVien = value; OnPropertyChanged(); }
         }
-
         public static StaffDTO currentStaff;
         private string _currentName;
 
@@ -153,8 +150,14 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
         public MainAdminViewModel() {
             FirstLoadCM = new RelayCommand<Frame>((p) => {
                 if(currentStaff != null)
+                {
                     currentName = currentStaff.DisplayName;
-                return true; }, (p) => { p.Content = new ProductMain(); 
+                    if (currentStaff.Role == "Nhân viên")
+                        IsNhanVien = "Collapsed";
+                }
+                return true; 
+            }, 
+            (p) => { p.Content = new ProductMain(); 
             });
             LoadKhachHangPage = new RelayCommand<Frame>((p) => { return true; }, (p) => { p.Content = new CustomerPage(); });
             LoadSanPhamPage = new RelayCommand<Frame>((p) => { return true; }, (p)=> { p.Content = new ProductMain(); });
