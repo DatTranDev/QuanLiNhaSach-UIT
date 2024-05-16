@@ -121,7 +121,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         }
 
 
-        private static SolidColorBrush defaultColor = new SolidColorBrush(Colors.White);
+        private static SolidColorBrush defaultColor = new SolidColorBrush(Colors.Transparent);
         private void ResetColors()
         {
             LichSuThuTienColor = defaultColor;

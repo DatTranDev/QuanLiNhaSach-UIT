@@ -53,9 +53,9 @@
                 Width="170"
                 Margin="238.5,0,718.5,0"
                 BorderBrush="#e0ae8a"
-                FontSize="30"
+                FontSize="22"
                 FontWeight="Bold"
-                Foreground="#e0ae8a"
+                Foreground="#110000"
                 ItemsSource="{Binding ListThang}"
                 SelectedItem="{Binding SelectedThang, Mode=TwoWay}"
                 Style="{DynamicResource MaterialDesignComboBox}" />

@@ -20,7 +20,7 @@
         <converters:CusNameConverter x:Key="CusNameConverter" />
     </Page.Resources>
 
-    <Grid Background="white">
+    <Grid>
         <ListView
             x:Name="billTable"
             Margin="11"
