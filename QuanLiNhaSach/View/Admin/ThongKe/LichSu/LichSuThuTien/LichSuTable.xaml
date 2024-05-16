@@ -23,7 +23,7 @@
         <converters:CusNameConverter x:Key="CusNameConverter" />
     </Page.Resources>
 
-    <Grid Background="White">
+    <Grid>
         <!--  ItemsSource="{Binding BillList}"  -->
         <ListView
             x:Name="danhSachThuTien"
