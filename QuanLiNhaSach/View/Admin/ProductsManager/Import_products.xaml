@@ -9,7 +9,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Import_products"
-        Name="ImportPrd"
+        x:Name="ImportPrd"
         Width="1280"
         Height="660"
         Background="Transparent"

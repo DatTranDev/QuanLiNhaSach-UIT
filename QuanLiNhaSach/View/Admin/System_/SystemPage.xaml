@@ -157,9 +157,9 @@
                      Text="Nợ tối đa"/>
 
             <Border Grid.Column="0" Grid.Row="9">
-                <TextBox x:Name="tb5" Margin="10" BorderThickness="0" FontSize="15">
+                <TextBox x:Name="tb5" Margin="10" BorderThickness="0" FontSize="15" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown">
                     <TextBox.Text>
-                        <Binding Path="MaxDebts" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="MaxDebts" UpdateSourceTrigger="PropertyChanged" StringFormat="N0">
                             <Binding.ValidationRules>
                                 <StaticResource ResourceKey="DoubleValidationRule" />
                             </Binding.ValidationRules>

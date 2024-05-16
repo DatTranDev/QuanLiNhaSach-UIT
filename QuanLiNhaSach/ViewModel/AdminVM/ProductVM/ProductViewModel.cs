@@ -842,6 +842,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                         if (d)
                         {
                             Success wd4 = new Success("Nhập hàng thành công");
+                            ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
+                            if (ProductList != null)
+                            {
+                                prdList = new List<BookDTO>(ProductList);
+                            }
+                            p.Close();
                             wd4.ShowDialog();
                         }
 

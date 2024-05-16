@@ -183,7 +183,7 @@ namespace QuanLiNhaSach.ViewModel.SystemVM
 
                 SystemValue systemValue = await SystemValueService.Ins.GetData();
                 MinReceived = systemValue.MinReceived.ToString();
-                MaxDebts = systemValue.MaxDebts.ToString();
+                MaxDebts = ((decimal)systemValue.MaxDebts).ToString("N0");
                 MaxInventory = systemValue.MaxInventory.ToString();
                 MinSaleInventory = systemValue.MinSaleInventory.ToString();
                 DebtsPolicy = (bool)systemValue.DebtsPolicy;

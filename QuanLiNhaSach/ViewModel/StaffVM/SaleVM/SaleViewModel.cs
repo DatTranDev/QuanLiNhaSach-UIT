@@ -159,7 +159,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
             set { _debt = value; OnPropertyChanged(); }
         }
 
-        private decimal _paidBillValue;
+        private decimal _paidBillValue ;
 
         public decimal PaidBillValue
         {

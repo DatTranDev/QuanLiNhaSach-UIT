@@ -104,7 +104,7 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var prD = await context.Book.Where(p => p.DisplayName == newPrD.DisplayName && p.Publisher==newPrD.Publisher && p.PublishYear==newPrD.PublishYear && p.Author== newPrD.Author &&p.IDGenre==newPrD.IDGenre).FirstOrDefaultAsync();
+                    var prD = await context.Book.Where(p => p.DisplayName == newPrD.DisplayName && p.Publisher==newPrD.Publisher && p.PublishYear==newPrD.PublishYear && p.Author== newPrD.Author &&p.IDGenre==newPrD.IDGenre && p.IsDeleted==false ).FirstOrDefaultAsync();
                     if (prD != null)
                     {
                         if (prD.IsDeleted == true)
@@ -168,7 +168,7 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var prD = await context.Book.Where(p => p.ID == newPrD.ID).FirstOrDefaultAsync();
+                    var prD = await context.Book.Where(p => p.ID == newPrD.ID && p.IsDeleted==false).FirstOrDefaultAsync();
 
                     if (prD == null) return (false, "Không tìm thấy ID");
                     prD.DisplayName = newPrD.DisplayName;
@@ -224,7 +224,7 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var book = await context.Book.Where(p => p.DisplayName==Name && p.GenreBook.DisplayName==Genre && p.Author==Author && p.Publisher==Publisher && p.PublishYear==publishYear).FirstOrDefaultAsync();
+                    var book = await context.Book.Where(p => p.DisplayName==Name && p.GenreBook.DisplayName==Genre && p.Author==Author && p.Publisher==Publisher && p.PublishYear==publishYear && p.IsDeleted==false).FirstOrDefaultAsync();
                     if (book == null)
                     {
                         return (false, null);
