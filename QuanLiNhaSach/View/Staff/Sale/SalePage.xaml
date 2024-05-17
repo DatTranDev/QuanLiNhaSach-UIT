@@ -771,7 +771,7 @@
                                    FontSize="20"
                                    VerticalAlignment="Top"
                                    Margin="0 0 15 0 " />
-                        <TextBox Text="{Binding PaidBillValue , UpdateSourceTrigger=PropertyChanged,Converter={StaticResource InputPriceConverter}}"
+                        <TextBox Text="{Binding PaidBillValue , UpdateSourceTrigger=PropertyChanged}"
                                  x:Name="SoTienDaTra"
                                 
                                  MaxWidth="170"
