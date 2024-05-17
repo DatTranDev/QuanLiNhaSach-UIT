@@ -31,7 +31,7 @@ namespace QuanLiNhaSach.View.Admin
 
         private void AdminWD_Closed(object sender, System.EventArgs e)
         {
-            //this.Owner.Visibility = Visibility.Visible;
+            this.Owner.Visibility = Visibility.Visible;
         }
     }
 }

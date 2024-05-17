@@ -280,6 +280,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
                 confirmLogOut.ShowDialog();
                 if (confirmLogOut.DialogResult == true)
                 {
+                    p.Owner.Visibility = Visibility.Visible;
                     p.Close();
                 }
             });

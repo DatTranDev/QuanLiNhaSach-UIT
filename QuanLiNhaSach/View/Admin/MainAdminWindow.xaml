@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin"
+        
         x:Name="AdminWD"
         mc:Ignorable="d"
         d:DesignHeight="864"
