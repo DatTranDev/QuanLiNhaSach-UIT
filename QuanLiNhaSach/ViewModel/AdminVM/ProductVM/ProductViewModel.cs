@@ -31,7 +31,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             get { return listStaff; }
             set { listStaff = value; OnPropertyChanged(); }
         }
-        public Staff Staff;
+        public StaffDTO Staff;
         public static StaffDTO currentStaff;
         //
         private string filePath;
@@ -292,9 +292,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
         {
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                //test
-                (Staff e,bool g) = await StaffService.Ins.FindStaff(5);
-                Staff = e;
+                Staff  = MainAdminViewModel.currentStaff;
                 //
                 SystemValue = new SystemValue();
                 SystemValue = await SystemValueService.Ins.GetData();
@@ -695,14 +693,15 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             });
             ConfirmImport = new RelayCommand<Window>(p => { return true; }, async (p) =>
             {
-                //MessageBox.Show("" + ListImport.Count());
-                DateTime date;
-                if (DateTime.TryParseExact(DateImport, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
-                {
+            //MessageBox.Show("" + ListImport.Count());
+            (Staff findedStaff, bool isSuc) = await StaffService.Ins.FindStaff(Staff.ID);
+            DateTime date;
+            if (DateTime.TryParseExact(DateImport, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+            {
                     GoodReceived = new GoodReceivedDTO
                     {
                         CreateAt = date,
-                        Staff = this.Staff,
+                        Staff = findedStaff,
                         StaffId = this.Staff.ID,
                         Total=0,
                         GoodReceivedInfo = new List<GoodReceivedInfoDTO>()
