@@ -1,0 +1,279 @@
+﻿<Window
+    x:Class="QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuNhap.ChiTietPhieuNhap"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:QuanLiNhaSach.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuNhap"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="ChiTietPhieuNhapWD"
+    Title="ChiTietPhieuNhap"
+    Width="870"
+    Height="590"
+    AllowsTransparency="True"
+    Background="Transparent"
+    BorderBrush="Transparent"
+    BorderThickness="0"
+    DataContext="{StaticResource ThongKeVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    ResizeMode="NoResize"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="TextBlock" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="19.2" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <converters:PriceConverter x:Key="PriceConverter" />
+        <converters:IndexConverter x:Key="IndexConverter" />
+    </Window.Resources>
+
+
+
+    <Grid>
+        <Border
+            Margin="0,0,0,0"
+            Padding="0"
+            Background="White"
+            BorderBrush="Black"
+            BorderThickness="1"
+            CornerRadius="25">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="71" />
+                    <RowDefinition Height="340" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <TextBlock
+                        Height="35"
+                        Margin="50,28,0,0"
+                        VerticalAlignment="Top"
+                        FontFamily="Inter"
+                        FontSize="28.8"
+                        FontWeight="Bold"
+                        Foreground="#CC824D"
+                        Text="Chi tiết phiếu nhập" />
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Border
+                        Width="855.6"
+                        Height="312"
+                        Margin="0,10,0,0"
+                        VerticalAlignment="Top"
+                        Background="#E6B89F"
+                        CornerRadius="25"
+                        Opacity="0.58">
+                        <Border
+                            Margin="12"
+                            Background="White"
+                            CornerRadius="25">
+                            <ListView
+                                Width="850"
+                                Margin="10,0,0,0"
+                                ItemsSource="{Binding Detail_DsNhapList}">
+                                <ListView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+
+                                <ListView.View>
+                                    <GridView>
+
+                                        <GridViewColumn Width="40" Header="STT">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock FontSize="17" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Width="190" Header="Tên sách">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="Height" Value="47" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        FontSize="17"
+                                                        Text="{Binding BookName}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+
+                                        <GridViewColumn Width="190" Header="Thể loại">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="Height" Value="47" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        FontSize="17"
+                                                        Text="{Binding BookGenre}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Width="180" Header="Tác giả">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="Height" Value="47" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        Margin="0,0,15,0"
+                                                        HorizontalAlignment="Center"
+                                                        FontSize="17"
+                                                        Text="{Binding BookAuthor}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Width="70" Header="Số lượng">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="Height" Value="47" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        Margin="0,0,10,0"
+                                                        HorizontalAlignment="Center"
+                                                        FontSize="17"
+                                                        Text="{Binding Quantity, Converter={StaticResource PriceConverter}}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Width="130" Header="Đơn giá">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="Height" Value="47" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        Margin="0,0,10,0"
+                                                        HorizontalAlignment="Center"
+                                                        FontSize="17"
+                                                        Text="{Binding BookPrice, Converter={StaticResource PriceConverter}}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                        </Border>
+
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Height="25"
+                            Margin="50,0,15,0"
+                            VerticalAlignment="Top"
+                            Style="{DynamicResource TextBlock}"
+                            Text="Thời gian:" />
+                        <TextBlock
+                            Height="23"
+                            VerticalAlignment="Top"
+                            Style="{DynamicResource TextBlock}"
+                            Text="{Binding SelectedItem_ForDsNhap.CreateAt, StringFormat='dd/MM/yyyy HH:mm:ss'}" />
+                    </StackPanel>
+
+
+
+                    <!--  Tổng  -->
+                    <DockPanel Margin="140,0,0,0" HorizontalAlignment="Left">
+                        <TextBlock
+                            Height="23"
+                            Margin="305,0,15,0"
+                            VerticalAlignment="Top"
+                            Style="{DynamicResource TextBlock}"
+                            Text="Tổng:" />
+                        <TextBlock
+                            Height="23"
+                            MaxWidth="120"
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Top"
+                            Style="{DynamicResource TextBlock}"
+                            Text="{Binding SelectedItem_ForDsNhap.Total, Converter={StaticResource PriceConverter}}" />
+                        <TextBlock
+                            Height="23"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Style="{DynamicResource TextBlock}"
+                            Text="đ" />
+                    </DockPanel>
+                </Grid>
+
+
+                <!--  Nút đóng  -->
+                <Grid Grid.Row="3">
+                    <Button
+                        Width="130"
+                        Height="62"
+                        Margin="494,70,94,29.5"
+                        materialDesign:ButtonAssist.CornerRadius="24"
+                        Background="#F0BD70"
+                        BorderThickness="0"
+                        Command="{Binding CloseWdCM}"
+                        CommandParameter="{Binding ElementName=ChiTietPhieuNhapWD}"
+                        Content="Đóng"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        RenderTransformOrigin="0.385,1.331" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

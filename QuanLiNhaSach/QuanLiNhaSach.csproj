@@ -269,6 +269,7 @@
     <Compile Include="ViewModel\AdminVM\ThongKeVM\CongNo.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\DoanhThu.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuBan.cs" />
+    <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuNhap.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\LichSuThuTien.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\MotSoPTBoTro.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\SachBanChay.cs" />
@@ -319,6 +320,12 @@
       <DependentUpon>ChiTietHoaDon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\ThongKe\LichSu\LichSuBan\LichSuTable.xaml.cs">
+      <DependentUpon>LichSuTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\LichSu\LichSuNhap\ChiTietPhieuNhap.xaml.cs">
+      <DependentUpon>ChiTietPhieuNhap.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ThongKe\LichSu\LichSuNhap\LichSuTable.xaml.cs">
       <DependentUpon>LichSuTable.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\ThongKe\LichSu\LichSuThuTien\ChiTietPhieuThu.xaml.cs">
@@ -489,6 +496,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\ThongKe\LichSu\LichSuBan\LichSuTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\LichSu\LichSuNhap\ChiTietPhieuNhap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ThongKe\LichSu\LichSuNhap\LichSuTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

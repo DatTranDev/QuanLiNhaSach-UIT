@@ -45,6 +45,16 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             }
         }
 
+        private SolidColorBrush lichSuNhapColor;
+        public SolidColorBrush LichSuNhapColor
+        {
+            get => lichSuNhapColor;
+            set
+            {
+                lichSuNhapColor = value;
+                OnPropertyChanged(nameof(LichSuNhapColor));
+            }
+        }
 
         private SolidColorBrush doanhThuColor;
         public SolidColorBrush DoanhThuColor
@@ -117,6 +127,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 case 5:
                     TonKhoColor = colorSelect;
                     break;
+                case 6:
+                    LichSuNhapColor = colorSelect;
+                    break;
             }
         }
 
@@ -130,6 +143,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             SachBanChayColor = defaultColor;
             CongNoColor = defaultColor;
             TonKhoColor = defaultColor;
+            LichSuNhapColor = defaultColor;
         }
     }
 }

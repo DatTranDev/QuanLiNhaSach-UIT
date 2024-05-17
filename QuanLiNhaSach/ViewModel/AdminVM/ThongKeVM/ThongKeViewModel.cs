@@ -22,6 +22,8 @@ using QuanLiNhaSach.View.Admin.ThongKe;
 using System.Threading;
 using QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuThuTien;
 using System.Security.Policy;
+using QuanLiNhaSach.Model;
+using QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuNhap;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
@@ -60,7 +62,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand DateChange { get; set; }
         public ICommand InfoPaymentReceptCM { get; set; }
         public ICommand DeletePaymentReciptCM {  get; set; }
-
+        public ICommand LichSuNhapCM { get; set; }
+        public ICommand ChiTietPhieuNhapCM { get; set; }
 
 
 
@@ -113,7 +116,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 CaseNav = 0;
                 checkLanDau = true;
                 IsBorderForDatePickerVisible = true;
-                loadDataForDateChange();
+                await loadDataForDateChange();
 
 
             });
@@ -132,9 +135,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             #endregion
 
 
-            #region xóa phiếu thu
 
-            #endregion
+
+            #region xóa 1 hóa đơn
             //xóa 1 hóa đơn
             DeletePaymentReciptCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
@@ -157,6 +160,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                     }
                 }
             });
+            #endregion
+
+
             #region Lịch sử bán
 
             //lịch sử bán
@@ -183,7 +189,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 checkThaoTac = true;
                 CaseNav = 1;
                 IsBorderForDatePickerVisible = true;
-                loadDataForDateChange();
+                await loadDataForDateChange();
 
             });
             #endregion
@@ -295,7 +301,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 checkThaoTac = true;
                 CaseNav = 2;
                 IsBorderForDatePickerVisible = true;
-                loadDataForDateChange();
+                await loadDataForDateChange();
 
 
             });
@@ -317,7 +323,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 checkThaoTac = true;
                 CaseNav = 3;
                 IsBorderForDatePickerVisible = true;
-                loadDataForDateChange();
+                await loadDataForDateChange();
 
             });
             #endregion
@@ -388,18 +394,62 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             {
                 if (p == null) return;
 
-                loadDataForDateChange();
+                await loadDataForDateChange();
             });
 
+            #endregion
 
 
-           
+
+            #region lịch sử nhập
+            LichSuNhapCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+
+                if (p == null) return;
+
+
+                if (!checkThaoTac)
+                {
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                    return;
+                }
+                checkThaoTac = false;
+
+                DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(await Task.Run(() => GoodReceivedService.Ins.GetGRBetweenDate(SelectedDateFrom,SelectedDateTo)));
+                if (DanhSachNhap != null)
+                {
+                    danhSachNhap = new List<GoodReceivedDTO>(DanhSachNhap);
+                }
+                p.Content = new View.Admin.ThongKe.LichSu.LichSuNhap.LichSuTable();
+
+                checkThaoTac = true;
+                CaseNav = 6;
+                IsBorderForDatePickerVisible = true;
+                await loadDataForDateChange();
+
+            });
+            #endregion
+
+
+            #region chi tiết phiếu nhập
+            ChiTietPhieuNhapCM = new RelayCommand<GoodReceivedDTO>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItem_ForDsNhap != null)
+                {
+
+                    GoodReceivedDTO a = SelectedItem_ForDsNhap;
+
+                    Detail_DsNhapList = new ObservableCollection<GoodReceivedInfoDTO>(SelectedItem_ForDsNhap.GoodReceivedInfo);
+                    ChiTietPhieuNhap wd = new ChiTietPhieuNhap();
+                    wd.ShowDialog();
+                }
+            });
             #endregion
         }
 
         bool checkThaoTac = false;
 
-        private async void loadDataForDateChange()
+        private async Task loadDataForDateChange()
         {
             if (CaseNav == -1) return;
 
@@ -462,6 +512,17 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             if (CaseNav == 3)
             {
                 FavorList = new ObservableCollection<BookDTO>(await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo)));
+                return;
+            }
+
+            //lịch sử nhập
+            if (CaseNav == 6)
+            {
+                if (danhSachNhap != null)
+                {
+                    DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(danhSachNhap.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                }
+                return;
             }
         }
 
@@ -593,3 +654,4 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 
     }
 }
+

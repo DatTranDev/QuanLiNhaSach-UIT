@@ -109,6 +109,39 @@
 
 
 
+                    <!--  Lịch sử nhập  -->
+                    <Border
+                        x:Name="LichSuNhapBD"
+                        Width="180"
+                        Height="46"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="{Binding LichSuNhapColor}"
+                        CornerRadius="16">
+                        <Button
+                            Width="180"
+                            Height="46"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Command="{Binding LichSuNhapCM}"
+                            CommandParameter="{Binding ElementName=TableFrame}"
+                            Foreground="{x:Null}"
+                            Tag="LichSuNhapBD">
+                            <TextBlock
+                                Margin="40,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="DemiBold"
+                                Foreground="#E0AE8A"
+                                Text="Lịch sử nhập" />
+                        </Button>
+                    </Border>
+
+
                     <!--  Doanh thu  -->
                     <Border
                         x:Name="DoanhThuBD"
