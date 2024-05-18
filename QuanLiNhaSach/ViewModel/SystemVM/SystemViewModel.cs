@@ -232,7 +232,7 @@ namespace QuanLiNhaSach.ViewModel.SystemVM
                         genreBookList = new List<string>(await GenreService.Ins.GetAllGenreBook());
                         var newGenreDTO = new GenreBookDTO
                         {
-                            STT = genreBookList.Count() + 1,
+                            STT = genreBookList.Count(),
                             ID = newID,
                             DisplayName = newGenre.DisplayName,
                             Quantity = bookList.Count(book => book.IDGenre == newID),

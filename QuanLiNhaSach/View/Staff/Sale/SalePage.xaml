@@ -159,7 +159,7 @@
                                   Margin="4,0,4,0"
                                   VerticalScrollBarVisibility="Auto"
                                   PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
-                                  Height="635"
+                                  Height="615"
                                   VerticalAlignment="Top">
                         <ListView x:Name="SanPhamList"
                                   VerticalAlignment="Top"

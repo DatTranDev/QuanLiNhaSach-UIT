@@ -294,15 +294,15 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             {
                 Staff  = MainAdminViewModel.currentStaff;
                 //
-                SystemValue = new SystemValue();
-                SystemValue = await SystemValueService.Ins.GetData();
                 ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
                 if (ProductList != null)
                 {
                     prdList = new List<BookDTO>(ProductList);
                 }
+                SystemValue = new SystemValue();
+                SystemValue = await SystemValueService.Ins.GetData();
                 GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
-                ComboList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
+                ComboList = GenreList;
                 ComboList.Insert(0, "Tất cả thể loại");
                 GenreBox = "Tất cả thể loại";
             });
@@ -846,6 +846,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             {
                                 prdList = new List<BookDTO>(ProductList);
                             }
+                            GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
                             p.Close();
                             wd4.ShowDialog();
                         }
