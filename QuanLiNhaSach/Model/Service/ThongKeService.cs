@@ -6,6 +6,7 @@ using System.Text;
 using QuanLiNhaSach.DTOs;
 using System.Threading.Tasks;
 using QuanLiNhaSach.View.MessageBox;
+using System.Windows;
 
 namespace QuanLiNhaSach.Model.Service
 {
@@ -68,36 +69,46 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var prodStatistic = context.BillInfo.Where(b => b.Bill.CreateAt >= from && b.Bill.CreateAt <= to && b.IsDeleted == false)
-                    .GroupBy(pBill => pBill.IDBook)
-                    .Select(gr => new
-                    {
-                        IDProduct = gr.Key,
-                        Revenue = gr.Sum(pBill => (Decimal?)(pBill.PriceItem * pBill.Quantity)) ?? 0,
-                        SalesQuantity = gr.Sum(pBill => (int?)pBill.Quantity) ?? 0
-                    })
-                    .OrderByDescending(m => m.SalesQuantity).Take(10)
-                    .Join(
-                    context.Book,
-                    statis => statis.IDProduct,
-                    prod => prod.ID,
-                    (statis, prod) => new BookDTO
-                    {
-                        ID = prod.ID,
-                        DisplayName = prod.DisplayName,
-                        Price = statis.Revenue,
-                        Inventory = statis.SalesQuantity
-                    }).ToListAsync();
+                    var billInfoData = await context.BillInfo
+                        .Where(b => b.Bill.CreateAt.HasValue && b.IsDeleted == false)
+                        .ToListAsync();
 
-                    return await prodStatistic;
+                    var filteredData = billInfoData
+                        .Where(b => b.Bill.CreateAt.Value.Date >= from.Date && b.Bill.CreateAt.Value.Date <= to.Date)
+                        .GroupBy(pBill => pBill.IDBook)
+                        .Select(gr => new
+                        {
+                            IDProduct = gr.Key,
+                            Revenue = gr.Sum(pBill => (Decimal?)(pBill.PriceItem * pBill.Quantity)) ?? 0,
+                            SalesQuantity = gr.Sum(pBill => (int?)pBill.Quantity) ?? 0
+                        })
+                        .OrderByDescending(m => m.SalesQuantity)
+                        .Take(10)
+                        .ToList();
+
+                    var prodStatistic = filteredData
+                        .Join(
+                            context.Book,
+                            statis => statis.IDProduct,
+                            prod => prod.ID,
+                            (statis, prod) => new BookDTO
+                            {
+                                ID = prod.ID,
+                                DisplayName = prod.DisplayName,
+                                Price = statis.Revenue,
+                                Inventory = statis.SalesQuantity
+                            }).ToList();
+
+                    return prodStatistic;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 MessageBoxCustom.Show(MessageBoxCustom.Error, "Xảy ra lỗi");
                 return null;
             }
         }
+
 
 
     }

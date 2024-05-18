@@ -31,18 +31,32 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
     {
 
         #region chọn ngày
-        private DateTime _selectedDateFrom;
+        private DateTime _selectedDateFrom = DateTime.Now.AddDays(-2);
         public DateTime SelectedDateFrom
         {
             get { return _selectedDateFrom; }
-            set { _selectedDateFrom = value; OnPropertyChanged(); }
+            set
+            {
+                _selectedDateFrom = value;
+                OnPropertyChanged(nameof(SelectedDateFrom));
+
+                Task.Run(async () => { await loadDataForDateChange(); });
+            }
         }
-        private DateTime _selectedDateTo;
+
+        private DateTime _selectedDateTo = DateTime.Now;
         public DateTime SelectedDateTo
         {
             get { return _selectedDateTo; }
-            set { _selectedDateTo = value; OnPropertyChanged(); }
+            set
+            {
+                _selectedDateTo = value;
+                OnPropertyChanged(nameof(SelectedDateTo));
+
+                Task.Run(async () => { await loadDataForDateChange(); });
+            }
         }
+
         #endregion
 
 
@@ -59,9 +73,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand DeleteBillCM { get; set; }
         public ICommand RevenueCM { get; set; }
         public ICommand FavorCM { get; set; }
-        public ICommand DateChange { get; set; }
+     //   public ICommand DateChange { get; set; }
         public ICommand InfoPaymentReceptCM { get; set; }
-        public ICommand DeletePaymentReciptCM {  get; set; }
+        public ICommand DeletePaymentReciptCM { get; set; }
         public ICommand LichSuNhapCM { get; set; }
         public ICommand ChiTietPhieuNhapCM { get; set; }
 
@@ -75,7 +89,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             #region set dữ liệu cho lần đầu mở page thống kê
             IsBorderForDatePickerVisible = true;
             setListThang();
-            SelectedThang = "Tháng "+ DateTime.Now.Month;
+            SelectedThang = "Tháng " + DateTime.Now.Month;
             TextBoxYear = DateTime.Now.Year.ToString();
             CaseNav = 0;
             #endregion
@@ -90,25 +104,23 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 
                 if (!checkThaoTac && checkLanDau)
                 {
-                    MessageBoxCustom.Show(MessageBoxCustom.Error,"Thao tác quá nhanh!");
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
                     return;
                 }
                 checkThaoTac = false;
 
                 DanhSachThuTien = new ObservableCollection<PaymentReceiptDTO>(await Task.Run(() => PaymentReceiptService.Ins.GetAllPayment()));
-
-
                 if (DanhSachThuTien != null)
                 {
                     danhSachThuTien = new List<PaymentReceiptDTO>(DanhSachThuTien);
+                    DanhSachThuTien = new ObservableCollection<PaymentReceiptDTO>(
+                        danhSachThuTien.FindAll(x => x.CreateAt.HasValue && x.CreateAt.Value.Date >= SelectedDateFrom.Date && x.CreateAt.Value.Date <= SelectedDateTo.Date)
+                    );
                 }
+
                 p.Content = new View.Admin.ThongKe.LichSu.LichSuThuTien.LichSuTable();
 
-                if (!checkLanDau)
-                {
-                    SelectedDateTo = DateTime.Now;
-                    SelectedDateFrom = DateTime.Now.AddDays(-2);
-                }
+             
 
 
                 //không cho thao tác quá nhanh 
@@ -168,7 +180,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //lịch sử bán
             LichSuBanCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
-                
+
                 if (p == null) return;
 
 
@@ -183,7 +195,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 if (DanhSachHoaDon != null)
                 {
                     danhSachHoaDon = new List<BillDTO>(DanhSachHoaDon);
+                    // Lọc hóa đơn theo ngày tháng năm
+                    DanhSachHoaDon = new ObservableCollection<BillDTO>(
+                        danhSachHoaDon.FindAll(x => x.CreateAt.HasValue && x.CreateAt.Value.Date >= SelectedDateFrom.Date && x.CreateAt.Value.Date <= SelectedDateTo.Date)
+                    );
                 }
+
+
                 p.Content = new View.Admin.ThongKe.LichSu.LichSuBan.LichSuTable();
 
                 checkThaoTac = true;
@@ -255,9 +273,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             #region DoanhThu
             RevenueCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
-
                 if (p == null) return;
-
 
                 if (!checkThaoTac)
                 {
@@ -266,44 +282,40 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
                 checkThaoTac = false;
 
+                //       SumBillTotalPaid = 0;
+                //       p.Content = new DoanhThuTable();
+                //       List<int> revenueValues = new List<int>();
+                //       List<DateTime> dates = new List<DateTime>();
+                //       DateTime currentDate = SelectedDateFrom;
+                ////       DateTime UpDate = SelectedDateTo.AddDays(1);
+                //       while (currentDate <= SelectedDateTo)
+                //       {
+                //           int revenue = await BillService.Ins.getBillByDate(currentDate);
+                //           revenueValues.Add(revenue);
+                //           SumBillTotalPaid += revenue;
+                //           dates.Add(currentDate);
+                //           currentDate = currentDate.AddDays(1);
+                //       }
 
-                SumBillTotalPaid = 0;
-                p.Content = new DoanhThuTable();
-                List<int> revenueValues = new List<int>();
-                List<DateTime> dates = new List<DateTime>();
-                DateTime currentDate = SelectedDateFrom;
-                DateTime UpDate = SelectedDateTo.AddDays(1);
-                while (currentDate <= UpDate)
-                {
-                    int revenue = await BillService.Ins.getBillByDate(currentDate);
-                    revenueValues.Add(revenue);
-                    SumBillTotalPaid += revenue;
-                    dates.Add(currentDate);
-                    currentDate = currentDate.AddDays(1);
-                }
+                //       string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
+                //       RevenueSeries = new SeriesCollection
+                //       {
+                //           new LineSeries
+                //           {
+                //               Title = "Doanh thu",
+                //               Values = new ChartValues<int>(revenueValues),
+                //           }
+                //       };
+                //       Labels = dateStrings;
+                //       YFormatter = value => value.ToString("N");
 
-                string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
-                RevenueSeries = new SeriesCollection
-                {
-                new LineSeries
-                {
-                    Title = "Doanh thu",
-                    Values = new ChartValues<int>(revenueValues),
-                }
-                };
-                Labels = dateStrings;
-                YFormatter = value =>
-                {
-                    return value.ToString("N");
 
-                };
+                await LoadRevenueData(p);
 
                 checkThaoTac = true;
                 CaseNav = 2;
                 IsBorderForDatePickerVisible = true;
                 await loadDataForDateChange();
-
-
             });
             #endregion
 
@@ -318,7 +330,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
                 checkThaoTac = false;
                 p.Content = new SachBanChayTable();
-                FavorList = new ObservableCollection<BookDTO>( await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo)));
+                FavorList = new ObservableCollection<BookDTO>(await Task.Run(() => ThongKeService.Ins.GetTop10SalerBetween(SelectedDateFrom, SelectedDateTo)));
 
                 checkThaoTac = true;
                 CaseNav = 3;
@@ -342,11 +354,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 p.Content = new CongNoTable();
 
                 SelectedThang = "Tháng " + DateTime.Now.Month;
-                TextBoxYear =DateTime.Now.Year.ToString();
+                TextBoxYear = DateTime.Now.Year.ToString();
                 month = formatMonth(SelectedThang);
                 year = TextBoxYear;
 
-                DebtList = new ObservableCollection<DebtReportDTO>(await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(formatMonthYear(month,year))));
+                DebtList = new ObservableCollection<DebtReportDTO>(await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(formatMonthYear(month, year))));
                 if (DebtList != null)
                 {
                     debtList = new List<DebtReportDTO>(DebtList);
@@ -390,12 +402,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 
 
             #region select date from,to
-            DateChange = new RelayCommand<object>((p) => { return true; }, async (p) =>
-            {
-                if (p == null) return;
+            //DateChange = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            //{
+            //    if (p == null) return;
 
-                await loadDataForDateChange();
-            });
+            //    await loadDataForDateChange();
+            //});
 
             #endregion
 
@@ -415,7 +427,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
                 checkThaoTac = false;
 
-                DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(await Task.Run(() => GoodReceivedService.Ins.GetGRBetweenDate(SelectedDateFrom,SelectedDateTo)));
+                DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(await Task.Run(() => GoodReceivedService.Ins.GetGRBetweenDate(SelectedDateFrom, SelectedDateTo)));
                 if (DanhSachNhap != null)
                 {
                     danhSachNhap = new List<GoodReceivedDTO>(DanhSachNhap);
@@ -456,20 +468,31 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //lịch sử thu tiền
             if (CaseNav == 0)
             {
-                if (danhSachThuTien != null)
+                DanhSachThuTien = new ObservableCollection<PaymentReceiptDTO>(await Task.Run(() => PaymentReceiptService.Ins.GetAllPayment()));
+                if (DanhSachThuTien != null)
                 {
-                    DanhSachThuTien = new ObservableCollection<PaymentReceiptDTO>(danhSachThuTien.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                    danhSachThuTien = new List<PaymentReceiptDTO>(DanhSachThuTien);
+                    DanhSachThuTien = new ObservableCollection<PaymentReceiptDTO>(
+                        danhSachThuTien.FindAll(x => x.CreateAt.HasValue && x.CreateAt.Value.Date >= SelectedDateFrom.Date && x.CreateAt.Value.Date <= SelectedDateTo.Date)
+                    );
                 }
                 return;
+
             }
 
 
             //lịch sử bán
             if (CaseNav == 1)
             {
-                if (danhSachHoaDon != null)
+
+                DanhSachHoaDon = new ObservableCollection<BillDTO>(await Task.Run(() => BillService.Ins.GetAllBill()));
+                if (DanhSachHoaDon != null)
                 {
-                    DanhSachHoaDon = new ObservableCollection<BillDTO>(danhSachHoaDon.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                    danhSachHoaDon = new List<BillDTO>(DanhSachHoaDon);
+                    // Lọc hóa đơn theo ngày tháng năm
+                    DanhSachHoaDon = new ObservableCollection<BillDTO>(
+                        danhSachHoaDon.FindAll(x => x.CreateAt.HasValue && x.CreateAt.Value.Date >= SelectedDateFrom.Date && x.CreateAt.Value.Date <= SelectedDateTo.Date)
+                    );
                 }
                 return;
             }
@@ -477,32 +500,30 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //doanh thu
             if (CaseNav == 2)
             {
-                List<int> revenueValues = new List<int>();
-                List<DateTime> dates = new List<DateTime>();
+                //List<int> revenueValues = new List<int>();
+                //List<DateTime> dates = new List<DateTime>();
+
+                //for (DateTime currentDate = SelectedDateFrom; currentDate <= SelectedDateTo; currentDate = currentDate.AddDays(1))
+                //{
+                //    int revenue = await BillService.Ins.getBillByDate(currentDate);
+                //    revenueValues.Add(revenue);
+                //    dates.Add(currentDate);
+                //}
+
+                //string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
+                //RevenueSeries = new SeriesCollection
+                //{
+                //    new LineSeries
+                //    {
+                //        Title = "Doanh thu",
+                //        Values = new ChartValues<int>(revenueValues),
+                //    }
+                //};
+                //Labels = dateStrings;
+                //YFormatter = value => value.ToString("N");
 
 
-                for (DateTime currentDate = SelectedDateFrom; currentDate <= SelectedDateTo; currentDate = currentDate.AddDays(1))
-                {
-                    int revenue = await BillService.Ins.getBillByDate(currentDate);
-                    revenueValues.Add(revenue);
-                    dates.Add(currentDate);
-                }
-
-                string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
-                RevenueSeries = new SeriesCollection
-                    {
-                    new LineSeries
-                    {
-                        Title = "Doanh thu",
-                        Values = new ChartValues<int>(revenueValues),
-                    }
-                    };
-                Labels = dateStrings;
-                YFormatter = value =>
-                {
-                    return value.ToString("N");
-
-                };
+                await LoadRevenueData();
 
                 return;
             }
@@ -604,7 +625,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             get { return textBoxYear; }
             set
             {
-             
+
 
                 if (value != textBoxYear)
                 {
@@ -646,7 +667,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             get { return validateTextBoxYear; }
             set
             {
-                validateTextBoxYear= value;
+                validateTextBoxYear = value;
                 OnPropertyChanged(nameof(ValidateTextBoxYear));
             }
         }

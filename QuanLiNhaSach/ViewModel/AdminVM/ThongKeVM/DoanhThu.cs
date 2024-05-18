@@ -1,9 +1,14 @@
 ﻿using LiveCharts;
+using LiveCharts.Wpf;
+using QuanLiNhaSach.Model.Service;
+using QuanLiNhaSach.View.Admin.ThongKe.DoanhThu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
@@ -19,6 +24,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 OnPropertyChanged(nameof(RevenueSeries));
             }
         }
+
         private string[] _labels;
         public string[] Labels
         {
@@ -40,14 +46,63 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 OnPropertyChanged(nameof(YFormatter));
             }
         }
+
         private decimal _sumBillTotalPaid;
         public decimal SumBillTotalPaid
         {
             get { return _sumBillTotalPaid; }
-            set { _sumBillTotalPaid = value; OnPropertyChanged(); }
+            set
+            {
+                _sumBillTotalPaid = value;
+                OnPropertyChanged(nameof(SumBillTotalPaid));
+            }
         }
-        public void GetRevenueData()
+
+
+        private async Task LoadRevenueData(Frame p = null)
         {
+            SumBillTotalPaid = 0;
+
+            if (p != null)
+            {
+                p.Content = new DoanhThuTable();
+            }
+
+            List<int> revenueValues = new List<int>();
+            List<DateTime> dates = new List<DateTime>();
+            DateTime currentDate = SelectedDateFrom;
+            DateTime UpDate = SelectedDateTo.AddDays(1);
+
+            while (currentDate < UpDate)
+            {
+                int revenue = await BillService.Ins.getBillByDate(currentDate);
+                revenueValues.Add(revenue);
+                SumBillTotalPaid += revenue;
+                dates.Add(currentDate);
+                currentDate = currentDate.AddDays(1);
+            }
+
+            string[] dateStrings = dates.Select(date => date.ToString("dd/MM/yyyy")).ToArray();
+
+            // Cập nhật trong UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                RevenueSeries = new SeriesCollection
+                {
+                    new LineSeries
+                    {
+                        Title = "Doanh thu",
+                        Values = new ChartValues<int>(revenueValues)
+                    }
+                };
+                Labels = dateStrings;
+                YFormatter = value => value.ToString("N");
+
+                OnPropertyChanged(nameof(RevenueSeries));
+                OnPropertyChanged(nameof(Labels));
+                OnPropertyChanged(nameof(YFormatter));
+            });
         }
     }
 }
+
