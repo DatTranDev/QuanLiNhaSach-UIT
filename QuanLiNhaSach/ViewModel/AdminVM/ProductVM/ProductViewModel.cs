@@ -19,6 +19,7 @@ using System.Windows;
 using System.Diagnostics;
 using OfficeOpenXml;
 using System.IO;
+using CloudinaryDotNet;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
 {
@@ -258,6 +259,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
         public ICommand AddNewGenre { get; set; }
         public ICommand OpenAddNewGenre { get; set; }
         public ICommand AddBookToImportTable { get; set; }
+        public ICommand SearchCM {  get; set; }
         private string FormalPrice(string s)
         {
             string valuePrice = "";
@@ -430,9 +432,24 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             MessageBoxCustom.Show(MessageBoxCustom.Error, messageAdd);
                         }
                     }
-                    
                 }
 
+            });
+
+            SearchCM = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
+            {              
+                if (p.Text == "")
+                {
+                    ImportComboListString = prdList.Select(prd => prd.ToString()).ToList();
+                    SelectedImportBook = ImportComboListString.FirstOrDefault();
+                }
+                else
+                {
+                    ImportComboListString = prdList
+                    .FindAll(prd => prd.DisplayName.ToLower().Contains(p.Text.ToLower()))
+                    .Select(prd => prd.ToString()).ToList();
+                    SelectedImportBook = ImportComboListString.FirstOrDefault();
+                }
             });
 
             OpenAddList = new RelayCommand<Window>((p) => { return true; },  (p) =>
