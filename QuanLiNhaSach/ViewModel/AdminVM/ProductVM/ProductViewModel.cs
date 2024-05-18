@@ -101,6 +101,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             get { return _genreList; }
             set { _genreList = value; OnPropertyChanged(); }
         }
+        private ObservableCollection<string> _genreListImport;
+        public ObservableCollection<string> GenreListImport
+        {
+            get { return _genreListImport; }
+            set { _genreListImport = value; OnPropertyChanged(); }
+        }
 
         //Add page
         private string _name;
@@ -315,6 +321,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 SystemValue = new SystemValue();
                 SystemValue = await SystemValueService.Ins.GetData();
                 GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
+                List<string> gnList = new List<string>(GenreList);
+                GenreListImport = new ObservableCollection<string>(gnList);
                 ComboList = GenreList;
                 ComboList.Insert(0, "Tất cả thể loại");
                 GenreBox = "Tất cả thể loại";
@@ -358,7 +366,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     Success wd2 = new Success("Đã thêm thành công " + (lines.Length - error) + " danh mục mới");
                     wd2.ShowDialog();
                     GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
-                    ComboList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
+                    ComboList = GenreList;
                     ComboList.Insert(0, "Tất cả thể loại");
                     GenreBox = "Tất cả thể loại";
                     Genre = null;
@@ -442,14 +450,14 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             {
                 if (p.Text == "")
                 {
-                    ImportComboListString = prdList.Select(prd => prd.ToString()).ToList();
+                    ImportComboListString = prdList.Select(prd => prd.toString()).ToList();
                     SelectedImportBook = ImportComboListString.FirstOrDefault();
                 }
                 else
                 {
                     ImportComboListString = prdList
                     .FindAll(prd => prd.DisplayName.ToLower().Contains(p.Text.ToLower()))
-                    .Select(prd => prd.ToString()).ToList();
+                    .Select(prd => prd.toString()).ToList();
                     SelectedImportBook = ImportComboListString.FirstOrDefault();
                 }
             });
@@ -612,9 +620,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
 
             AddBookToImportTable = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                //ImportItem addValue = new ImportItem(SelectedImportBook);
-                //addValue.STT = ListImport.Count() + 1;
-                //ListImport.Add(addValue);
+                ImportItem addValue = new ImportItem(SelectedImportBook);
+                addValue.STT = ListImport.Count() + 1;
+                ListImport.Add(addValue);
             });
             OpenExcel = new RelayCommand<string>((p) => { return true; }, (p) =>
             {
@@ -726,7 +734,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 ListImport = new ObservableCollection<ImportItem>();
                 if (prdList.Count > 0)
                 {
-                    ImportComboListString = prdList.Select(prd => prd.ToString()).ToList();
+                    ImportComboListString = prdList.Select(prd => prd.toString()).ToList();
                     SelectedImportBook = ImportComboListString.FirstOrDefault();
                 }
                 DateImport = null;
@@ -882,18 +890,32 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     }
                     if (flag)
                     {
-                        (bool d, string str) = await GoodReceivedService.Ins.AddNewGoodReceived(GoodReceived);
-                        if (d)
-                        {
-                            Success wd4 = new Success("Nhập hàng thành công");
-                            ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
-                            if (ProductList != null)
+                        if(GoodReceived.Total == 0)
                             {
-                                prdList = new List<BookDTO>(ProductList);
+                            Error wd5 = new Error("Vui lòng nhập thông tin");
+                            wd5.ShowDialog();  
+                        }
+                        else
+                        {
+                            (bool d, string str) = await GoodReceivedService.Ins.AddNewGoodReceived(GoodReceived);
+                            if (d)
+                            {
+                                Success wd4 = new Success("Nhập hàng thành công");
+                                ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
+                                if (ProductList != null)
+                                {
+                                    prdList = new List<BookDTO>(ProductList);
+                                }
+                                GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
+                                List<string> gnList = new List<string>(GenreList);
+                                GenreListImport = new ObservableCollection<string>(gnList);
+                                ComboList = GenreList;
+                                ComboList.Insert(0, "Tất cả thể loại");
+                                GenreBox = "Tất cả thể loại";
+                                p.Close();
+                                wd4.ShowDialog();
                             }
-                            GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
-                            p.Close();
-                            wd4.ShowDialog();
+
                         }
 
                     }

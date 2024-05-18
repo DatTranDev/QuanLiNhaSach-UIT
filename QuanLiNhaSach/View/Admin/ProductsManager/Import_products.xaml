@@ -226,7 +226,7 @@
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
                                             <ComboBox IsEditable="True"
-                                          ItemsSource="{Binding DataContext.GenreList, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                          ItemsSource="{Binding DataContext.GenreListImport, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                           Text="{Binding GenreName, UpdateSourceTrigger=PropertyChanged}"
                                           StaysOpenOnEdit="True"
                                           IsTextSearchEnabled="True"
