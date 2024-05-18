@@ -26,6 +26,19 @@ namespace QuanLiNhaSach.View.Admin.ProductsManager
         {
             InitializeComponent();
         }
+        private void ComboBox_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                var bindingExpression = comboBox.GetBindingExpression(ComboBox.TextProperty);
+                if (bindingExpression != null)
+                {
+                    bindingExpression.UpdateSource();
+                }
+            }
+        }
+
         public class BookViewModel : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
