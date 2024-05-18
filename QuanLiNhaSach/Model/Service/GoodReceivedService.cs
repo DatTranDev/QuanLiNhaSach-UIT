@@ -52,6 +52,7 @@ namespace QuanLiNhaSach.Model.Service
                                                         GoodReceived = x.GoodReceived,
                                                         TotalPriceItem = x.TotalPriceItem,
                                                         Book = x.Book,
+                                                        BookName=x.Book.DisplayName,
                                                         BookAuthor = x.Book.Author,
                                                         BookGenre = x.Book.GenreBook.DisplayName,
                                                         BookPrice = x.Book.Price,

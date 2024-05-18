@@ -53,7 +53,14 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         private string _staffName;
         public string StaffName
         {
-            get { return _staffName; }
+            get {
+
+                if (string.IsNullOrEmpty(_staffName))
+                    _staffName = "unknown";
+                return _staffName;
+            
+            
+            }
             set { _staffName = value; OnPropertyChanged(); }
         }
         private string _billDate;

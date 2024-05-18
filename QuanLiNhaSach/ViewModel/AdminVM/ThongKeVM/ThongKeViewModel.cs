@@ -155,7 +155,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             {
                 if (SelectedItemPaymentRecept == null) return;
 
-                DeleteMessage wd = new DeleteMessage();
+                DeleteMessage wd = new DeleteMessage("Bạn có chắc chắn muốn xóa không");
                 wd.ShowDialog();
                 if (wd.DialogResult == true)
                 {
@@ -251,7 +251,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             {
                 if (SelectedItem == null) return;
 
-                DeleteMessage wd = new DeleteMessage();
+                DeleteMessage wd = new DeleteMessage("Bạn có chắc chắn muốn xóa không");
                 wd.ShowDialog();
                 if (wd.DialogResult == true)
                 {
