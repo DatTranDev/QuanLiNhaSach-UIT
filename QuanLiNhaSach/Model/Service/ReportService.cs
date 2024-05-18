@@ -53,6 +53,35 @@ namespace QuanLiNhaSach.DTOs
                 return null;
             }
         }
+
+
+        public async Task<List<InventoryReportDTO>> GetAllInventoryReport()
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var ivtReport = (from c in context.InventoryReport
+                                     select new InventoryReportDTO
+                                     {
+                                         Id = c.Id,
+                                         BookId = c.BookId,
+                                         FirstIvt = c.FirstIvt,
+                                         LastIvt = c.LastIvt,
+                                         Arise = c.Arise,
+                                         Book = c.Book,
+                                         MonthYear = c.MonthYear,
+                                     }).ToListAsync();
+                    return await ivtReport;
+                }
+            }
+            catch
+            {
+                MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi xảy ra");
+                return null;
+            }
+        }
+
         public async Task<List<DebtReportDTO>> GetDebtReportByMonth(string MonthYear)
         {
             try
@@ -80,6 +109,36 @@ namespace QuanLiNhaSach.DTOs
                 return null;
             }
         }
+
+
+
+        public async Task<List<DebtReportDTO>> GetAllDebtReport()
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    var debtReport = (from c in context.DebtReport
+                                      select new DebtReportDTO
+                                      {
+                                          Id = c.Id,
+                                          CustomerId = c.CustomerId,
+                                          FirstDebt = c.FirstDebt,
+                                          LastDebt = c.LastDebt,
+                                          Arise = c.Arise,
+                                          Customer = c.Customer,
+                                          MonthYear = c.MonthYear
+                                      }).ToListAsync();
+                    return await debtReport;
+                }
+            }
+            catch
+            {
+                MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi xảy ra");
+                return null;
+            }
+        }
+
         //Get 
     }
 }

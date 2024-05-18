@@ -358,10 +358,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 month = formatMonth(SelectedThang);
                 year = TextBoxYear;
 
-                DebtList = new ObservableCollection<DebtReportDTO>(await Task.Run(() => ReportService.Ins.GetDebtReportByMonth(formatMonthYear(month, year))));
+                DebtList = new ObservableCollection<DebtReportDTO>(await Task.Run(() => ReportService.Ins.GetAllDebtReport()));
                 if (DebtList != null)
                 {
                     debtList = new List<DebtReportDTO>(DebtList);
+                    DebtList = new ObservableCollection<DebtReportDTO>(debtList.FindAll(d => d.MonthYear == formatMonthYear(month, year)));
                 }
                 checkThaoTac = true;
                 CaseNav = 4;
@@ -387,10 +388,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 month = formatMonth(SelectedThang);
                 year = TextBoxYear;
 
-                InventoryList = new ObservableCollection<InventoryReportDTO>(await Task.Run(() => ReportService.Ins.GetInventoryReportByMonth(formatMonthYear(month, year))));
+                InventoryList = new ObservableCollection<InventoryReportDTO>(await Task.Run(() => ReportService.Ins.GetAllInventoryReport()));
                 if (InventoryList != null)
                 {
                     inventoryList = new List<InventoryReportDTO>(InventoryList);
+                    InventoryList = new ObservableCollection<InventoryReportDTO>(inventoryList.FindAll(d => d.MonthYear == formatMonthYear(month, year)));
                 }
 
 
