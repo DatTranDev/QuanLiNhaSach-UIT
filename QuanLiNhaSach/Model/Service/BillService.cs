@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace QuanLiNhaSach.Model.Service
 {
@@ -242,17 +243,15 @@ namespace QuanLiNhaSach.Model.Service
             {
                 using (var context = new QuanLiNhaSachEntities())
                 {
-                    var billTotalPaid = await context.Bill.Where(p => p.CreateAt.Value.Day == date.Day
-                                                           && p.CreateAt.Value.Month == date.Month
-                                                           && p.CreateAt.Value.Year == date.Year
-                                                           && p.IsDeleted == false).ToListAsync();
-                    int totalPrice = 0;
-                    foreach (var bill in billTotalPaid)
-                    {
-                        totalPrice = totalPrice + (int)bill.Paid;
-                    }
-                    return totalPrice;
+                    var billTotalPaid = await context.Bill
+                        .Where(p => p.CreateAt.HasValue
+                                    && p.CreateAt.Value.Day == date.Day
+                                    && p.CreateAt.Value.Month == date.Month
+                                    && p.CreateAt.Value.Year == date.Year
+                                    && p.IsDeleted == false)
+                        .SumAsync(bill => (int?)bill.Paid);
 
+                    return billTotalPaid ?? 0; 
                 }
             }
             catch
@@ -261,6 +260,7 @@ namespace QuanLiNhaSach.Model.Service
                 return -1;
             }
         }
+
 
     }
 

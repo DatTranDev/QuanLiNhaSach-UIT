@@ -317,13 +317,13 @@
                                     Width="100"
                                     materialDesign:CalendarAssist.IsHeaderVisible="False"
                                     materialDesign:HintAssist.Hint="Ngày"
-                                    SelectedDate="{Binding SelectedDateFrom, StringFormat=dd/MM/yyyy, Mode=TwoWay}"
+                                    SelectedDate="{Binding SelectedDateFrom, StringFormat=dd/MM/yyyy, UpdateSourceTrigger=PropertyChanged}"
                                     SelectedDateFormat="Short">
-                                    <i:Interaction.Triggers>
+                                    <!--<i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectedDateChanged">
                                             <i:InvokeCommandAction Command="{Binding DateChange}" CommandParameter="{Binding ElementName=DatePicker1}" />
                                         </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                    </i:Interaction.Triggers>-->
                                 </DatePicker>
                             </StackPanel>
 
@@ -352,12 +352,12 @@
                                     Width="100"
                                     materialDesign:CalendarAssist.IsHeaderVisible="False"
                                     materialDesign:HintAssist.Hint="Ngày"
-                                    SelectedDate="{Binding SelectedDateTo, StringFormat=dd/MM/yyyy, Mode=TwoWay}">
-                                    <i:Interaction.Triggers>
+                                    SelectedDate="{Binding SelectedDateTo, StringFormat=dd/MM/yyyy, UpdateSourceTrigger=PropertyChanged}">
+                                    <!--<i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectedDateChanged">
                                             <i:InvokeCommandAction Command="{Binding DateChange}" CommandParameter="{Binding ElementName=DatePicker2}" />
                                         </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                    </i:Interaction.Triggers>-->
                                 </DatePicker>
                             </StackPanel>
 
