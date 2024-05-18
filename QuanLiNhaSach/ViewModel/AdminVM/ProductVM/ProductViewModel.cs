@@ -47,6 +47,18 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             set { systemValue = value; OnPropertyChanged(); }
         }
 
+        private List<string> _importComboListString;
+        public List<string> ImportComboListString
+        {
+            get { return _importComboListString; }
+            set {  _importComboListString = value; OnPropertyChanged(); }
+        }
+        private String _selectedImportBook;
+        public String SelectedImportBook
+        {
+            get { return _selectedImportBook; }
+            set { _selectedImportBook = value; OnPropertyChanged(); }
+        }
         public static List<BookDTO> prdList;
         private ObservableCollection<BookDTO> _productList;
         public ObservableCollection<BookDTO> ProductList
@@ -75,8 +87,6 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             get { return bookImport; }
             set { bookImport = value; OnPropertyChanged(); }
         }
-
-
 
         private ObservableCollection<ImportItem> listImport;
         public ObservableCollection<ImportItem> ListImport
@@ -247,6 +257,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
         public ICommand OpenAddList { get; set; }   
         public ICommand AddNewGenre { get; set; }
         public ICommand OpenAddNewGenre { get; set; }
+        public ICommand AddBookToImportTable { get; set; }
         private string FormalPrice(string s)
         {
             string valuePrice = "";
@@ -579,6 +590,13 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 Description = null;
                 p.Close();
             });
+
+            AddBookToImportTable = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ImportItem addValue = new ImportItem(SelectedImportBook);
+                addValue.STT = ListImport.Count()+1;
+                ListImport.Add(addValue);
+            });
             OpenExcel = new RelayCommand<string>((p) => { return true; },(p)=>
             {
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -616,7 +634,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                     // Tạo một đối tượng ExcelData để lưu trữ dữ liệu từ hàng
                                         BookImport = new ImportItem();
                                         // Gán dữ liệu từ các cột vào các thuộc tính của đối tượng ExcelData
-                                        BookImport.STT = Convert.ToInt32(worksheet.Cells[row, 1].Value);
+                                        BookImport.STT = ListImport.Count()+1;
                                         BookImport.DisplayName = worksheet.Cells[row, 2].Value?.ToString();
                                         BookImport.GenreName = worksheet.Cells[row, 3].Value?.ToString();
                                         BookImport.Author = worksheet.Cells[row, 4].Value?.ToString();
@@ -687,6 +705,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             {
                 
                 ListImport = new ObservableCollection<ImportItem>();
+                if(prdList.Count > 0)
+                {
+                    ImportComboListString = prdList.Select(prd => prd.ToString()).ToList();
+                    SelectedImportBook = ImportComboListString.FirstOrDefault();
+                }
+                DateImport = null;
                 Import_products imp= new Import_products();
                 imp.ShowDialog();
 
@@ -698,6 +722,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             DateTime date;
             if (DateTime.TryParseExact(DateImport, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
             {
+                    if(date==null)
+                        date = DateTime.Now;
                     GoodReceived = new GoodReceivedDTO
                     {
                         CreateAt = date,
@@ -966,6 +992,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             IDGenre = id,
                             Price = decimal.Parse(EditPrice),
                             Inventory = int.Parse(EditInventory),
+                            Publisher = SelectedItem.Publisher,
+                            PublishYear = SelectedItem.PublishYear,
                             Author = EditAuthor,
                             Image = EditImage,
                             Description = EditDescription,

@@ -31,5 +31,17 @@ namespace QuanLiNhaSach.DTOs
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            result.AppendLine($"{ID}-{DisplayName}-");
+            result.AppendLine($"Danh mục: {GenreName}");
+            result.AppendLine($"Tác giả: {Author}");
+            result.AppendLine($"Năm xuất bản: {PublishYear ?? 0}");
+            result.AppendLine($"NXB: {Publisher}");
+            result.AppendLine($"Giá nhập: {((decimal)Price).ToString("N0")}");
+            return result.ToString();
+        }
     }
 }
