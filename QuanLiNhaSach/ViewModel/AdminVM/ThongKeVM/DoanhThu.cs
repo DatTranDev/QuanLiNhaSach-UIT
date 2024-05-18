@@ -48,20 +48,20 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         }
 
         private decimal _sumBillTotalPaid;
-        public decimal SumBillTotalPaid
+        public decimal SumBillTotalPrice
         {
             get { return _sumBillTotalPaid; }
             set
             {
                 _sumBillTotalPaid = value;
-                OnPropertyChanged(nameof(SumBillTotalPaid));
+                OnPropertyChanged(nameof(SumBillTotalPrice));
             }
         }
 
 
         private async Task LoadRevenueData(Frame p = null)
         {
-            SumBillTotalPaid = 0;
+            SumBillTotalPrice = 0;
 
             if (p != null)
             {
@@ -77,7 +77,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             {
                 int revenue = await BillService.Ins.getBillByDate(currentDate);
                 revenueValues.Add(revenue);
-                SumBillTotalPaid += revenue;
+                SumBillTotalPrice += revenue;
                 dates.Add(currentDate);
                 currentDate = currentDate.AddDays(1);
             }

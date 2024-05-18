@@ -249,7 +249,7 @@ namespace QuanLiNhaSach.Model.Service
                                     && p.CreateAt.Value.Month == date.Month
                                     && p.CreateAt.Value.Year == date.Year
                                     && p.IsDeleted == false)
-                        .SumAsync(bill => (int?)bill.Paid);
+                        .SumAsync(bill => (int?)bill.TotalPrice);
 
                     return billTotalPaid ?? 0; 
                 }
