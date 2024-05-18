@@ -216,9 +216,24 @@
                                                             IsReadOnly="False"
                                                             HeaderStringFormat=""
                                                             Width="250"/>
-                                <DataGridTextColumn Header="Thể loại"
-                                                            Width="210"
-                                                            Binding="{Binding Path= GenreName}" />
+                                <!-- DataGridTemplateColumn for GenreName -->
+                                <DataGridTemplateColumn Header="Thể loại" Width="210">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding GenreName}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox IsEditable="True"
+                                          ItemsSource="{Binding DataContext.GenreList, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                          Text="{Binding GenreName, UpdateSourceTrigger=PropertyChanged}"
+                                          StaysOpenOnEdit="True"
+                                          IsTextSearchEnabled="True"
+                                          PreviewLostKeyboardFocus="ComboBox_PreviewLostKeyboardFocus"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Tác giả"
                                                             Width="190"
                                                             Binding="{Binding Path=Author}" />
