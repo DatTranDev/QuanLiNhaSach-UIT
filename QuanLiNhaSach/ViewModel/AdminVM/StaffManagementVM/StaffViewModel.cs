@@ -417,14 +417,16 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                                     string Date = worksheet.Cells[row, 8].Value?.ToString();
                                     DateTime dateBirthDay;
                                     String[] DateFormat = { "dd/MM/yyyy", "d/M/yyyy", "d/MM/yyyy", "dd/M/yyyy", "dd/MM/yyyy h:mm:ss tt", "d/M/yyyy h:mm:ss tt",
-                                    "d/MM/yyyy h:mm:ss tt", "dd/M/yyyy h:mm:ss tt"};
+                                    "d/MM/yyyy h:mm:ss tt", "dd/M/yyyy h:mm:ss tt","M/d/yyyy","M/dd/yyyy","MM/d/yyyy","MM/dd/yyyy","M/d/yyyy h:mm:ss tt"
+                                    ,"M/dd/yyyy h:mm:ss tt","MM/d/yyyy h:mm:ss tt","MM/dd/yyyy h:mm:ss tt"};
                                     if (DateTime.TryParseExact(Date, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateBirthDay))
                                     {
                                         staff.BirthDay = dateBirthDay;
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Invalid date format.");
+                                        MessageBox.Show("Invalid Birthday format");
+                                        return;
                                     }
                                     string DateStart = worksheet.Cells[row, 9].Value?.ToString();
                                     DateTime dateStart;
@@ -434,7 +436,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Invalid date format.");
+                                        MessageBox.Show("Invalid Startdate format");
+                                        return;
                                     }
                                     staff.Status = worksheet.Cells[row, 10].Value?.ToString();
                                     staff.UserName = worksheet.Cells[row, 11].Value?.ToString();
@@ -456,118 +459,126 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                     {
                         MessageBox.Show("Lỗi khi import dữ liệu từ tệp Excel: " + ex.Message);
                     }
-
-                    string EmailError = "Email đã tồn tại";
-                    string PhoneNumberError = "Số điện thoại đã tồn tại";
-                    string UserNameError = "Tài khoản đã tồn tại";
-                    for (int i = 0; i < listImportStaff.Count; i++)
+                    try
                     {
-                        //gan du lieu cho viewmodel bang null de dam bao k check sai
-                        DisplayName = null;
-                        StartDate = DateTime.Now;
-                        UserName = null;
-                        PassWord = null;
-                        PhoneNumber = null;
-                        BirthDay = DateTime.Now;
-                        Wage = null;
-                        Status = null;
-                        Email = null;
-                        Gender = null;
-                        Role = null;
-                        ConfirmPassWord = null;
-                        //gan du lieu tung phan tu vao de thao tac
-                        DisplayName = listImportStaff[i].DisplayName;
-                        StartDate = (DateTime)listImportStaff[i].StartDate;
-                        UserName = listImportStaff[i].UserName;
-                        PassWord = listImportStaff[i].PassWord;
-                        PhoneNumber = listImportStaff[i].PhoneNumber;
-                        BirthDay = (DateTime)listImportStaff[i].BirthDay;
-                        Wage = listImportStaff[i].Wage.ToString();
-                        Status = listImportStaff[i].Status;
-                        Email = listImportStaff[i].Email;
-                        Gender = listImportStaff[i].Gender;
-                        Role = listImportStaff[i].Role;
-                        ConfirmPassWord = listImportStaff[i].PassWord;
-
-                        //check ngoai le
-                        int iWage = 0;
-                        if (DisplayName == null || UserName == null || PassWord == null
-                        || PhoneNumber == null || Wage == null || Status == null || Email == null
-                        || Gender == null || Role == null || !int.TryParse(Wage.Replace(".", ""), out iWage)
-                        || DisplayName == "" || UserName == "" || PassWord == ""
-                        || PhoneNumber == "" || Wage == "" || Status == "" || Email == ""
-                        || Gender == "" || Role == "")
+                        string EmailError = "Email đã tồn tại";
+                        string PhoneNumberError = "Số điện thoại đã tồn tại";
+                        string UserNameError = "Tài khoản đã tồn tại";
+                        for (int i = 0; i < listImportStaff.Count; i++)
                         {
-                            MessageBoxCustom.Show(MessageBoxCustom.Error, "Bạn đang nhập thiếu hoặc sai thông tin của nhân viên thứ " + (i + 1) + " trong file Excel");
-                            listImportStaff = new ObservableCollection<StaffDTO>();
-                            return;
+                            //gan du lieu cho viewmodel bang null de dam bao k check sai
+                            DisplayName = null;
+                            StartDate = DateTime.Now;
+                            UserName = null;
+                            PassWord = null;
+                            PhoneNumber = null;
+                            BirthDay = DateTime.Now;
+                            Wage = null;
+                            Status = null;
+                            Email = null;
+                            Gender = null;
+                            Role = null;
+                            ConfirmPassWord = null;
+                            //gan du lieu tung phan tu vao de thao tac
+                            DisplayName = listImportStaff[i].DisplayName;
+                            StartDate = (DateTime)listImportStaff[i].StartDate;
+                            UserName = listImportStaff[i].UserName;
+                            PassWord = listImportStaff[i].PassWord;
+                            PhoneNumber = listImportStaff[i].PhoneNumber;
+                            BirthDay = (DateTime)listImportStaff[i].BirthDay;
+                            Wage = listImportStaff[i].Wage.ToString();
+                            Status = listImportStaff[i].Status;
+                            Email = listImportStaff[i].Email;
+                            Gender = listImportStaff[i].Gender;
+                            Role = listImportStaff[i].Role;
+                            ConfirmPassWord = listImportStaff[i].PassWord;
+
+                            //check ngoai le
+                            int iWage = 0;
+                            if (DisplayName == null || UserName == null || PassWord == null
+                            || PhoneNumber == null || Wage == null || Status == null || Email == null
+                            || Gender == null || Role == null || !int.TryParse(Wage.Replace(".", ""), out iWage)
+                            || DisplayName == "" || UserName == "" || PassWord == ""
+                            || PhoneNumber == "" || Wage == "" || Status == "" || Email == ""
+                            || Gender == "" || Role == "")
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Bạn đang nhập thiếu hoặc sai thông tin của nhân viên thứ " + (i + 1) + " trong file Excel");
+                                listImportStaff = new ObservableCollection<StaffDTO>();
+                                return;
+                            }
+
+
+                            else
+                            {
+                                if (PassWord != ConfirmPassWord)
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Xác nhận mật khẩu không đúng của nhân viên thứ " + (i + 1) + " trong file Excel");
+                                    listImportStaff = new ObservableCollection<StaffDTO>();
+                                    return;
+                                }
+                                if (DateTime.Compare(BirthDay, new DateTime(1900, 1, 1)) < 0 || DateTime.Compare(BirthDay, DateTime.Now) > 0)
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày sinh không hợp lệ của nhân viên thứ " + (i + 1) + " trong file Excel");
+                                    listImportStaff = new ObservableCollection<StaffDTO>();
+                                    return;
+                                }
+
+                                else if (DateTime.Compare(StartDate, new DateTime(1900, 1, 1)) < 0 || DateTime.Compare(StartDate, DateTime.Now) > 0)
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày bắt đầu không hợp lệ của nhân viên thứ " + i + " trong file Excel");
+                                    listImportStaff = new ObservableCollection<StaffDTO>();
+                                    return;
+                                }
+
+                                else if (StartDate.Year - (BirthDay).Year < 16)
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Đảm bảo nhân viên thứ " + (i + 1) + " vào làm trên 16 tuổi");
+                                    listImportStaff = new ObservableCollection<StaffDTO>();
+                                    return;
+                                }
+                                string pass = Helper.MD5Hash(this.PassWord);
+
+                                Staff newStaff = new Staff
+                                {
+                                    DisplayName = this.DisplayName,
+                                    StartDate = this.StartDate,
+                                    UserName = this.UserName,
+                                    PassWord = pass,
+                                    PhoneNumber = this.PhoneNumber,
+                                    BirthDay = this.BirthDay,
+                                    Wage = iWage,
+                                    Status = this.Status,
+                                    Email = this.Email,
+                                    Gender = this.Gender,
+                                    Role = this.Role,
+                                    IsDeleted = false
+                                };
+                                (bool IsAdded, string messageAdd) = await StaffService.Ins.AddNewStaff(newStaff);
+                                if (!IsAdded && messageAdd.Equals(EmailError))
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên thứ " + (i + 1) + " trong file excel có " + messageAdd);
+                                    return;
+                                }
+                                else if (!IsAdded && messageAdd.Equals(PhoneNumberError))
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên thứ " + (i + 1) + " trong file excel có " + messageAdd);
+                                    return;
+                                }
+                                else if (!IsAdded && messageAdd.Equals(UserNameError))
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên thứ " + (i + 1) + " trong file excel có " + messageAdd);
+                                    return;
+                                }
+                            }
                         }
-
-
-                        else
-                        {
-                            if (PassWord != ConfirmPassWord)
-                            {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Xác nhận mật khẩu không đúng của nhân viên thứ " + (i + 1) + " trong file Excel");
-                                listImportStaff = new ObservableCollection<StaffDTO>();
-                                return;
-                            }
-                            if (DateTime.Compare(BirthDay, new DateTime(1900, 1, 1)) < 0 || DateTime.Compare(BirthDay, DateTime.Now) > 0)
-                            {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày sinh không hợp lệ của nhân viên thứ " + (i + 1) + " trong file Excel");
-                                listImportStaff = new ObservableCollection<StaffDTO>();
-                                return;
-                            }
-
-                            else if (DateTime.Compare(StartDate, new DateTime(1900, 1, 1)) < 0 || DateTime.Compare(StartDate, DateTime.Now) > 0)
-                            {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày bắt đầu không hợp lệ của nhân viên thứ " + i + " trong file Excel");
-                                listImportStaff = new ObservableCollection<StaffDTO>();
-                                return;
-                            }
-
-                            else if (StartDate.Year - (BirthDay).Year < 16)
-                            {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Đảm bảo nhân viên thứ " + (i + 1) + " vào làm trên 16 tuổi");
-                                listImportStaff = new ObservableCollection<StaffDTO>();
-                                return;
-                            }
-                            string pass = Helper.MD5Hash(this.PassWord);
-
-                            Staff newStaff = new Staff
-                            {
-                                DisplayName = this.DisplayName,
-                                StartDate = this.StartDate,
-                                UserName = this.UserName,
-                                PassWord = pass,
-                                PhoneNumber = this.PhoneNumber,
-                                BirthDay = this.BirthDay,
-                                Wage = iWage,
-                                Status = this.Status,
-                                Email = this.Email,
-                                Gender = this.Gender,
-                                Role = this.Role,
-                                IsDeleted = false
-                            };
-                            (bool IsAdded, string messageAdd) = await StaffService.Ins.AddNewStaff(newStaff);
-                            if (!IsAdded&& messageAdd.Equals(EmailError))
-                            {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error,"Nhân viên thứ "+(i+1)+" có "+ messageAdd);
-                                return;
-                            }else if(!IsAdded && messageAdd.Equals(PhoneNumberError))
-                            {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên thứ " + (i + 1) + " có "+ messageAdd);
-                                return;
-                            }
-                            else if(!IsAdded && messageAdd.Equals(UserNameError))
-                            {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhân viên thứ " + (i + 1) + " có "+messageAdd);
-                                return;
-                            }
-                        }
+                        StaffObservation = new ObservableCollection<StaffDTO>(await StaffService.Ins.GetAllStaff());
+                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Bạn đã thêm danh sách thành công nhân viên từ Excel");
                     }
-                    StaffObservation = new ObservableCollection<StaffDTO>(await StaffService.Ins.GetAllStaff());
-                    MessageBoxCustom.Show(MessageBoxCustom.Success, "Bạn đã thêm danh sách thành công nhân viên từ Excel");
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi import dữ liệu từ tệp Excel: " + ex.Message);
+                    }
+
                 }
             });
             ExportStaffCommand = new RelayCommand<Page>((p) => { return true; }, async (p) =>
