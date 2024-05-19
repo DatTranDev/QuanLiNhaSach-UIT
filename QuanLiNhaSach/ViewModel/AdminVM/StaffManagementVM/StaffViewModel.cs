@@ -485,7 +485,21 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                             UserName = listImportStaff[i].UserName;
                             PassWord = listImportStaff[i].PassWord;
                             PhoneNumber = listImportStaff[i].PhoneNumber;
-                            BirthDay = (DateTime)listImportStaff[i].BirthDay;
+                            try
+                            {
+                                if (listImportStaff[i].BirthDay is DateTime date)
+                                {
+                                    BirthDay = date;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Invalid date format or type. Please check the input data.");
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("An unexpected error occurred: " + ex.Message);
+                            }
                             Wage = listImportStaff[i].Wage.ToString();
                             Status = listImportStaff[i].Status;
                             Email = listImportStaff[i].Email;
