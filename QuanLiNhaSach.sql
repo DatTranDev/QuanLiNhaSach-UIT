@@ -1,4 +1,4 @@
-﻿CREATE DATABASE QuanLiNhaSach;
+CREATE DATABASE QuanLiNhaSach;
 GO
 
 USE QuanLiNhaSach;
@@ -127,7 +127,7 @@ CREATE TABLE SystemValue (
     MaxDebts MONEY DEFAULT 1000000,
     MinSaleInventory INT DEFAULT 20,
     Profit FLOAT DEFAULT 0.05,
-    DebtsPolicy BIT default 1
+    DebtsPolicy BIT
 );
 GO
 
@@ -191,13 +191,16 @@ INSERT INTO Customer (DisplayName, Email, PhoneNumber, Address, Debts, Spend) VA
 (N'Trần Thành Công', 'abc@gmail.com', '0879917567', N'Dĩ An', 0, 0);
 GO
 INSERT INTO Book (DisplayName, Price, IDGenre, Inventory, Author, Description, Image, PublishYear, Publisher) VALUES
-(N'Người thầy', 200000, 4, 30, N'Nguyễn Ngọc Ký', N'Câu chuyện truyền cảm hứng của một người thầy đặc biệt', 'https://docsachcungcon.com/wp-content/uploads/2023/04/nguoithay-1.jpg', 2019, N'Nhà Xuất Bản Trẻ'),
+(N'Thế giới cổ tích', 150000, 1, 50, N'Nguyễn Nhật Ánh', N'Bộ sưu tập các câu chuyện cổ tích nổi tiếng', 'https://product.hstatic.net/200000343865/product/chuyen-phieu-luu-vao-the-gioi-co-tich_8e7622d40455477897f3bcfb2153e43c.jpg', 2020, N'Nhà Xuất Bản Kim Đồng'),
+(N'Người thầy', 200000, 9, 30, N'Nguyễn Ngọc Ký', N'Câu chuyện truyền cảm hứng của một người thầy đặc biệt', 'https://docsachcungcon.com/wp-content/uploads/2023/04/nguoithay-1.jpg', 2019, N'Nhà Xuất Bản Trẻ'),
+(N'Bí mật của nước', 180000, 2, 40, N'Masaru Emoto', N'Khám phá những bí mật của nước qua các thí nghiệm khoa học', 'https://sachhoc.com/image/catalog/Khoinghiep/Bi-mat-cua-nuoc-ebook.jpg', 2018, N'Nhà Xuất Bản Văn Học'),
 (N'Trại trẻ đặc biệt của cô Peregrine', 220000, 6, 25, N'Ransom Riggs', N'Một câu chuyện viễn tưởng ly kỳ về những đứa trẻ đặc biệt', 'https://salt.tikicdn.com/media/catalog/product/b/o/boxset.u84.d20161107.t170654.722703.png', 2016, N'Nhà Xuất Bản Hội Nhà Văn'),
 (N'Tâm lý học đám đông', 200000, 2, 45, N'Gustave Le Bon', N'Thấu hiểu tâm lý đám đông và tác động của nó', 'https://omegaplus.vn/wp-content/uploads/2018/07/tam-ly-h%E1%BB%8Dc-dam-dong.jpg', 2017, N'Nhà Xuất Bản Lao Động'),
 (N'Lịch sử thế giới', 300000, 5, 20, N'Philip Parker', N'Tổng quan về lịch sử thế giới từ cổ đại đến hiện đại', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-low7n5r9xpama7', 2021, N'Nhà Xuất Bản Thế Giới'),
 (N'Những bài học cuộc sống', 150000, 9, 50, N'Robin Sharma', N'Những bài học giá trị về cuộc sống và thành công', 'https://cdn0.fahasa.com/media/catalog/product/i/m/image_225532.jpg', 2018, N'Nhà Xuất Bản Lao Động'),
 (N'Mật mã Da Vinci', 280000, 8, 30, N'Dan Brown', N'Tiểu thuyết kinh dị nổi tiếng về những bí ẩn của lịch sử', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lpkz2ttg2w1bcf', 2003, N'Nhà Xuất Bản Văn Học'),
-(N'Tiểu sử Steve Jobs', 350000, 7, 15, N'Walter Isaacson', N'Tiểu sử của nhà sáng lập Apple, Steve Jobs', 'https://bizweb.dktcdn.net/100/197/269/products/sach-tieu-su-steve-jobs-tai-ban-alphabooks.jpg?v=1587629624130', 2011, N'Nhà Xuất Bản Trẻ');
+(N'Tiểu sử Steve Jobs', 350000, 7, 15, N'Walter Isaacson', N'Tiểu sử của nhà sáng lập Apple, Steve Jobs', 'https://bizweb.dktcdn.net/100/197/269/products/sach-tieu-su-steve-jobs-tai-ban-alphabooks.jpg?v=1587629624130', 2011, N'Nhà Xuất Bản Trẻ'),
+(N'Kỹ năng mềm cho người mới bắt đầu', 170000, 9, 40, N'Trần Thị Minh Thu', N'Những kỹ năng mềm cần thiết cho người mới bắt đầu', 'https://lib.vinhuni.edu.vn/data/62/upload/1301/images//2023/12/t1.jpg', 2019, N'Nhà Xuất Bản Trẻ');
 GO
 -- Insert 2 bills
 INSERT INTO Bill (IDCus, IDStaff, CreateAt, TotalPrice, Paid) VALUES
@@ -212,3 +215,85 @@ INSERT INTO BillInfo (IDBill, IDBook, PriceItem, Quantity, IsDeleted) VALUES
 (2, 3, 180000, 1, 0),
 (2, 4, 220000, 1, 0);
 GO
+
+
+
+
+-- các trigger và pro cần thiết
+
+GO
+USE QuanLiNhaSach
+GO
+
+GO
+CREATE PROCEDURE sp_UpdateInventoryForNewMonth
+AS
+BEGIN
+    DECLARE @CurrentMonthYear VARCHAR(7)
+    SET @CurrentMonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    INSERT INTO InventoryReport (BookId, FirstIvt, LastIvt, Arise, MonthYear)
+    SELECT b.ID, b.Inventory, b.Inventory, 0, @CurrentMonthYear
+    FROM Book b
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM InventoryReport
+        WHERE BookId = b.ID AND MonthYear = @CurrentMonthYear
+    )
+END
+GO
+
+
+
+
+GO
+CREATE TRIGGER trg_UpdateInventoryReportOnReceive
+ON GoodReceivedInfo
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @IDBook INT, @Quantity INT, @MonthYear VARCHAR(7)
+
+    SELECT @IDBook = inserted.IDBook, @Quantity = inserted.Quantity
+    FROM inserted
+
+    SET @MonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    IF NOT EXISTS (SELECT 1 FROM InventoryReport WHERE BookId = @IDBook AND MonthYear = @MonthYear)
+    BEGIN
+        INSERT INTO InventoryReport (BookId, FirstIvt, LastIvt, Arise, MonthYear)
+        VALUES (@IDBook, 0, @Quantity, @Quantity, @MonthYear)
+    END
+    ELSE
+    BEGIN
+        UPDATE InventoryReport
+        SET LastIvt = LastIvt + @Quantity,
+            Arise = Arise + @Quantity
+        WHERE BookId = @IDBook AND MonthYear = @MonthYear
+    END
+END
+GO
+
+
+GO
+CREATE TRIGGER trg_UpdateInventoryReportOnSale
+ON BillInfo
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @IDBook INT, @Quantity INT, @MonthYear VARCHAR(7)
+
+    SELECT @IDBook = inserted.IDBook, @Quantity = inserted.Quantity
+    FROM inserted
+
+    SET @MonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    UPDATE InventoryReport
+    SET LastIvt = LastIvt - @Quantity
+    WHERE BookId = @IDBook AND MonthYear = @MonthYear
+END
+GO
+
+
+
+
