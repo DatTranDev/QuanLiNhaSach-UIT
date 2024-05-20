@@ -125,9 +125,9 @@ CREATE TABLE SystemValue (
     MinReceived INT DEFAULT 150,
     MaxInventory INT DEFAULT 300,
     MaxDebts MONEY DEFAULT 1000000,
-    MinSaleInventory INT DEFAULT 20,
+    MinSaleInventory INT DEFAULT 20,S
     Profit FLOAT DEFAULT 0.05,
-    DebtsPolicy BIT
+    DebtsPolicy BIT DEFAULT 1
 );
 GO
 
@@ -287,13 +287,9 @@ BEGIN
     FROM inserted
 
     SET @MonthYear = FORMAT(GETDATE(), 'MM-yyyy')
-
+	
     UPDATE InventoryReport
     SET LastIvt = LastIvt - @Quantity
     WHERE BookId = @IDBook AND MonthYear = @MonthYear
 END
 GO
-
-
-
-
