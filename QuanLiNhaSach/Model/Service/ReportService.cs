@@ -112,6 +112,33 @@ namespace QuanLiNhaSach.DTOs
 
 
 
+        //public async Task<List<DebtReportDTO>> GetAllDebtReport()
+        //{
+        //    try
+        //    {
+        //        using (var context = new QuanLiNhaSachEntities())
+        //        {
+        //            var debtReport = (from c in context.DebtReport
+        //                              select new DebtReportDTO
+        //                              {
+        //                                  Id = c.Id,
+        //                                  CustomerId = c.CustomerId,
+        //                                  FirstDebt = c.FirstDebt,
+        //                                  LastDebt = c.LastDebt,
+        //                                  Arise = c.Arise,
+        //                                  Customer = c.Customer,
+        //                                  MonthYear = c.MonthYear
+        //                              }).ToListAsync();
+        //            return await debtReport;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi xảy ra");
+        //        return null;
+        //    }
+        //}
+
         public async Task<List<DebtReportDTO>> GetAllDebtReport()
         {
             try
@@ -119,6 +146,7 @@ namespace QuanLiNhaSach.DTOs
                 using (var context = new QuanLiNhaSachEntities())
                 {
                     var debtReport = (from c in context.DebtReport
+                                      where !(c.FirstDebt == 0 && c.LastDebt == 0 && c.Arise == 0)
                                       select new DebtReportDTO
                                       {
                                           Id = c.Id,
@@ -138,6 +166,7 @@ namespace QuanLiNhaSach.DTOs
                 return null;
             }
         }
+
 
         //Get 
     }

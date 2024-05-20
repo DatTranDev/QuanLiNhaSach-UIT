@@ -20,6 +20,7 @@ namespace QuanLiNhaSach
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
             await ThongKeService.Ins.UpdateInventoryForNewMonth();
+            await ThongKeService.Ins.UpdateDebtForNewMonth();
         }
     }
 }
