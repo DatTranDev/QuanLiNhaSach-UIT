@@ -1,4 +1,4 @@
-﻿CREATE DATABASE QuanLiNhaSach;
+CREATE DATABASE QuanLiNhaSach;
 GO
 
 USE QuanLiNhaSach;
