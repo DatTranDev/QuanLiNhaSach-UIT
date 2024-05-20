@@ -125,7 +125,7 @@ CREATE TABLE SystemValue (
     MinReceived INT DEFAULT 150,
     MaxInventory INT DEFAULT 300,
     MaxDebts MONEY DEFAULT 1000000,
-    MinSaleInventory INT DEFAULT 20,S
+    MinSaleInventory INT DEFAULT 20,
     Profit FLOAT DEFAULT 0.05,
     DebtsPolicy BIT DEFAULT 1
 );
