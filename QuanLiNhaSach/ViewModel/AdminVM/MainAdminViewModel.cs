@@ -152,8 +152,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
                 if(currentStaff != null)
                 {
                     currentName = currentStaff.DisplayName;
-                    if (currentStaff.Role == "Nhân viên")
+                    if (currentStaff.Role == "Nhân Viên")
                         IsNhanVien = "Collapsed";
+                    else
+                        IsNhanVien = "Visible";
+                  
                 }
                 return true; 
             }, 
