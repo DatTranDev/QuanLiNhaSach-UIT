@@ -841,7 +841,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
 
             DeleteStaffCommand = new RelayCommand<object>(null, async (p) =>
             {
-                DeleteMessage deleteMessage = new DeleteMessage();
+                DeleteMessage deleteMessage = new DeleteMessage("Bạn có chắc chắn muốn xóa không?");
                 deleteMessage.ShowDialog();
                 if (deleteMessage.DialogResult == true)
                 {
