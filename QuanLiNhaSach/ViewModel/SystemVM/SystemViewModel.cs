@@ -215,35 +215,38 @@ namespace QuanLiNhaSach.ViewModel.SystemVM
                     {
                         MessageBoxCustom.Show(MessageBoxCustom.Error, "Bạn đang nhập thiếu hoặc sai thông tin");
                     }
-                    genreBookList = new List<string>(await GenreService.Ins.GetAllGenreBook());
-
-                    var bookList = new List<BookDTO>(await BookService.Ins.GetAllBook());
-                    GenreBook newGenre = new GenreBook
-                    {
-                        DisplayName = this.ConfirmDisplayName,
-                        IsDeleted = false
-                    };
-
-                    (bool IsAdded, string messageAdd) = await GenreService.Ins.AddNewGenre(newGenre);
-                    if (IsAdded)
-                    {
-                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Bạn đã thêm thành công danh mục");
-                        (int newID, var _) = await GenreService.Ins.FindGenrePrD(newGenre.DisplayName);
-                        genreBookList = new List<string>(await GenreService.Ins.GetAllGenreBook());
-                        var newGenreDTO = new GenreBookDTO
-                        {
-                            STT = genreBookList.Count(),
-                            ID = newID,
-                            DisplayName = newGenre.DisplayName,
-                            Quantity = bookList.Count(book => book.IDGenre == newID),
-                            IsDeleted = newGenre.IsDeleted
-                        };
-                        genreBookObservation.Add(newGenreDTO);
-                        p.Close();
-                    }
                     else
                     {
-                        MessageBoxCustom.Show(MessageBoxCustom.Error, messageAdd);
+                        genreBookList = new List<string>(await GenreService.Ins.GetAllGenreBook());
+
+                        var bookList = new List<BookDTO>(await BookService.Ins.GetAllBook());
+                        GenreBook newGenre = new GenreBook
+                        {
+                            DisplayName = this.ConfirmDisplayName,
+                            IsDeleted = false
+                        };
+
+                        (bool IsAdded, string messageAdd) = await GenreService.Ins.AddNewGenre(newGenre);
+                        if (IsAdded)
+                        {
+                            MessageBoxCustom.Show(MessageBoxCustom.Success, "Bạn đã thêm thành công danh mục");
+                            (int newID, var _) = await GenreService.Ins.FindGenrePrD(newGenre.DisplayName);
+                            genreBookList = new List<string>(await GenreService.Ins.GetAllGenreBook());
+                            var newGenreDTO = new GenreBookDTO
+                            {
+                                STT = genreBookList.Count(),
+                                ID = newID,
+                                DisplayName = newGenre.DisplayName,
+                                Quantity = bookList.Count(book => book.IDGenre == newID),
+                                IsDeleted = newGenre.IsDeleted
+                            };
+                            genreBookObservation.Add(newGenreDTO);
+                            p.Close();
+                        }
+                        else
+                        {
+                            MessageBoxCustom.Show(MessageBoxCustom.Error, messageAdd);
+                        }
                     }
                 }
                 catch (Exception ex)

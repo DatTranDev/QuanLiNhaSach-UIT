@@ -111,5 +111,33 @@ namespace QuanLiNhaSach.Model.Service
 
 
 
+        public async Task UpdateInventoryForNewMonth()
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    await context.Database.ExecuteSqlCommandAsync("EXEC sp_UpdateInventoryForNewMonth");
+                }
+            }
+            catch(Exception e)
+            {
+               
+            }
+        }
+
+        public async Task UpdateDebtForNewMonth()
+        {
+            try
+            {
+                using (var context = new QuanLiNhaSachEntities())
+                {
+                    await context.Database.ExecuteSqlCommandAsync("EXEC sp_UpdateDebtForNewMonth");
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
     }
 }
