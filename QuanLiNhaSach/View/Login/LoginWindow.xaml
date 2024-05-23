@@ -74,7 +74,7 @@
                                      FontFamily="Inter"
                                      FontSize="12"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                     Text="{Binding Username}" />
+                                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock Text="Mật khẩu"
                                        FontFamily="Inter"
                                        FontSize="11.2"

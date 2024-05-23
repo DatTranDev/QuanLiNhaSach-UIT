@@ -126,6 +126,11 @@ namespace QuanLiNhaSach.ViewModel.LoginVM
                             Role = staff.Role,
                             IsDeleted = staff.IsDeleted,
                         };
+                        Password = "";
+                        Username = "";
+                        password = "";
+                        PasswordBox a = (PasswordBox)p.FindName("passwordBox");
+                        a.Password = "";
                         if (staff.Role == "Quản lí")
                         {
                             MainAdminWindow ad = new MainAdminWindow();
