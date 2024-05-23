@@ -1,4 +1,4 @@
-# Quản lí coffee shop
+# Quản lí nhà sách
 ![appicon](https://raw.githubusercontent.com/DatTranDev/QuanLiNhaSach-UIT/master/QuanLiNhaSach/Resources/Icon/AppIcon.ico)
 
 ## Thành viên nhóm:
