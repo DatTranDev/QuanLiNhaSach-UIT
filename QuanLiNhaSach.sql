@@ -191,9 +191,7 @@ INSERT INTO Customer (DisplayName, Email, PhoneNumber, Address, Debts, Spend) VA
 (N'Trần Thành Công', 'abc@gmail.com', '0879917567', N'Dĩ An', 0, 0);
 GO
 INSERT INTO Book (DisplayName, Price, IDGenre, Inventory, Author, Description, Image, PublishYear, Publisher) VALUES
-(N'Thế giới cổ tích', 150000, 1, 50, N'Nguyễn Nhật Ánh', N'Bộ sưu tập các câu chuyện cổ tích nổi tiếng', 'https://product.hstatic.net/200000343865/product/chuyen-phieu-luu-vao-the-gioi-co-tich_8e7622d40455477897f3bcfb2153e43c.jpg', 2020, N'Nhà Xuất Bản Kim Đồng'),
 (N'Người thầy', 200000, 9, 30, N'Nguyễn Ngọc Ký', N'Câu chuyện truyền cảm hứng của một người thầy đặc biệt', 'https://docsachcungcon.com/wp-content/uploads/2023/04/nguoithay-1.jpg', 2019, N'Nhà Xuất Bản Trẻ'),
-(N'Bí mật của nước', 180000, 2, 40, N'Masaru Emoto', N'Khám phá những bí mật của nước qua các thí nghiệm khoa học', 'https://sachhoc.com/image/catalog/Khoinghiep/Bi-mat-cua-nuoc-ebook.jpg', 2018, N'Nhà Xuất Bản Văn Học'),
 (N'Trại trẻ đặc biệt của cô Peregrine', 220000, 6, 25, N'Ransom Riggs', N'Một câu chuyện viễn tưởng ly kỳ về những đứa trẻ đặc biệt', 'https://salt.tikicdn.com/media/catalog/product/b/o/boxset.u84.d20161107.t170654.722703.png', 2016, N'Nhà Xuất Bản Hội Nhà Văn'),
 (N'Tâm lý học đám đông', 200000, 2, 45, N'Gustave Le Bon', N'Thấu hiểu tâm lý đám đông và tác động của nó', 'https://omegaplus.vn/wp-content/uploads/2018/07/tam-ly-h%E1%BB%8Dc-dam-dong.jpg', 2017, N'Nhà Xuất Bản Lao Động'),
 (N'Lịch sử thế giới', 300000, 5, 20, N'Philip Parker', N'Tổng quan về lịch sử thế giới từ cổ đại đến hiện đại', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-low7n5r9xpama7', 2021, N'Nhà Xuất Bản Thế Giới'),
@@ -382,5 +380,3 @@ BEGIN
     END
 END
 GO
-
-

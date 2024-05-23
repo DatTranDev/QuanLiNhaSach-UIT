@@ -52,12 +52,12 @@ namespace QuanLiNhaSach.Model.Service
                                                     select new BillInfoDTO
                                                     {
                                                         IDBill = x.IDBill,
-                                                        PriceItem = x.PriceItem,
+                                                        PriceItem = x.PriceItem/x.Quantity,
                                                         IDBook = x.IDBook,
                                                         Quantity = x.Quantity,
                                                         Bill = x.Bill,
                                                         Book = x.Book,
-                                                        TotalPrice=x.PriceItem*x.Quantity
+                                                        TotalPrice=x.PriceItem
                                                     }).ToList(),
                                         IsDeleted = c.IsDeleted
                                     }).OrderByDescending(m => m.CreateAt).ToListAsync();

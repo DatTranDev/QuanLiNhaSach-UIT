@@ -91,7 +91,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Width="300" Header="Sách">
+                        <GridViewColumn Width="375" Header="Sách">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -110,7 +110,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Width="235" Header="Tồn đầu">
+                        <GridViewColumn Width="195" Header="Tồn đầu">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -130,7 +130,7 @@
                             </GridViewColumn.CellTemplate>
 
                         </GridViewColumn>
-                        <GridViewColumn Width="235" Header="Phát sinh">
+                        <GridViewColumn Width="195" Header="Phát sinh">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -150,7 +150,7 @@
                             </GridViewColumn.CellTemplate>
 
                         </GridViewColumn>
-                        <GridViewColumn Width="235" Header="Tồn cuối">
+                        <GridViewColumn Width="195" Header="Tồn cuối">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />

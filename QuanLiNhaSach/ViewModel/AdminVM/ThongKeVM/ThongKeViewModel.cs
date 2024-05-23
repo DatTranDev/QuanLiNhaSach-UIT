@@ -78,8 +78,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand DeletePaymentReciptCM { get; set; }
         public ICommand LichSuNhapCM { get; set; }
         public ICommand ChiTietPhieuNhapCM { get; set; }
-
-
+        public ICommand ExportExcelCM {  get; set; }
 
         bool checkLanDau = false;
         #endregion
@@ -459,6 +458,44 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
             });
             #endregion
+
+
+
+            #region Export excel
+            ExportExcelCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+
+                try
+                {
+                    if (!checkThaoTac)
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                        return;
+                    }
+                    checkThaoTac = false;
+
+
+                    //công nợ
+                    if (caseNav == 4)
+                    {
+
+                    }
+                    else if (CaseNav == 5)
+                    {
+
+                    }
+
+
+                    checkThaoTac = true;
+                }
+                catch
+                {
+                    checkThaoTac = true;
+                }
+
+            });
+            #endregion
+
         }
 
         bool checkThaoTac = false;
@@ -541,11 +578,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //lịch sử nhập
             if (CaseNav == 6)
             {
-                if (danhSachNhap != null)
+
+                DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(await Task.Run(() => GoodReceivedService.Ins.GetGRBetweenDate(SelectedDateFrom, SelectedDateTo)));
+                if (DanhSachNhap != null)
                 {
-                    DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(danhSachNhap.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                    danhSachNhap = new List<GoodReceivedDTO>(DanhSachNhap);
                 }
-                return;
             }
         }
 
