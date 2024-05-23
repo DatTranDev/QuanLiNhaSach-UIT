@@ -401,10 +401,55 @@
 
                 </Border>
 
+
+
+
+                <!--  Xuất excel cho công nợ và tồn kho  -->
+                <Border
+                    Width="135"
+                    Height="46"
+                    Margin="0,10,0,14"
+                    HorizontalAlignment="Center"
+                    Background="#ffecdf"
+                    BorderBrush="#ffecdf"
+                    CornerRadius="16"
+                    Visibility="{Binding IsBorderForTonKhoCongNoVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button
+                        Padding="0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Command="{Binding ExportExcelCM}"
+                        Foreground="{x:Null}">
+                        <StackPanel Width="135" Orientation="Horizontal">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Margin="10,2,8,0"
+                                VerticalAlignment="Center"
+                                Source="/QuanLiNhaSach;component/Resources/Icon/ExportExelCongNoTonKho.png" />
+                            <TextBlock
+                                Width="80"
+                                Margin="0,2,0,0"
+                                VerticalAlignment="Center"
+                                Panel.ZIndex="1"
+                                FontFamily="Roboto Condensed"
+                                FontSize="17"
+                                FontWeight="SemiBold"
+                                Foreground="#e0ae8a"
+                                Text="Xuất excel" />
+                        </StackPanel>
+                    </Button>
+                </Border>
+
             </StackPanel>
         </Grid>
 
+
+
         <Grid Grid.Column="1">
+
+
+
             <Border
                 Width="1153"
                 Height="652"
