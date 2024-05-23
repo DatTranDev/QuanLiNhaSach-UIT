@@ -78,8 +78,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand DeletePaymentReciptCM { get; set; }
         public ICommand LichSuNhapCM { get; set; }
         public ICommand ChiTietPhieuNhapCM { get; set; }
-
-
+        public ICommand ExportExcelCM {  get; set; }
 
         bool checkLanDau = false;
         #endregion
@@ -459,6 +458,44 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
             });
             #endregion
+
+
+
+            #region Export excel
+            ExportExcelCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+
+                try
+                {
+                    if (!checkThaoTac)
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                        return;
+                    }
+                    checkThaoTac = false;
+
+
+                    //công nợ
+                    if (caseNav == 4)
+                    {
+
+                    }
+                    else if (CaseNav == 5)
+                    {
+
+                    }
+
+
+                    checkThaoTac = true;
+                }
+                catch
+                {
+                    checkThaoTac = true;
+                }
+
+            });
+            #endregion
+
         }
 
         bool checkThaoTac = false;
