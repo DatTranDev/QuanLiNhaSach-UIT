@@ -766,7 +766,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                 else
                 {
                     DateTime tempBirthDay;
-                    DateTime.TryParseExact(EditBirthDay, "dd/MM/yyyy", new CultureInfo("vi-VN"), DateTimeStyles.None, out tempBirthDay);
+                    DateTime.TryParseExact(EditBirthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out tempBirthDay);
+                    MessageBox.Show("xxx "+tempBirthDay);
 
                     DateTime tempStartDate;
                     DateTime.TryParseExact(EditStartDate, "dd/MM/yyyy", new CultureInfo("vi-VN"), DateTimeStyles.None, out tempStartDate);
