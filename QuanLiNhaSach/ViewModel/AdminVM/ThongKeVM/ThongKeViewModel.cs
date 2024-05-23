@@ -541,11 +541,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //lịch sử nhập
             if (CaseNav == 6)
             {
-                if (danhSachNhap != null)
+
+                DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(await Task.Run(() => GoodReceivedService.Ins.GetGRBetweenDate(SelectedDateFrom, SelectedDateTo)));
+                if (DanhSachNhap != null)
                 {
-                    DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(danhSachNhap.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                    danhSachNhap = new List<GoodReceivedDTO>(DanhSachNhap);
                 }
-                return;
             }
         }
 
