@@ -265,6 +265,7 @@
     <Compile Include="ViewModel\AdminVM\ProductVM\CompareWithVietnameseSigns.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ImportItem.cs" />
     <Compile Include="ViewModel\AdminVM\ProductVM\ProductViewModel.cs" />
+    <Compile Include="ViewModel\AdminVM\StaffManagementVM\MotSoPTBoTro.cs" />
     <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffViewModel.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\CongNo.cs" />
     <Compile Include="ViewModel\AdminVM\ThongKeVM\DoanhThu.cs" />
