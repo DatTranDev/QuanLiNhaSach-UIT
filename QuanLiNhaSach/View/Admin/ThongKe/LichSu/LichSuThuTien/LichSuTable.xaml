@@ -112,7 +112,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="17"
-                                    Text="{Binding AmountReceived, Converter={StaticResource PriceConverter}}" />
+                                    Text="{Binding AmountReceived,StringFormat={}{0:N0} VNĐ}" />
                                 <!--    -->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

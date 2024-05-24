@@ -210,7 +210,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
             });
             AddCusListCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
             {
-                if (this.Name == null || this.PhoneNumber == null || this.Email == null || this.Address ==null)
+                if (this.Name == null || this.PhoneNumber == null || this.Email == null || this.Address ==null || this.Name.Trim() == "" ||
+                    this.Address == null || this.Address.Trim() == "")
                 {
                     MessageBoxCustom.Show(MessageBoxCustom.Error, "Không nhập đủ dữ liệu");
                 }
@@ -274,7 +275,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
             EditCusListCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
             {
 
-                if (this.EditName == null || this.EditPhoneNumber == null || this.EditEmail == null)
+                if (this.EditName == null || this.EditPhoneNumber == null || this.EditEmail == null || this.EditName.Trim()=="" 
+                || this.EditAddress.Trim()==""||this.EditAddress ==null)
                 {
                     MessageBoxCustom.Show(MessageBoxCustom.Error, "Không nhập đủ dữ liệu");
                 }

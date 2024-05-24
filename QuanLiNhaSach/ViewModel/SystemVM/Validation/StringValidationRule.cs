@@ -42,12 +42,12 @@ namespace QuanLiNhaSach.ViewModel.SystemVM.Validation
 
             if (!double.TryParse(inputText, out number))
             {
-                return new ValidationResult(false, "Hãy nhập một số dương hợp lệ.");
+                return new ValidationResult(false, "Hãy nhập một số thập phân hợp lệ.");
             }
 
             if (double.Parse(inputText) < 0)
             {
-                return new ValidationResult(false, "Giá trị được nhập phải là một số dương.");
+                return new ValidationResult(false, "Giá trị được nhập phải là một số thập phân.");
             }
 
             return ValidationResult.ValidResult;

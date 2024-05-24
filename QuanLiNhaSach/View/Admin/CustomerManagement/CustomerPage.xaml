@@ -57,7 +57,7 @@
                             materialDesign:HintAssist.Hint="Tìm Kiếm khách hàng"
                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                             BorderThickness="0"
-                            FontSize="17.6">
+                            FontSize="15">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="TextChanged">
                                         <i:InvokeCommandAction Command="{Binding SearchCustomerCM}" CommandParameter="{Binding ElementName=searchBox}" />
@@ -121,7 +121,7 @@
                                     <DataTemplate>
                                         <TextBlock
                                             HorizontalAlignment="Center"
-                                            FontSize="17.6"
+                                            FontSize="16"
                                             Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}, UpdateSourceTrigger=PropertyChanged}" />      
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -139,7 +139,7 @@
                                     <DataTemplate>
                                         <TextBlock
                                             HorizontalAlignment="Center"
-                                            FontSize="17.6"
+                                            FontSize="16"
                                             Text="{Binding DisplayName}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -157,7 +157,7 @@
                                     <DataTemplate>
                                         <TextBlock
                                             HorizontalAlignment="Center"
-                                            FontSize="17.6"
+                                            FontSize="16"
                                             Text="{Binding PhoneNumber}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -176,7 +176,7 @@
                                     <DataTemplate>
                                         <TextBlock
                                             HorizontalAlignment="Center"
-                                            FontSize="17.6"
+                                            FontSize="16"
                                             Text="{Binding Email}" />       
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -195,8 +195,8 @@
                                     <DataTemplate>
                                         <TextBlock
                                             HorizontalAlignment="Center"
-                                            FontSize="17.6"
-                                            Text="{Binding Spend, Converter={StaticResource PriceConverter}}" />        
+                                            FontSize="16"
+                                            Text="{Binding Spend, StringFormat={}{0:N0} VNĐ}" />        
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -214,8 +214,8 @@
                                     <DataTemplate>
                                         <TextBlock
                                             HorizontalAlignment="Center"
-                                            FontSize="17.6"
-                                            Text="{Binding Debts, Converter={StaticResource PriceConverter}}" />
+                                            FontSize="16"
+                                            Text="{Binding Debts, StringFormat={}{0:N0} VNĐ}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -233,7 +233,7 @@
                                     <DataTemplate>
                                         <TextBlock
                                             HorizontalAlignment="Center"
-                                            FontSize="17.6"
+                                            FontSize="16"
                                             Text="{Binding Description}" />     
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
