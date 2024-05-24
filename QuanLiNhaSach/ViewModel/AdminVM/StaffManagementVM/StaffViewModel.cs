@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Data.Common;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
 using System.Text.RegularExpressions;
+using OfficeOpenXml.ConditionalFormatting.Contracts;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
 {
@@ -804,11 +805,24 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
                         return;
                     }
                     DateTime tempBirthDay;
-                    DateTime.TryParseExact(EditBirthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out tempBirthDay);
-                    MessageBox.Show("xxx "+tempBirthDay);
+                    //chuyen Birthday tu chuoi sang datetime
+                    tempBirthDay = MotSoPTBoTro.formatDate(EditBirthDay);
+                    if(tempBirthDay == DateTime.MinValue)
+                    {
 
-                    DateTime tempStartDate;
-                    DateTime.TryParseExact(EditStartDate, "dd/MM/yyyy", new CultureInfo("vi-VN"), DateTimeStyles.None, out tempStartDate);
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra trong việc chuyển đổi ngày sinh");
+                        return;
+                    }
+                    
+
+                    DateTime tempStartDate = MotSoPTBoTro.formatDate(EditStartDate);
+                    tempStartDate = MotSoPTBoTro.formatDate(EditStartDate);
+                    if (tempStartDate == DateTime.MinValue)
+                    {
+
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra trong việc chuyển đổi ngày bắt đầu");
+                        return;
+                    }   
 
                     if ((EditPassWord == null || EditPassWord == "") && EditDisplayName == SelectedItem.DisplayName && EditEmail == SelectedItem.Email
                         && EditGender == SelectedItem.Gender.Trim() && tempStartDate == SelectedItem.StartDate && EditStatus == SelectedItem.Status
