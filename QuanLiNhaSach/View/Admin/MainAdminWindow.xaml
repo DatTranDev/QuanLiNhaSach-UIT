@@ -449,7 +449,7 @@
 
                     <!--  NhanVien-Menu_btn  -->
                     <RadioButton
-    Visibility="{Binding IsNhanVien}"
+    Visibility="{Binding IsNhanVien, UpdateSourceTrigger=PropertyChanged}"
     x:Name="NVbtn"
     Command="{Binding LoadNhanVienPage}"
     CommandParameter="{Binding ElementName=MainFrame}"
@@ -472,7 +472,7 @@
             Height="30"
             Margin="24,0,0,0"
             Source="/QuanLiNhaSach;component/Resources/Icon/NhanVien_Brown_Icon.png" />
-                                                    <TextBlock
+                                                    <TextBlock                                                      
             x:Name="text"
             Margin="13,0,0,0"
             VerticalAlignment="Center"
@@ -552,7 +552,7 @@
 
                     <!--  HeThong-Menu_btn  -->
                     <RadioButton
-                        Visibility="{Binding IsNhanVien}"
+                        Visibility="{Binding IsNhanVien, UpdateSourceTrigger=PropertyChanged}"
                         x:Name="HeThongbtn"
                         Command="{Binding LoadHeThongPage}"
                         CommandParameter="{Binding ElementName=MainFrame}"

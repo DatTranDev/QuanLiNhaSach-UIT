@@ -254,7 +254,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
                             }
                             else
                             {
-                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Lỗi khi thêm khách hàng");
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, messageAdd);
                             }
                         }
                     }                  

@@ -1,9 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<Application x:Class="QuanLiNhaSach.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:QuanLiNhaSach"
-             StartupUri="View\Admin\StaffManagement\StaffPage.xaml">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="QuanLiNhaSach.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:QuanLiNhaSach"
+    Startup="Application_Startup"
+    StartupUri="View\Login\LoginWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

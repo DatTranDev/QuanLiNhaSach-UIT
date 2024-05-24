@@ -33,7 +33,7 @@ namespace QuanLiNhaSach.Model.Service
                 using (var context = new QuanLiNhaSachEntities())
                 {
                     var cusList = (from s in context.Customer
-                                   where s.IsDeleted == false
+                                   where s.IsDeleted == false && s.DisplayName != "Khách lẻ"
                                    select new CustomerDTO
                                    {
                                        ID = s.ID,

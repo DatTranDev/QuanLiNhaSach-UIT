@@ -1,4 +1,4 @@
-﻿CREATE DATABASE QuanLiNhaSach;
+CREATE DATABASE QuanLiNhaSach;
 GO
 
 USE QuanLiNhaSach;
@@ -127,7 +127,7 @@ CREATE TABLE SystemValue (
     MaxDebts MONEY DEFAULT 1000000,
     MinSaleInventory INT DEFAULT 20,
     Profit FLOAT DEFAULT 0.05,
-    DebtsPolicy BIT default 1
+    DebtsPolicy BIT DEFAULT 1
 );
 GO
 
@@ -197,18 +197,186 @@ INSERT INTO Book (DisplayName, Price, IDGenre, Inventory, Author, Description, I
 (N'Lịch sử thế giới', 300000, 5, 20, N'Philip Parker', N'Tổng quan về lịch sử thế giới từ cổ đại đến hiện đại', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-low7n5r9xpama7', 2021, N'Nhà Xuất Bản Thế Giới'),
 (N'Những bài học cuộc sống', 150000, 9, 50, N'Robin Sharma', N'Những bài học giá trị về cuộc sống và thành công', 'https://cdn0.fahasa.com/media/catalog/product/i/m/image_225532.jpg', 2018, N'Nhà Xuất Bản Lao Động'),
 (N'Mật mã Da Vinci', 280000, 8, 30, N'Dan Brown', N'Tiểu thuyết kinh dị nổi tiếng về những bí ẩn của lịch sử', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lpkz2ttg2w1bcf', 2003, N'Nhà Xuất Bản Văn Học'),
-(N'Tiểu sử Steve Jobs', 350000, 7, 15, N'Walter Isaacson', N'Tiểu sử của nhà sáng lập Apple, Steve Jobs', 'https://bizweb.dktcdn.net/100/197/269/products/sach-tieu-su-steve-jobs-tai-ban-alphabooks.jpg?v=1587629624130', 2011, N'Nhà Xuất Bản Trẻ');
+(N'Tiểu sử Steve Jobs', 350000, 7, 15, N'Walter Isaacson', N'Tiểu sử của nhà sáng lập Apple, Steve Jobs', 'https://bizweb.dktcdn.net/100/197/269/products/sach-tieu-su-steve-jobs-tai-ban-alphabooks.jpg?v=1587629624130', 2011, N'Nhà Xuất Bản Trẻ'),
+(N'Kỹ năng mềm cho người mới bắt đầu', 170000, 9, 40, N'Trần Thị Minh Thu', N'Những kỹ năng mềm cần thiết cho người mới bắt đầu', 'https://lib.vinhuni.edu.vn/data/62/upload/1301/images//2023/12/t1.jpg', 2019, N'Nhà Xuất Bản Trẻ');
 GO
 -- Insert 2 bills
 INSERT INTO Bill (IDCus, IDStaff, CreateAt, TotalPrice, Paid) VALUES
-(1, 1, '2024-05-15', 500000, 500000),
-(2, 2, '2024-05-16', 300000, 300000);
+(1, 1, '2024-05-23', 651000, 651000),
+(2, 2, '2024-05-24', 300000, 300000);
 GO
 
 -- Insert bill information for the 2 bills
 INSERT INTO BillInfo (IDBill, IDBook, PriceItem, Quantity, IsDeleted) VALUES
-(1, 1, 150000, 2, 0),
-(1, 2, 200000, 1, 0),
-(2, 3, 180000, 1, 0),
-(2, 4, 220000, 1, 0);
+(1, 1, 420000, 2, 0),
+(1, 2, 231000, 1, 0),
+(2, 3, 210000, 1, 0),
+(2, 4, 315000, 1, 0);
+GO
+
+
+
+
+-- các trigger và pro cần thiết
+
+--trigger,pro cho tồn kho
+GO
+USE QuanLiNhaSach
+GO
+
+GO
+CREATE PROCEDURE sp_UpdateInventoryForNewMonth
+AS
+BEGIN
+    DECLARE @CurrentMonthYear VARCHAR(7)
+    SET @CurrentMonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    INSERT INTO InventoryReport (BookId, FirstIvt, LastIvt, Arise, MonthYear)
+    SELECT b.ID, b.Inventory, b.Inventory, 0, @CurrentMonthYear
+    FROM Book b
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM InventoryReport
+        WHERE BookId = b.ID AND MonthYear = @CurrentMonthYear
+    )
+END
+GO
+
+
+
+
+GO
+CREATE TRIGGER trg_UpdateInventoryReportOnReceive
+ON GoodReceivedInfo
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @IDBook INT, @Quantity INT, @MonthYear VARCHAR(7)
+
+    SELECT @IDBook = inserted.IDBook, @Quantity = inserted.Quantity
+    FROM inserted
+
+    SET @MonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    IF NOT EXISTS (SELECT 1 FROM InventoryReport WHERE BookId = @IDBook AND MonthYear = @MonthYear)
+    BEGIN
+        INSERT INTO InventoryReport (BookId, FirstIvt, LastIvt, Arise, MonthYear)
+        VALUES (@IDBook, 0, @Quantity, @Quantity, @MonthYear)
+    END
+    ELSE
+    BEGIN
+        UPDATE InventoryReport
+        SET LastIvt = LastIvt + @Quantity,
+            Arise = Arise + @Quantity
+        WHERE BookId = @IDBook AND MonthYear = @MonthYear
+    END
+END
+GO
+
+
+GO
+CREATE TRIGGER trg_UpdateInventoryReportOnSale
+ON BillInfo
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @IDBook INT, @Quantity INT, @MonthYear VARCHAR(7)
+
+    SELECT @IDBook = inserted.IDBook, @Quantity = inserted.Quantity
+    FROM inserted
+
+    SET @MonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+	
+    UPDATE InventoryReport
+    SET LastIvt = LastIvt - @Quantity
+    WHERE BookId = @IDBook AND MonthYear = @MonthYear
+END
+GO
+
+
+
+--trigger ,pro cho công nợ
+
+
+GO
+CREATE PROCEDURE sp_UpdateDebtForNewMonth
+AS
+BEGIN
+    DECLARE @CurrentMonthYear VARCHAR(7)
+    SET @CurrentMonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    INSERT INTO DebtReport (CustomerId, FirstDebt, LastDebt, Arise, MonthYear)
+    SELECT c.ID, c.Debts, c.Debts, 0, @CurrentMonthYear
+    FROM Customer c
+    WHERE c.ID != 1 AND NOT EXISTS (
+        SELECT 1
+        FROM DebtReport
+        WHERE CustomerId = c.ID AND MonthYear = @CurrentMonthYear
+    )
+END
+GO
+
+
+GO
+CREATE TRIGGER trg_AddDebtRecordOnNewCustomer
+ON Customer
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @CustomerId INT, @CurrentDebt MONEY, @CurrentMonthYear VARCHAR(7)
+
+    SELECT @CustomerId = inserted.ID, @CurrentDebt = inserted.Debts
+    FROM inserted
+
+    SET @CurrentMonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    IF @CustomerId != 1
+    BEGIN
+        INSERT INTO DebtReport (CustomerId, FirstDebt, LastDebt, Arise, MonthYear)
+        VALUES (@CustomerId, @CurrentDebt, @CurrentDebt, 0, @CurrentMonthYear)
+    END
+END
+GO
+
+
+GO
+CREATE TRIGGER trg_UpdateDebtOnCustomerChange
+ON Customer
+AFTER UPDATE
+AS
+BEGIN
+    DECLARE @CustomerId INT, @OldDebt MONEY, @NewDebt MONEY, @DebtChange MONEY, @MonthYear VARCHAR(7)
+
+    SELECT @CustomerId = inserted.ID, @NewDebt = inserted.Debts, @OldDebt = deleted.Debts
+    FROM inserted, deleted
+
+    SET @DebtChange = @NewDebt - @OldDebt
+
+    SET @MonthYear = FORMAT(GETDATE(), 'MM-yyyy')
+
+    IF @CustomerId != 1
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM DebtReport WHERE CustomerId = @CustomerId AND MonthYear = @MonthYear)
+        BEGIN
+            INSERT INTO DebtReport (CustomerId, FirstDebt, LastDebt, Arise, MonthYear)
+            VALUES (@CustomerId, @OldDebt, @NewDebt, CASE WHEN @DebtChange > 0 THEN @DebtChange ELSE 0 END, @MonthYear)
+        END
+        ELSE
+        BEGIN
+            IF @DebtChange > 0
+            BEGIN
+                UPDATE DebtReport
+                SET LastDebt = LastDebt + @DebtChange,
+                    Arise = Arise + @DebtChange
+                WHERE CustomerId = @CustomerId AND MonthYear = @MonthYear
+            END
+            ELSE
+            BEGIN
+                UPDATE DebtReport
+                SET LastDebt = LastDebt + @DebtChange
+                WHERE CustomerId = @CustomerId AND MonthYear = @MonthYear
+            END
+        END
+    END
+END
 GO

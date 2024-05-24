@@ -1,8 +1,10 @@
-﻿using System;
+﻿using QuanLiNhaSach.Model.Service;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,6 +17,10 @@ namespace QuanLiNhaSach
     /// </summary>
     public partial class App : Application
     {
-        
+        private async void Application_Startup(object sender, StartupEventArgs e)
+        {
+            await ThongKeService.Ins.UpdateInventoryForNewMonth();
+            await ThongKeService.Ins.UpdateDebtForNewMonth();
+        }
     }
 }

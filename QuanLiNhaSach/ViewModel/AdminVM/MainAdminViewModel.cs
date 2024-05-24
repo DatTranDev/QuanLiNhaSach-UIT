@@ -21,6 +21,7 @@ using QuanLiNhaSach.View.Staff.Sale;
 using QuanLiNhaSach.View.Admin.StaffManagement;
 using QuanLiNhaSach.View.Admin.ThongKe;
 using QuanLiNhaSach.View.Admin.System_;
+using QuanLiNhaSach.ViewModel.LoginVM;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM
 {
@@ -152,8 +153,11 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
                 if(currentStaff != null)
                 {
                     currentName = currentStaff.DisplayName;
-                    if (currentStaff.Role == "Nhân viên")
+                    if (currentStaff.Role == "Nhân Viên")
                         IsNhanVien = "Collapsed";
+                    else
+                        IsNhanVien = "Visible";
+                  
                 }
                 return true; 
             }, 
@@ -280,7 +284,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
                 confirmLogOut.ShowDialog();
                 if (confirmLogOut.DialogResult == true)
                 {
-                    p.Owner.Visibility = Visibility.Visible;
+                    p.Owner.Visibility = Visibility.Visible;                    
                     p.Close();
                 }
             });

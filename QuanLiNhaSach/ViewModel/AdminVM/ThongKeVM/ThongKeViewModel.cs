@@ -24,6 +24,11 @@ using QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuThuTien;
 using System.Security.Policy;
 using QuanLiNhaSach.Model;
 using QuanLiNhaSach.View.Admin.ThongKe.LichSu.LichSuNhap;
+using OfficeOpenXml;
+using System.Data;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Windows.Forms;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
 {
@@ -78,8 +83,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
         public ICommand DeletePaymentReciptCM { get; set; }
         public ICommand LichSuNhapCM { get; set; }
         public ICommand ChiTietPhieuNhapCM { get; set; }
-
-
+        public ICommand ExportExcelCM {  get; set; }
 
         bool checkLanDau = false;
         #endregion
@@ -459,6 +463,228 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                 }
             });
             #endregion
+
+
+
+            #region Export excel
+            ExportExcelCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
+            {
+
+                try
+                {
+                    if (!checkThaoTac)
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Thao tác quá nhanh!");
+                        return;
+                    }
+                    checkThaoTac = false;
+
+
+                    //công nợ
+                    if (caseNav == 4)
+                    {
+                        var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+                        // Hiển thị hộp thoại chọn thư mục và lấy kết quả
+                        System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                        if (result == System.Windows.Forms.DialogResult.OK)
+                        {
+                            string selectedFolderPath = dialog.SelectedPath;
+
+
+                            string fileExcelName = "";//tên file export
+                            string pathFile = "";//đường dẫn tuyệt đối của file export
+
+                            bool check = false;
+                            while (true)
+                            {
+                                fileExcelName = "CongNo_" + formatMonthYear(month, year)+"-"+ RandomFileName() + ".xlsx";
+                                pathFile = selectedFolderPath + @"\" + fileExcelName;
+                                if (!File.Exists(pathFile))
+                                {
+                                    check = true;
+                                    break;
+                                }
+                            }
+
+                            if (check)
+                            {
+                                DataTable table = new DataTable();
+                                table.Columns.Add("STT", typeof(string));
+                                table.Columns.Add("Khách hàng", typeof(string));
+                                table.Columns.Add("Nợ đầu", typeof(string));
+                                table.Columns.Add("Phát sinh", typeof(string));
+                                table.Columns.Add("Nợ cuối", typeof(string));
+
+
+                                int stt = 1;
+                                foreach (var item in DebtList)
+                                {
+                                    if (item.Customer.DisplayName != null && item.FirstDebt != null && item.Arise != null && item.LastDebt != null)
+                                    {
+                                        table.Rows.Add(stt.ToString(), item.Customer.DisplayName, item.FirstDebt.ToString(), item.Arise.ToString(), item.LastDebt.ToString());
+                                        stt++;
+                                    }
+                                }
+
+
+                                try
+                                {
+                                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                                    using (var package = new ExcelPackage())
+                                    {
+                                        var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                                        // Thêm tiêu đề và tháng
+                                        worksheet.Cells["A1:E1"].Merge = true;
+                                        worksheet.Cells["A1:E1"].Value = "Báo cáo công nợ";
+                                        worksheet.Cells["A1:E1"].Style.Font.Size = 16;
+                                        worksheet.Cells["A1:E1"].Style.Font.Bold = true;
+                                        worksheet.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                                        worksheet.Cells["A2:E2"].Merge = true;
+                                        worksheet.Cells["A2:E2"].Value = "Tháng " + month + " năm " + year;
+                                        worksheet.Cells["A2:E2"].Style.Font.Size = 12;
+                                        worksheet.Cells["A2:E2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                                        // Load dữ liệu từ DataTable vào Excel, bắt đầu từ dòng thứ 4
+                                        worksheet.Cells["A4"].LoadFromDataTable(table, true);
+
+                                        worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                                        File.WriteAllBytes(pathFile, package.GetAsByteArray());
+
+                                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Thành công!");
+                                        checkThaoTac = true;
+
+                                    }
+                                }
+                                catch
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra!");
+                                    checkThaoTac = true;
+
+                                }
+
+                            }
+                            else
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra!");
+                                checkThaoTac = true;
+
+                            }
+
+                        }
+                    }
+                    else if (CaseNav == 5)
+                    {
+                        var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+                        // Hiển thị hộp thoại chọn thư mục và lấy kết quả
+                        System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                        if (result == System.Windows.Forms.DialogResult.OK)
+                        {
+                            string selectedFolderPath = dialog.SelectedPath;
+
+
+                            string fileExcelName = "";//tên file export
+                            string pathFile = "";//đường dẫn tuyệt đối của file export
+
+                            bool check = false;
+                            while (true)
+                            {
+                                fileExcelName = "TonKho_" + formatMonthYear(month, year)+ "_"+RandomFileName() + ".xlsx";
+                                pathFile = selectedFolderPath + @"\" + fileExcelName;
+                                if (!File.Exists(pathFile))
+                                {
+                                    check = true;
+                                    break;
+                                }
+                            }
+
+                            if (check)
+                            {
+                                DataTable table = new DataTable();
+                                table.Columns.Add("STT", typeof(string));
+                                table.Columns.Add("Sách", typeof(string));
+                                table.Columns.Add("Tồn đầu", typeof(string));
+                                table.Columns.Add("Phát sinh", typeof(string));
+                                table.Columns.Add("Tồn cuối", typeof(string));
+
+
+                                int stt = 1;
+                                foreach (var item in InventoryList)
+                                {
+                                    if (item.Book.DisplayName != null && item.FirstIvt != null && item.Arise != null && item.LastIvt != null)
+                                    {
+                                        table.Rows.Add(stt.ToString(), item.Book.DisplayName, item.FirstIvt.ToString(), item.Arise.ToString(), item.LastIvt.ToString());
+                                        stt++;
+                                    }
+                                }
+
+
+                                try
+                                {
+                                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                                    using (var package = new ExcelPackage())
+                                    {
+                                        var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                                        // Thêm tiêu đề và tháng
+                                        worksheet.Cells["A1:E1"].Merge = true;
+                                        worksheet.Cells["A1:E1"].Value = "Báo cáo tồn";
+                                        worksheet.Cells["A1:E1"].Style.Font.Size = 16;
+                                        worksheet.Cells["A1:E1"].Style.Font.Bold = true;
+                                        worksheet.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                                        worksheet.Cells["A2:E2"].Merge = true;
+                                        worksheet.Cells["A2:E2"].Value = "Tháng " + month + " năm " + year;
+                                        worksheet.Cells["A2:E2"].Style.Font.Size = 12;
+                                        worksheet.Cells["A2:E2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                                        // Load dữ liệu từ DataTable vào Excel, bắt đầu từ dòng thứ 4
+                                        worksheet.Cells["A4"].LoadFromDataTable(table, true);
+
+                                        worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                                        File.WriteAllBytes(pathFile, package.GetAsByteArray());
+
+                                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Thành công!");
+
+                                        checkThaoTac = true;
+                                    }
+                                }
+                                catch
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra!");
+                                    checkThaoTac = true;
+
+                                }
+
+                            }
+                            else
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra!");
+                                checkThaoTac = true;
+
+                            }
+                        }
+
+
+                    }
+                }
+                catch
+                {
+                    checkThaoTac = true;
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra!");
+                }
+
+                checkThaoTac = true;
+
+
+            });
+            #endregion
+
         }
 
         bool checkThaoTac = false;
@@ -541,11 +767,12 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
             //lịch sử nhập
             if (CaseNav == 6)
             {
-                if (danhSachNhap != null)
+
+                DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(await Task.Run(() => GoodReceivedService.Ins.GetGRBetweenDate(SelectedDateFrom, SelectedDateTo)));
+                if (DanhSachNhap != null)
                 {
-                    DanhSachNhap = new ObservableCollection<GoodReceivedDTO>(danhSachNhap.FindAll(x => x.CreateAt >= SelectedDateFrom && x.CreateAt <= SelectedDateTo));
+                    danhSachNhap = new List<GoodReceivedDTO>(DanhSachNhap);
                 }
-                return;
             }
         }
 

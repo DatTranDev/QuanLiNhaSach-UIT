@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="ChiTietPhieuNhapWD"
     Title="ChiTietPhieuNhap"
-    Width="870"
+    Width="1115"
     Height="590"
     AllowsTransparency="True"
     Background="Transparent"
@@ -66,7 +66,7 @@
 
                 <Grid Grid.Row="1">
                     <Border
-                        Width="855.6"
+                        Width="1050.6"
                         Height="312"
                         Margin="0,10,0,0"
                         VerticalAlignment="Top"
@@ -78,7 +78,7 @@
                             Background="White"
                             CornerRadius="25">
                             <ListView
-                                Width="850"
+                                Width="1045"
                                 Margin="10,0,0,0"
                                 ItemsSource="{Binding Detail_DsNhapList}">
                                 <ListView.ItemContainerStyle>
@@ -105,7 +105,7 @@
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
 
-                                        <GridViewColumn Width="190" Header="Tên sách">
+                                        <GridViewColumn Width="375" Header="Tên sách">
                                             <GridViewColumn.HeaderContainerStyle>
                                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -216,7 +216,7 @@
                 </Grid>
 
                 <Grid Grid.Row="2" Margin="0,10,0,0">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="450 0 0 0">
                         <TextBlock
                             Height="25"
                             Margin="50,0,15,0"
@@ -233,7 +233,7 @@
 
 
                     <!--  Tổng  -->
-                    <DockPanel Margin="140,0,0,0" HorizontalAlignment="Left">
+                    <DockPanel Margin="500,0,0,0" HorizontalAlignment="Left">
                         <TextBlock
                             Height="23"
                             Margin="305,0,15,0"
@@ -258,7 +258,7 @@
 
 
                 <!--  Nút đóng  -->
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="3" Margin="300 0 0 0">
                     <Button
                         Width="130"
                         Height="62"

@@ -708,6 +708,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icon\ExportExelCongNoTonKho.png" />
     <Resource Include="Resources\Icon\IconImport.png" />
     <Resource Include="Resources\Icon\Icon_ImportStaff.png" />
     <Resource Include="Resources\Icon\Icon_ExportStaff.png" />
