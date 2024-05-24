@@ -208,6 +208,20 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
             set { _editImage = value; OnPropertyChanged(); }
         }
 
+        private string _editPublisher;
+        public string EditPublisher
+        {
+            get { return _editPublisher; }
+            set { _editPublisher = value; OnPropertyChanged(); }
+        }
+
+        private string _editPublishYear;
+        public string EditPublishYear
+        {
+            get { return _editPublishYear; }
+            set { _editPublishYear = value; OnPropertyChanged(); }
+        }
+
         private string _genreBox;
         public string GenreBox
         {
@@ -266,6 +280,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
         public ICommand OpenAddNewGenre { get; set; }
         public ICommand AddBookToImportTable { get; set; }
         public ICommand SearchCM { get; set; }
+        public ICommand DeleteImport { get; set; }
         private string FormalPrice(string s)
         {
             string valuePrice = "";
@@ -763,7 +778,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     for (int i = 0; i < ListImport.Count; i++)
                     {
                         ImportItem item = ListImport[i];
-                        if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
+                        if ((ListImport[i].DisplayName == null || ListImport[i].DisplayName == "") && (ListImport[i].GenreName == null || ListImport[i].GenreName == "") && (ListImport[i].Author == null || ListImport[i].Author == "") && (ListImport[i].Publisher==null || ListImport[i].Publisher == ""))
                         {
                             continue;
                         }
@@ -772,6 +787,20 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             flag = false;
                             Error wd3 = new Error("Nhập thiếu thông tin tại STT: " + ListImport[i].STT);
                             wd3.ShowDialog();
+                            break;
+                        }
+                        if (ListImport[i].DisplayName.Trim() == "" || ListImport[i].GenreName.Trim() == "" || ListImport[i].Author.Trim() == "" || ListImport[i].PublishYear == null || ListImport[i].Publisher.Trim() == "")
+                        {
+                            flag = false;
+                            Error wd3 = new Error("Nhập sai thông tin tại STT: " + ListImport[i].STT);
+                            wd3.ShowDialog();
+                            break;
+                        }
+                        if (ListImport[i].Count == 0)
+                        {
+                            flag = false;
+                            Error wd2 = new Error("STT " + ListImport[i].STT + " nhập sai số");
+                            wd2.ShowDialog();
                             break;
                         }
                         if (ListImport[i].Count < SystemValue.MinReceived)
@@ -794,7 +823,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             if (!a1 && b1 == null)
                             {
                                 flag = false;
-                                Error wd3 = new Error("Xảy ra lỗi tại STT1: " + ListImport[i].STT);
+                                Error wd3 = new Error("Xảy ra lỗi tại STT: " + ListImport[i].STT);
                                 wd3.ShowDialog();
                                 break;
                             }
@@ -809,7 +838,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                             (id2, genre1) = await GenreService.Ins.FindGenrePrD(item.GenreName);
                             if (id2 == -1)
                             {
-                                Error wd = new Error("Xảy ra lỗi tại STT2: " + item.STT);
+                                Error wd = new Error("Xảy ra lỗi tại STT: " + item.STT);
                                 wd.ShowDialog();
                                 flag = false;
                                 break;
@@ -833,7 +862,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                 (bool a2, string b2) = await BookService.Ins.AddNewPrD(newBook);
                                 if (!a2)
                                 {
-                                    Error wd = new Error("Xảy ra lỗi tại STT3: " + item.STT);
+                                    Error wd = new Error("Xảy ra lỗi tại STT: " + item.STT);
                                     wd.ShowDialog();
                                     flag = false;
                                     break;
@@ -1005,6 +1034,8 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 EditImage = SelectedItem.Image;
                 EditDescription = SelectedItem.Description;
                 OriginImage = SelectedItem.Image;
+                EditPublisher = SelectedItem.Publisher;
+                EditPublishYear = SelectedItem.PublishYear.ToString();
                 EditProduct wd = new EditProduct();
                 wd.ShowDialog();
             });
@@ -1014,43 +1045,59 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     MessageBox.Show("SelectedItem null");
                 else
                 {
-                    if (this.EditName == null || this.EditGenre == null || this.EditImage == null || this.EditAuthor == null)
+                    if (this.EditName == null || this.EditGenre == null || this.EditImage == null || this.EditAuthor == null|| this.EditPublisher==null ||this.EditPublishYear==null)
                     {
                         MessageBoxCustom.Show(MessageBoxCustom.Error, "Không nhập đủ dữ liệu!");
                     }
                     else
                     {
-                        if (this.EditDescription == null) this.EditDescription = "";
-                        int id;
-
-                        GenreBook genrePrD = new GenreBook();
-                        (id, genrePrD) = await GenreService.Ins.FindGenrePrD(EditGenre);
-
-                        Book newPrD = new Book
+                        if(this.EditName.Trim() == "" || this.EditGenre.Trim() == "" || this.EditImage.Trim() == "" || this.EditAuthor.Trim() == "" || this.EditPublisher.Trim() == "" || this.EditPublishYear.Trim() == "")
                         {
-                            ID = SelectedItem.ID,
-                            DisplayName = EditName,
-                            IDGenre = id,
-                            Price = decimal.Parse(EditPrice),
-                            Inventory = int.Parse(EditInventory),
-                            Publisher = SelectedItem.Publisher,
-                            PublishYear = SelectedItem.PublishYear,
-                            Author = EditAuthor,
-                            Image = EditImage,
-                            Description = EditDescription,
-                            IsDeleted = false,
-                        };
-                        (bool success, string messageEdit) = await BookService.Ins.EditPrD(newPrD, SelectedItem.ID);
-                        if (success)
-                        {
-                            ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
-                            prdList = new List<BookDTO>(ProductList);
-                            MessageBoxCustom.Show(MessageBoxCustom.Success, "Sửa thành công");
-                            closingWd(p);
-                        }
+                            MessageBoxCustom.Show(MessageBoxCustom.Error, "Không nhập đủ dữ liệu!");
+                        }    
                         else
                         {
-                            MessageBoxCustom.Show(MessageBoxCustom.Error, messageEdit);
+                            if (this.EditDescription == null) this.EditDescription = "";
+                            int id;
+                            Book newPrD= new Book();
+                            try
+                            {
+                                GenreBook genrePrD = new GenreBook();
+                                (id, genrePrD) = await GenreService.Ins.FindGenrePrD(EditGenre);
+                                newPrD = new Book
+                                {
+                                    ID = SelectedItem.ID,
+                                    DisplayName = EditName,
+                                    IDGenre = id,
+                                    Price = decimal.Parse(EditPrice),
+                                    Inventory = int.Parse(EditInventory),
+                                    Publisher = EditPublisher,
+                                    PublishYear = int.Parse(EditPublishYear),
+                                    Author = EditAuthor,
+                                    Image = EditImage,
+                                    Description = EditDescription,
+                                    IsDeleted = false,
+                                };
+                            }
+                            catch
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, "Nhập sai dữ liệu!");
+                                return;
+                            }
+
+                           
+                            (bool success, string messageEdit) = await BookService.Ins.EditPrD(newPrD, SelectedItem.ID);
+                            if (success)
+                            {
+                                ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
+                                prdList = new List<BookDTO>(ProductList);
+                                MessageBoxCustom.Show(MessageBoxCustom.Success, "Sửa thành công");
+                                closingWd(p);
+                            }
+                            else
+                            {
+                                MessageBoxCustom.Show(MessageBoxCustom.Error, messageEdit);
+                            }
                         }
                     }
                 }
@@ -1102,6 +1149,17 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                     }
                 }
 
+            });
+            DeleteImport = new RelayCommand<Object>((p) => { return true; },  (p) =>
+            {
+                if (BookImport != null && ListImport.Contains(BookImport))
+                {
+                    ListImport.Remove(BookImport);
+                    if(ListImport.Count==0)
+                    {
+                        ListImport = new ObservableCollection<ImportItem>();
+                    }    
+                }
             });
 
         }

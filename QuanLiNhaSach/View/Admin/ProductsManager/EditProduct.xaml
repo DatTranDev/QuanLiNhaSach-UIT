@@ -9,7 +9,7 @@
         Title="EditProduct"
         Name="EditPrd"
         Width="605"
-        Height="660"
+        Height="750"
         Background="Transparent"
         AllowsTransparency="True"
         DataContext="{StaticResource ProductVM}"
@@ -72,12 +72,11 @@
             BorderBrush="#FF9900"
             BorderThickness="3"
             Background="White">
-     
+
 
         <Grid>
-            <Border 
-                    CornerRadius="32">
-                
+            <Border CornerRadius="32">
+
                 <Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -232,34 +231,10 @@
                                            Text="Tác giả" />
                                 <TextBox Text="{Binding EditAuthor}"
                                          Width="196"
-                                         Height="48"
-                                         Padding="12,2.4"
+                                         Height="154"
+                                         Padding="7,12,5,12"
                                          HorizontalAlignment="Left"
-                                         VerticalContentAlignment="Center"
-                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                         materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
-                                         Background="#D9D9D9"
-                                         BorderThickness="0.5"
-                                         FontFamily="Inter"
-                                         FontSize="16"
-                                       />
-                            </StackPanel>
-
-
-                            <StackPanel Grid.Column="1"
-                                        Margin="65.8,0,0,6"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Bottom">
-                                <TextBlock Margin="0,0,0,10"
-                                           VerticalAlignment="Top"
-                                           Style="{DynamicResource TextBlock}"
-                                           Text="Ghi chú" />
-                                <TextBox Text="{Binding EditDescription}"
-                                         Width="196"
-                                         Height="48"
-                                         Padding="12,2.4"
-                                         HorizontalAlignment="Left"
-                                         VerticalContentAlignment="Center"
+                                         VerticalContentAlignment="Top"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
                                          Background="#D9D9D9"
@@ -269,36 +244,92 @@
                             </StackPanel>
 
 
+                            <StackPanel Grid.Column="1"
+                                        Margin="65.8,0,0,6"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom" />
+
+
                         </Grid>
                         <StackPanel Grid.Row="2"
-                                    Width="270"
-                                    Height="62"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
+                                    Orientation="Vertical"
                                     Grid.ColumnSpan="2"
-                                    Margin="291,0,0,0">
-                            <Button Command="{Binding CloseWd}"
-                                    CommandParameter="{Binding ElementName=EditPrd}"
-                                    Width="120"
-                                    Height="62"
-                                    Margin="0,0,25,0"
-                                    materialDesign:ButtonAssist.CornerRadius="24"
-                                    Background="#EFD8B4"
-                                    BorderThickness="0"
-                                    Content="Bỏ qua"
-                                    FontSize="24"
-                                    FontWeight="Bold" />
-                            <Button Command="{Binding EditSanPhamListCM}"
-                                    CommandParameter="{Binding ElementName=EditPrd}"
-                                    Width="120"
-                                    Height="62"
-                                    materialDesign:ButtonAssist.CornerRadius="24"
-                                    Background="#F0BD70"
-                                    BorderThickness="0"
-                                    Content="Sửa"
-                                    FontSize="24"
-                                    FontWeight="Bold" />
+                                    Margin="11,0,0,0"
+                                    Width="588"
+                                    Height="199">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="40,0,0,6"
+                                            VerticalAlignment="Top"
+                                            Width="232">
+                                    <TextBlock Margin="0,0,0,10"
+                                               VerticalAlignment="Top"
+                                               Style="{DynamicResource TextBlock}"
+                                               Text="Nhà xuất bản" />
+                                    <TextBox Text="{Binding EditPublisher}"
+                                             Width="224"
+                                             Height="48"
+                                             Padding="12,2.4"
+                                             HorizontalAlignment="Left"
+                                             VerticalContentAlignment="Center"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                             materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
+                                             Background="#D9D9D9"
+                                             BorderThickness="0.5"
+                                             FontFamily="Inter"
+                                             FontSize="16"
+                                             Margin="0,0,0,0" />
+                                </StackPanel>
+                                <StackPanel Margin="80,0,0,6"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top">
+                                    <TextBlock Margin="0,0,0,10"
+                                               VerticalAlignment="Top"
+                                               Style="{DynamicResource TextBlock}"
+                                               Text="Năm xuất bản" />
+                                    <TextBox Text="{Binding EditPublishYear}"
+                                             Width="196"
+                                             Height="48"
+                                             Padding="12,2.4"
+                                             HorizontalAlignment="Left"
+                                             VerticalContentAlignment="Center"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                             materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
+                                             Background="#D9D9D9"
+                                             BorderThickness="0.5"
+                                             FontFamily="Inter"
+                                             FontSize="16" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0,30,0,0"
+                                        Height="77">
+                                <Button Command="{Binding CloseWd}"
+                                        CommandParameter="{Binding ElementName=EditPrd}"
+                                        Width="120"
+                                        Height="62"
+                                        Margin="290,0,0,0"
+                                        materialDesign:ButtonAssist.CornerRadius="24"
+                                        Background="#EFD8B4"
+                                        BorderThickness="0"
+                                        Content="Bỏ qua"
+                                        FontSize="24"
+                                        FontWeight="Bold" />
+                                <Button Command="{Binding EditSanPhamListCM}"
+                                        CommandParameter="{Binding ElementName=EditPrd}"
+                                        Width="120"
+                                        Height="62"
+                                        Margin="25,0,0,0"
+                                        materialDesign:ButtonAssist.CornerRadius="24"
+                                        Background="#F0BD70"
+                                        BorderThickness="0"
+                                        Content="Sửa"
+                                        FontSize="24"
+                                        FontWeight="Bold" />
+
+                            </StackPanel>
+
 
                         </StackPanel>
                     </Grid>

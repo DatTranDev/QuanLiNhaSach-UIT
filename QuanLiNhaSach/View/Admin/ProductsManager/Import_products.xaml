@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="Import_products"
         x:Name="ImportPrd"
-        Width="1280"
+        Width="1290"
         Height="690"
         Background="Transparent"
         AllowsTransparency="True"
@@ -161,7 +161,7 @@
                     </Button>
                 </Border>
             </StackPanel>
-            <Border Width="1200" Margin="0,30,0,0">
+            <Border Width="1250" Margin="0,30,0,0">
                 <StackPanel>
                     <Border Height="60"
                                     Background="#FFF2E9">
@@ -249,6 +249,26 @@
                                 <DataGridTextColumn Header="Đơn giá nhập"
                                                             Width="140"
                                                             Binding="{Binding Path=Price}" />
+                                <DataGridTemplateColumn Header=""
+                                                        Width="50">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding DataContext.DeleteImport, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}"
+                                                    Width="30"
+                                                    Padding="0"
+                                                    Margin="-10,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Background="{x:Null}"
+                                                    BorderBrush="{x:Null}"
+                                                    Foreground="{x:Null}">
+                                                <Image Width="25"
+                                                       Source="/QuanLiNhaSach;component/Resources/Icon/DeleteBlue_Icon.png" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
