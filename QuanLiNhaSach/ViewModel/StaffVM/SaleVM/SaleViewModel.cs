@@ -482,7 +482,7 @@ namespace QuanLiNhaSach.ViewModel.StaffVM.SaleVM
                                 string c = b.ToString("N");
                                 valuePrice = c.Substring(0, c.Length - 3);
                             
-                            Error wd3 = new Error("Tổng nợ không được quá " + SystemValue.MaxDebts);
+                            Error wd3 = new Error("Tổng nợ không được quá " + ((decimal)SystemValue.MaxDebts).ToString("N0") +" VNĐ");
                                 wd3.ShowDialog();
                                 PayEnabled = true;
                                 PayContent = "Thanh toán";
