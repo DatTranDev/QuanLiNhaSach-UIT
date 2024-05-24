@@ -139,7 +139,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Border>
-                                    <Border
+                                    <!--<Border
                                         Width="23.3"
                                         Height="24.49"
                                         Margin="12,0,0,0"
@@ -152,7 +152,7 @@
                                                 <i:InvokeCommandAction Command="{Binding ElementName=danhSachThuTien, Path=DataContext.DeletePaymentReciptCM}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                    </Border>
+                                    </Border>-->
                                 </StackPanel>
 
                             </DataTemplate>
