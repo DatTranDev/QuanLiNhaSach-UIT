@@ -107,7 +107,7 @@ namespace QuanLiNhaSach.View.Admin.System_
             }
             catch (Exception)
             {
-                MessageBoxCustom.Show(MessageBoxCustom.Error, "Không hợp lệ");
+                //MessageBoxCustom.Show(MessageBoxCustom.Error, "Không hợp lệ");
             }
         }
 

@@ -21,6 +21,9 @@ using OfficeOpenXml.Style;
 using System.Windows.Media;
 using System.Drawing;
 using System.Data.Common;
+using OfficeOpenXml.ConditionalFormatting.Contracts;
+using System.Text.RegularExpressions;
+using OfficeOpenXml.ConditionalFormatting.Contracts;
 
 namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
 {
@@ -333,6 +336,18 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
 
                 else
                 {
+                    string mailPattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
+                    string phonePattern = @"^0\d{9}$";
+                    if (!Regex.IsMatch(Email, mailPattern))
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Email không hợp lệ (phải có dạng @gmail.com)");
+                        return;
+                    }
+                    if (!Regex.IsMatch(PhoneNumber, phonePattern))
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Số điện thoại không hợp lệ (phải có 10 chữ số và số bắt đầu là 0)");
+                        return;
+                    }
                     if (PassWord != ConfirmPassWord)
                     {
                         MessageBoxCustom.Show(MessageBoxCustom.Error, "Xác nhận mật khẩu không đúng");
@@ -524,6 +539,18 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
 
                             else
                             {
+                                string mailPattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
+                                string phonePattern = @"^0\d{9}$";
+                                if (!Regex.IsMatch(Email, mailPattern))
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Email nhân viên thứ "+(i+1)+" trong excel không hợp lệ (phải có dạng @gmail.com)");
+                                    return;
+                                }
+                                if (!Regex.IsMatch(PhoneNumber, phonePattern))
+                                {
+                                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Số điện thoại nhân viên thứ "+ (i + 1) +" trong excel không hợp lệ (phải có 10 chữ số và số bắt đầu là 0)");
+                                    return;
+                                }
                                 if (PassWord != ConfirmPassWord)
                                 {
                                     MessageBoxCustom.Show(MessageBoxCustom.Error, "Xác nhận mật khẩu không đúng của nhân viên thứ " + (i + 1) + " trong file Excel");
@@ -765,11 +792,37 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.StaffManagementVM
 
                 else
                 {
+                    string mailPattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
+                    string phonePattern = @"^0\d{9}$";
+                    if (!Regex.IsMatch(EditEmail, mailPattern))
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Email không hợp lệ (phải có dạng @gmail.com)");
+                        return;
+                    }
+                    if (!Regex.IsMatch(EditPhoneNumber, phonePattern))
+                    {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Số điện thoại không hợp lệ (phải có 10 chữ số và số bắt đầu là 0)");
+                        return;
+                    }
                     DateTime tempBirthDay;
-                    DateTime.TryParseExact(EditBirthDay, "dd/MM/yyyy", new CultureInfo("vi-VN"), DateTimeStyles.None, out tempBirthDay);
+                    //chuyen Birthday tu chuoi sang datetime
+                    tempBirthDay = MotSoPTBoTro.formatDate(EditBirthDay);
+                    if(tempBirthDay == DateTime.MinValue)
+                    {
 
-                    DateTime tempStartDate;
-                    DateTime.TryParseExact(EditStartDate, "dd/MM/yyyy", new CultureInfo("vi-VN"), DateTimeStyles.None, out tempStartDate);
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra trong việc chuyển đổi ngày sinh");
+                        return;
+                    }
+                    
+
+                    DateTime tempStartDate = MotSoPTBoTro.formatDate(EditStartDate);
+                    tempStartDate = MotSoPTBoTro.formatDate(EditStartDate);
+                    if (tempStartDate == DateTime.MinValue)
+                    {
+
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Có lỗi xảy ra trong việc chuyển đổi ngày bắt đầu");
+                        return;
+                    }   
 
                     if ((EditPassWord == null || EditPassWord == "") && EditDisplayName == SelectedItem.DisplayName && EditEmail == SelectedItem.Email
                         && EditGender == SelectedItem.Gender.Trim() && tempStartDate == SelectedItem.StartDate && EditStatus == SelectedItem.Status

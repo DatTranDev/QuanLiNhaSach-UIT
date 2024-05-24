@@ -79,7 +79,7 @@ namespace QuanLiNhaSach.Model.Service
                         .Select(gr => new
                         {
                             IDProduct = gr.Key,
-                            Revenue = gr.Sum(pBill => (Decimal?)(pBill.PriceItem * pBill.Quantity)) ?? 0,
+                            Revenue = gr.Sum(pBill => (Decimal?)(pBill.PriceItem)) ?? 0,
                             SalesQuantity = gr.Sum(pBill => (int?)pBill.Quantity) ?? 0
                         })
                         .OrderByDescending(m => m.SalesQuantity)

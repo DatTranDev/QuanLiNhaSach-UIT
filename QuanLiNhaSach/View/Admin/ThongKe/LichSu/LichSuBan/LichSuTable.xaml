@@ -108,7 +108,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="17"
-                                    Text="{Binding TotalPrice, Converter={StaticResource PriceConverter}}" />
+                                    Text="{Binding TotalPrice, StringFormat={}{0:N0} VNĐ}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
 
@@ -132,7 +132,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Border>
-                                    <Border
+                                    <!--<Border
                                         Width="23.3"
                                         Height="24.49"
                                         Margin="12,0,0,0"
@@ -145,7 +145,7 @@
                                                 <i:InvokeCommandAction Command="{Binding ElementName=billTable, Path=DataContext.DeleteBillCM}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                    </Border>
+                                    </Border>-->
                                 </StackPanel>
 
                             </DataTemplate>

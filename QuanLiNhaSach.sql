@@ -191,7 +191,7 @@ INSERT INTO Customer (DisplayName, Email, PhoneNumber, Address, Debts, Spend) VA
 (N'Trần Thành Công', 'abc@gmail.com', '0879917567', N'Dĩ An', 0, 0);
 GO
 INSERT INTO Book (DisplayName, Price, IDGenre, Inventory, Author, Description, Image, PublishYear, Publisher) VALUES
-(N'Người thầy', 200000, 9, 30, N'Nguyễn Ngọc Ký', N'Câu chuyện truyền cảm hứng của một người thầy đặc biệt', 'https://docsachcungcon.com/wp-content/uploads/2023/04/nguoithay-1.jpg', 2019, N'Nhà Xuất Bản Trẻ'),
+(N'Người thầy', 200000, 4, 30, N'Nguyễn Ngọc Ký', N'Câu chuyện truyền cảm hứng của một người thầy đặc biệt', 'https://docsachcungcon.com/wp-content/uploads/2023/04/nguoithay-1.jpg', 2019, N'Nhà Xuất Bản Trẻ'),
 (N'Trại trẻ đặc biệt của cô Peregrine', 220000, 6, 25, N'Ransom Riggs', N'Một câu chuyện viễn tưởng ly kỳ về những đứa trẻ đặc biệt', 'https://salt.tikicdn.com/media/catalog/product/b/o/boxset.u84.d20161107.t170654.722703.png', 2016, N'Nhà Xuất Bản Hội Nhà Văn'),
 (N'Tâm lý học đám đông', 200000, 2, 45, N'Gustave Le Bon', N'Thấu hiểu tâm lý đám đông và tác động của nó', 'https://omegaplus.vn/wp-content/uploads/2018/07/tam-ly-h%E1%BB%8Dc-dam-dong.jpg', 2017, N'Nhà Xuất Bản Lao Động'),
 (N'Lịch sử thế giới', 300000, 5, 20, N'Philip Parker', N'Tổng quan về lịch sử thế giới từ cổ đại đến hiện đại', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-low7n5r9xpama7', 2021, N'Nhà Xuất Bản Thế Giới'),
@@ -202,16 +202,16 @@ INSERT INTO Book (DisplayName, Price, IDGenre, Inventory, Author, Description, I
 GO
 -- Insert 2 bills
 INSERT INTO Bill (IDCus, IDStaff, CreateAt, TotalPrice, Paid) VALUES
-(1, 1, '2024-05-15', 500000, 500000),
-(2, 2, '2024-05-16', 300000, 300000);
+(1, 1, '2024-05-23', 651000, 651000),
+(2, 2, '2024-05-24', 300000, 300000);
 GO
 
 -- Insert bill information for the 2 bills
 INSERT INTO BillInfo (IDBill, IDBook, PriceItem, Quantity, IsDeleted) VALUES
-(1, 1, 150000, 2, 0),
-(1, 2, 200000, 1, 0),
-(2, 3, 180000, 1, 0),
-(2, 4, 220000, 1, 0);
+(1, 1, 420000, 2, 0),
+(1, 2, 231000, 1, 0),
+(2, 3, 210000, 1, 0),
+(2, 4, 315000, 1, 0);
 GO
 
 
