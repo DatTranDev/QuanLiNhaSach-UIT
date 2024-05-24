@@ -176,7 +176,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
-                           Text="Áp dụng số tiền thu có thể phải ít hơn số tiền khách nợ" 
+                           Text="Áp dụng số tiền thu không lớn hơn số tiền khách nợ" 
                            TextWrapping="Wrap"
                            TextAlignment="Left"
                            HorizontalAlignment="Left"
@@ -215,7 +215,7 @@
                     Background="#FFE0AE8A"
                     FontSize="20"
                     Height="Auto"
-                    Width="Auto">
+                    Width="74" HorizontalAlignment="Right">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Style.Triggers>
