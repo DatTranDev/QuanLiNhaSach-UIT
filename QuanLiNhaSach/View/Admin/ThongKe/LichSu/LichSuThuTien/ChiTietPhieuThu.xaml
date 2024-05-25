@@ -132,7 +132,7 @@
                                 FontSize="14"
                                 IsEnabled="False"
                                 IsReadOnly="True"
-                                Text="{Binding SelectedItemPaymentRecept.CreateAt}" />
+                                Text="{Binding SelectedItemPaymentRecept.CreateAt, StringFormat='dd/MM/yyyy'}" />
                         </StackPanel>
                         <StackPanel Grid.Column="1">
                             <TextBlock

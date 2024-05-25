@@ -92,7 +92,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="17"
-                                    Text="{Binding CreateAt, StringFormat='dd/MM/yyyy HH:mm:ss'}" />
+                                    Text="{Binding CreateAt, StringFormat='dd/MM/yyyy'}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
 
@@ -112,7 +112,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="17"
-                                    Text="{Binding AmountReceived,StringFormat={}{0:N0} VNĐ}" />
+                                    Text="{Binding AmountReceived, StringFormat={}{0:N0} VNĐ}" />
                                 <!--    -->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

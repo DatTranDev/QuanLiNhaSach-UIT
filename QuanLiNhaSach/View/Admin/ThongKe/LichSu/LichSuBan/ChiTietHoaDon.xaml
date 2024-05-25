@@ -259,7 +259,7 @@
                             Height="23"
                             VerticalAlignment="Top"
                             Style="{DynamicResource TextBlock}"
-                            Text="{Binding BillDate, StringFormat='dd/MM/yyyy HH:mm:ss'}" />
+                            Text="{Binding BillDate, StringFormat='dd/MM/yyyy'}" />
                     </StackPanel>
 
 

@@ -226,7 +226,9 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ThongKeVM
                     BillDTO a = SelectedItem;
                     CusName = SelectedItem.Customer.DisplayName;
                     StaffName = SelectedItem.Staff.DisplayName;
-                    BillDate = SelectedItem.CreateAt.ToString();
+                    BillDate = SelectedItem.CreateAt.HasValue
+                        ? SelectedItem.CreateAt.Value.ToString("dd/MM/yyyy")
+                        : string.Empty;
                     TotalPrice = SelectedItem.TotalPrice ?? 0;
                     Paid = SelectedItem.Paid ?? 0;
                     TienConLai = TotalPrice - Paid;

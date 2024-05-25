@@ -203,7 +203,7 @@ GO
 -- Insert 2 bills
 INSERT INTO Bill (IDCus, IDStaff, CreateAt, TotalPrice, Paid) VALUES
 (1, 1, '2024-05-23', 651000, 651000),
-(2, 2, '2024-05-24', 300000, 300000);
+(2, 2, '2024-05-24', 525000, 525000);
 GO
 
 -- Insert bill information for the 2 bills

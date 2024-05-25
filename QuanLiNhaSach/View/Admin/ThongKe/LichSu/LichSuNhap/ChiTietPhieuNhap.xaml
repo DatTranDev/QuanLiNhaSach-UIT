@@ -216,7 +216,7 @@
                 </Grid>
 
                 <Grid Grid.Row="2" Margin="0,10,0,0">
-                    <StackPanel Orientation="Horizontal" Margin="450 0 0 0">
+                    <StackPanel Margin="450,0,0,0" Orientation="Horizontal">
                         <TextBlock
                             Height="25"
                             Margin="50,0,15,0"
@@ -227,7 +227,7 @@
                             Height="23"
                             VerticalAlignment="Top"
                             Style="{DynamicResource TextBlock}"
-                            Text="{Binding SelectedItem_ForDsNhap.CreateAt, StringFormat='dd/MM/yyyy HH:mm:ss'}" />
+                            Text="{Binding SelectedItem_ForDsNhap.CreateAt, StringFormat='dd/MM/yyyy'}" />
                     </StackPanel>
 
 
@@ -258,7 +258,7 @@
 
 
                 <!--  Nút đóng  -->
-                <Grid Grid.Row="3" Margin="300 0 0 0">
+                <Grid Grid.Row="3" Margin="300,0,0,0">
                     <Button
                         Width="130"
                         Height="62"
