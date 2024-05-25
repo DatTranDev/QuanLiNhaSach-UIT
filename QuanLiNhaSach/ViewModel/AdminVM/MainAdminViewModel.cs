@@ -265,7 +265,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM
             {
                 try
                 {
-                    Process.Start("https://web.facebook.com/caphecake");
+                    Process.Start("https://www.instagram.com/tiemsachvietnam/");
                 }
                 catch (Exception)
                 {

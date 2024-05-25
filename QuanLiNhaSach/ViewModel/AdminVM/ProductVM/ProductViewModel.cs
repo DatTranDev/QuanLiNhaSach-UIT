@@ -1073,7 +1073,7 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                                     Inventory = int.Parse(EditInventory),
                                     Publisher = EditPublisher,
                                     PublishYear = int.Parse(EditPublishYear),
-                                    Author = EditAuthor,
+                                    Author = FormatAuthor(EditAuthor),
                                     Image = EditImage,
                                     Description = EditDescription,
                                     IsDeleted = false,
