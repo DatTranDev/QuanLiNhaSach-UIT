@@ -10,7 +10,7 @@
     x:Name="ChiTietPhieuNhapWD"
     Title="ChiTietPhieuNhap"
     Width="1115"
-    Height="590"
+    Height="710"
     AllowsTransparency="True"
     Background="Transparent"
     BorderBrush="Transparent"
@@ -47,7 +47,7 @@
             CornerRadius="25">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="71" />
+                    <RowDefinition Height="191" />
                     <RowDefinition Height="340" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -62,6 +62,31 @@
                         FontWeight="Bold"
                         Foreground="#CC824D"
                         Text="Chi tiết phiếu nhập" />
+
+
+                    <StackPanel Margin="0,0,200,0" HorizontalAlignment="Right">
+                        <TextBlock
+                            Height="23"
+                            Margin="50,70,0,10"
+                            VerticalAlignment="Top"
+                            Style="{DynamicResource TextBlock}"
+                            Text="Nhân viên nhập" />
+                        <TextBox
+                            Width="231.6"
+                            Height="50"
+                            Margin="50,0,0,0"
+                            Padding="12,2.4"
+                            HorizontalAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                            materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
+                            Background="#D9D9D9"
+                            BorderThickness="0.5"
+                            FontFamily="Inter"
+                            FontSize="17"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedItem_ForDsNhap.Staff.DisplayName}" />
+                    </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="1">
