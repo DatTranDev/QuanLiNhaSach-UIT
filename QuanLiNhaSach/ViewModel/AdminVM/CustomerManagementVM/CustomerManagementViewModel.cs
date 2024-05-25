@@ -360,31 +360,43 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.CustomerManagementVM
             });
             DebtingCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
             {
-                SystemValue value = await SystemValueService.Ins.GetData();
-                decimal? selectedDebt = SelectedItem.Debts;
-                if (value.DebtsPolicy == true && selectedDebt < decimal.Parse(DebtMoney)) {
-                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Số tiền thu không được vượt quá số nợ");
-                }
+                if (DebtMoney == null || DebtMoney == "")
+                    MessageBoxCustom.Show(MessageBoxCustom.Error, "Vui lòng nhập số tiền thu");
                 else
                 {
-                    decimal a = -decimal.Parse(DebtMoney);
-                    (bool sc, string mess) = await CustomerService.Ins.updateDebts(a, SelectedItem.ID);
-
-                    PaymentReceipt paymentReceipt = new PaymentReceipt {
-                        IDCus = SelectedItem.ID,
-                        AmountReceived = decimal.Parse(DebtMoney),
-                        IsDeleted = false,
-                        CreatAt = DebtDay
-                    };
-                    (bool sc1, string mess1) = await PaymentReceiptService.Ins.AddNewPay(paymentReceipt);
-                    if(sc1&&sc) {
-                        MessageBoxCustom.Show(MessageBoxCustom.Success, "Cập nhật thành công");
-                        CustomerList = new ObservableCollection<CustomerDTO>(await Task.Run(() => CustomerService.Ins.GetAllCus()));
-                        if (CustomerList != null)
-                            cusList = new List<CustomerDTO>(CustomerList);
-
+                    SystemValue value = await SystemValueService.Ins.GetData();
+                    decimal? selectedDebt = SelectedItem.Debts;
+                    if (value.DebtsPolicy == true && selectedDebt < decimal.Parse(DebtMoney)) {
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Số tiền thu không được vượt quá số nợ");
                     }
-                    p.Close();
+                    else
+                    {
+                        if(DebtDay > DateTime.Now)
+                        {
+                            MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày lập không được quá ngày hiện tại!");
+                        }
+                        else
+                        {
+                            decimal a = -decimal.Parse(DebtMoney);
+                            (bool sc, string mess) = await CustomerService.Ins.updateDebts(a, SelectedItem.ID);
+
+                            PaymentReceipt paymentReceipt = new PaymentReceipt {
+                                IDCus = SelectedItem.ID,
+                                AmountReceived = decimal.Parse(DebtMoney),
+                                IsDeleted = false,
+                                CreatAt = DebtDay
+                            };
+                            (bool sc1, string mess1) = await PaymentReceiptService.Ins.AddNewPay(paymentReceipt);
+                            if(sc1&&sc) {
+                                MessageBoxCustom.Show(MessageBoxCustom.Success, "Cập nhật thành công");
+                                CustomerList = new ObservableCollection<CustomerDTO>(await Task.Run(() => CustomerService.Ins.GetAllCus()));
+                                if (CustomerList != null)
+                                    cusList = new List<CustomerDTO>(CustomerList);
+
+                            }
+                            p.Close();
+                        }
+                    }
                 }
             });
         }

@@ -764,189 +764,196 @@ namespace QuanLiNhaSach.ViewModel.AdminVM.ProductVM
                 DateTime date;
                 if (DateTime.TryParseExact(DateImport, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
                 {
-                    if (date == null)
-                        date = DateTime.Now;
-                    GoodReceived = new GoodReceivedDTO
+                    if (date>DateTime.Now)
                     {
-                        CreateAt = date,
-                        Staff = findedStaff,
-                        StaffId = this.Staff.ID,
-                        Total = 0,
-                        GoodReceivedInfo = new List<GoodReceivedInfoDTO>()
-                    };
-                    bool flag = true;
-                    for (int i = 0; i < ListImport.Count; i++)
+                        MessageBoxCustom.Show(MessageBoxCustom.Error, "Ngày nhập không được quá ngày hiện tại");
+                    }
+                    else
                     {
-                        ImportItem item = ListImport[i];
-                        if ((ListImport[i].DisplayName == null || ListImport[i].DisplayName == "") && (ListImport[i].GenreName == null || ListImport[i].GenreName == "") && (ListImport[i].Author == null || ListImport[i].Author == "") && (ListImport[i].Publisher==null || ListImport[i].Publisher == ""))
+                        if (date == null)
+                            date = DateTime.Now;
+                        GoodReceived = new GoodReceivedDTO
                         {
-                            continue;
-                        }
-                        if (ListImport[i].DisplayName == null || ListImport[i].GenreName == null || ListImport[i].Author == null || ListImport[i].PublishYear == null || ListImport[i].Publisher == null)
+                            CreateAt = date,
+                            Staff = findedStaff,
+                            StaffId = this.Staff.ID,
+                            Total = 0,
+                            GoodReceivedInfo = new List<GoodReceivedInfoDTO>()
+                        };
+                        bool flag = true;
+                        for (int i = 0; i < ListImport.Count; i++)
                         {
-                            flag = false;
-                            Error wd3 = new Error("Nhập thiếu thông tin tại STT: " + ListImport[i].STT);
-                            wd3.ShowDialog();
-                            break;
-                        }
-                        if (ListImport[i].DisplayName.Trim() == "" || ListImport[i].GenreName.Trim() == "" || ListImport[i].Author.Trim() == "" || ListImport[i].PublishYear == null || ListImport[i].Publisher.Trim() == "")
-                        {
-                            flag = false;
-                            Error wd3 = new Error("Nhập sai thông tin tại STT: " + ListImport[i].STT);
-                            wd3.ShowDialog();
-                            break;
-                        }
-                        if (ListImport[i].Count == 0)
-                        {
-                            flag = false;
-                            Error wd2 = new Error("STT " + ListImport[i].STT + " nhập sai số");
-                            wd2.ShowDialog();
-                            break;
-                        }
-                        if (ListImport[i].Count < SystemValue.MinReceived)
-                        {
-                            flag = false;
-                            Error wd2 = new Error("STT " + ListImport[i].STT + " có số lượng nhập không đủ");
-                            wd2.ShowDialog();
-                            break;
-                        }
-                        int id;
-                        GenreBook genrePrD = new GenreBook();
-                        (id, genrePrD) = await GenreService.Ins.FindGenrePrD(item.GenreName);
-                        if (id == -1)
-                        {
-                            GenreBook newGenre = new GenreBook
+                            ImportItem item = ListImport[i];
+                            if ((ListImport[i].DisplayName == null || ListImport[i].DisplayName == "") && (ListImport[i].GenreName == null || ListImport[i].GenreName == "") && (ListImport[i].Author == null || ListImport[i].Author == "") && (ListImport[i].Publisher==null || ListImport[i].Publisher == ""))
                             {
-                                DisplayName = item.GenreName,
-                            };
-                            (bool a1, string b1) = await GenreService.Ins.AddNewGenre(newGenre);
-                            if (!a1 && b1 == null)
+                                continue;
+                            }
+                            if (ListImport[i].DisplayName == null || ListImport[i].GenreName == null || ListImport[i].Author == null || ListImport[i].PublishYear == null || ListImport[i].Publisher == null)
                             {
                                 flag = false;
-                                Error wd3 = new Error("Xảy ra lỗi tại STT: " + ListImport[i].STT);
+                                Error wd3 = new Error("Nhập thiếu thông tin tại STT: " + ListImport[i].STT);
                                 wd3.ShowDialog();
                                 break;
                             }
-
-                        }
-                        (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
-                        if (!a)
-                        {
-
-                            int id2;
-                            GenreBook genre1 = new GenreBook();
-                            (id2, genre1) = await GenreService.Ins.FindGenrePrD(item.GenreName);
-                            if (id2 == -1)
+                            if (ListImport[i].DisplayName.Trim() == "" || ListImport[i].GenreName.Trim() == "" || ListImport[i].Author.Trim() == "" || ListImport[i].PublishYear == null || ListImport[i].Publisher.Trim() == "")
                             {
-                                Error wd = new Error("Xảy ra lỗi tại STT: " + item.STT);
-                                wd.ShowDialog();
                                 flag = false;
+                                Error wd3 = new Error("Nhập sai thông tin tại STT: " + ListImport[i].STT);
+                                wd3.ShowDialog();
                                 break;
                             }
-                            else
+                            if (ListImport[i].Count == 0)
                             {
-                                Book newBook = new Book
+                                flag = false;
+                                Error wd2 = new Error("STT " + ListImport[i].STT + " nhập sai số");
+                                wd2.ShowDialog();
+                                break;
+                            }
+                            if (ListImport[i].Count < SystemValue.MinReceived)
+                            {
+                                flag = false;
+                                Error wd2 = new Error("STT " + ListImport[i].STT + " có số lượng nhập không đủ");
+                                wd2.ShowDialog();
+                                break;
+                            }
+                            int id;
+                            GenreBook genrePrD = new GenreBook();
+                            (id, genrePrD) = await GenreService.Ins.FindGenrePrD(item.GenreName);
+                            if (id == -1)
+                            {
+                                GenreBook newGenre = new GenreBook
                                 {
-                                    DisplayName = item.DisplayName,
-                                    IDGenre = id2,
-                                    Image = "/QuanLiNhaSach;component/Resources/Image/Book_Default.png",
-                                    Author = FormatAuthor(item.Author),
-                                    Publisher = item.Publisher,
-                                    PublishYear = item.PublishYear,
-                                    Price = item.Price,
-                                    Description = "",
-                                    Inventory = 0,
-                                    IsDeleted = false,
-
+                                    DisplayName = item.GenreName,
                                 };
-                                (bool a2, string b2) = await BookService.Ins.AddNewPrD(newBook);
-                                if (!a2)
+                                (bool a1, string b1) = await GenreService.Ins.AddNewGenre(newGenre);
+                                if (!a1 && b1 == null)
+                                {
+                                    flag = false;
+                                    Error wd3 = new Error("Xảy ra lỗi tại STT: " + ListImport[i].STT);
+                                    wd3.ShowDialog();
+                                    break;
+                                }
+
+                            }
+                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
+                            if (!a)
+                            {
+
+                                int id2;
+                                GenreBook genre1 = new GenreBook();
+                                (id2, genre1) = await GenreService.Ins.FindGenrePrD(item.GenreName);
+                                if (id2 == -1)
                                 {
                                     Error wd = new Error("Xảy ra lỗi tại STT: " + item.STT);
                                     wd.ShowDialog();
                                     flag = false;
                                     break;
                                 }
-                            }
-                        }
-                        else
-                        {
-                            if (b.Inventory > SystemValue.MaxInventory)
-                            {
-                                flag = false;
-                                Error wd1 = new Error("STT " + ListImport[i].STT + " ở kho vẫn còn hàng");
-                                wd1.ShowDialog();
-                                break;
-                            }
-                            if (b.Price != item.Price)
-                            {
-                                flag = false;
-                                Error wd3 = new Error("STT " + ListImport[i].STT + " có giá nhập sai");
-                                wd3.ShowDialog();
-                                break;
-                            }
-                        }
-                    }
-                    //Bắt đầu thêm
-                    if (flag)
-                    {
-                        for (int i = 0; i < ListImport.Count; i++)
-                        {
-                            if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
-                            {
-                                continue;
-                            }
-                            ImportItem item = ListImport[i];
+                                else
+                                {
+                                    Book newBook = new Book
+                                    {
+                                        DisplayName = item.DisplayName,
+                                        IDGenre = id2,
+                                        Image = "/QuanLiNhaSach;component/Resources/Image/Book_Default.png",
+                                        Author = FormatAuthor(item.Author),
+                                        Publisher = item.Publisher,
+                                        PublishYear = item.PublishYear,
+                                        Price = item.Price,
+                                        Description = "",
+                                        Inventory = 0,
+                                        IsDeleted = false,
 
-                            (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
-                            if (a)
-                            {
-                                receivedInfo = new GoodReceivedInfoDTO
-                                {
-                                    IDBook = b.ID,
-                                    Quantity = item.Count,
-                                    BookAuthor = item.Author,
-                                    BookName = item.DisplayName,
-                                    BookGenre = item.GenreName,
-                                    BookPrice = item.Price,
-                                    TotalPriceItem = item.Price * item.Count,
-                                    IsDeleted = false,
-                                };
-                                GoodReceived.GoodReceivedInfo.Add(receivedInfo);
-                                GoodReceived.Total += receivedInfo.TotalPriceItem;
-                            }
-                        }
-                    }
-                    if (flag)
-                    {
-                        if(GoodReceived.Total == 0)
-                            {
-                            Error wd5 = new Error("Vui lòng nhập thông tin");
-                            wd5.ShowDialog();  
-                        }
-                        else
-                        {
-                            (bool d, string str) = await GoodReceivedService.Ins.AddNewGoodReceived(GoodReceived);
-                            if (d)
-                            {
-                                Success wd4 = new Success("Nhập hàng thành công");
-                                ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
-                                if (ProductList != null)
-                                {
-                                    prdList = new List<BookDTO>(ProductList);
+                                    };
+                                    (bool a2, string b2) = await BookService.Ins.AddNewPrD(newBook);
+                                    if (!a2)
+                                    {
+                                        Error wd = new Error("Xảy ra lỗi tại STT: " + item.STT);
+                                        wd.ShowDialog();
+                                        flag = false;
+                                        break;
+                                    }
                                 }
-                                GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
-                                List<string> gnList = new List<string>(GenreList);
-                                GenreListImport = new ObservableCollection<string>(gnList);
-                                ComboList = GenreList;
-                                ComboList.Insert(0, "Tất cả thể loại");
-                                GenreBox = "Tất cả thể loại";
-                                p.Close();
-                                wd4.ShowDialog();
+                            }
+                            else
+                            {
+                                if (b.Inventory > SystemValue.MaxInventory)
+                                {
+                                    flag = false;
+                                    Error wd1 = new Error("STT " + ListImport[i].STT + " ở kho vẫn còn hàng");
+                                    wd1.ShowDialog();
+                                    break;
+                                }
+                                if (b.Price != item.Price)
+                                {
+                                    flag = false;
+                                    Error wd3 = new Error("STT " + ListImport[i].STT + " có giá nhập sai");
+                                    wd3.ShowDialog();
+                                    break;
+                                }
+                            }
+                        }
+                        //Bắt đầu thêm
+                        if (flag)
+                        {
+                            for (int i = 0; i < ListImport.Count; i++)
+                            {
+                                if (ListImport[i].DisplayName == null && ListImport[i].GenreName == null && ListImport[i].Author == null)
+                                {
+                                    continue;
+                                }
+                                ImportItem item = ListImport[i];
+
+                                (bool a, Book b) = await BookService.Ins.findIdBook(ListImport[i].DisplayName, ListImport[i].GenreName, FormatAuthor(ListImport[i].Author), ListImport[i].Publisher, ListImport[i].PublishYear);
+                                if (a)
+                                {
+                                    receivedInfo = new GoodReceivedInfoDTO
+                                    {
+                                        IDBook = b.ID,
+                                        Quantity = item.Count,
+                                        BookAuthor = item.Author,
+                                        BookName = item.DisplayName,
+                                        BookGenre = item.GenreName,
+                                        BookPrice = item.Price,
+                                        TotalPriceItem = item.Price * item.Count,
+                                        IsDeleted = false,
+                                    };
+                                    GoodReceived.GoodReceivedInfo.Add(receivedInfo);
+                                    GoodReceived.Total += receivedInfo.TotalPriceItem;
+                                }
+                            }
+                        }
+                        if (flag)
+                        {
+                            if(GoodReceived.Total == 0)
+                                {
+                                Error wd5 = new Error("Vui lòng nhập thông tin");
+                                wd5.ShowDialog();  
+                            }
+                            else
+                            {
+                                (bool d, string str) = await GoodReceivedService.Ins.AddNewGoodReceived(GoodReceived);
+                                if (d)
+                                {
+                                    Success wd4 = new Success("Nhập hàng thành công");
+                                    ProductList = new ObservableCollection<BookDTO>(await BookService.Ins.GetAllBook());
+                                    if (ProductList != null)
+                                    {
+                                        prdList = new List<BookDTO>(ProductList);
+                                    }
+                                    GenreList = new ObservableCollection<string>(await GenreService.Ins.GetAllGenreBook());
+                                    List<string> gnList = new List<string>(GenreList);
+                                    GenreListImport = new ObservableCollection<string>(gnList);
+                                    ComboList = GenreList;
+                                    ComboList.Insert(0, "Tất cả thể loại");
+                                    GenreBox = "Tất cả thể loại";
+                                    p.Close();
+                                    wd4.ShowDialog();
+                                }
+
                             }
 
                         }
-
                     }
                 }
                 else
