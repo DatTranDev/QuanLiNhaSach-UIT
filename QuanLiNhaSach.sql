@@ -197,7 +197,7 @@ INSERT INTO Book (DisplayName, Price, IDGenre, Inventory, Author, Description, I
 (N'Lịch sử thế giới', 300000, 5, 20, N'Philip Parker', N'Tổng quan về lịch sử thế giới từ cổ đại đến hiện đại', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-low7n5r9xpama7', 2021, N'Nhà Xuất Bản Thế Giới'),
 (N'Những bài học cuộc sống', 150000, 9, 50, N'Robin Sharma', N'Những bài học giá trị về cuộc sống và thành công', 'https://cdn0.fahasa.com/media/catalog/product/i/m/image_225532.jpg', 2018, N'Nhà Xuất Bản Lao Động'),
 (N'Mật mã Da Vinci', 280000, 8, 30, N'Dan Brown', N'Tiểu thuyết kinh dị nổi tiếng về những bí ẩn của lịch sử', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lpkz2ttg2w1bcf', 2003, N'Nhà Xuất Bản Văn Học'),
-(N'Tiểu sử Steve Jobs', 350000, 7, 15, N'Walter Isaacson', N'Tiểu sử của nhà sáng lập Apple, Steve Jobs', 'https://bizweb.dktcdn.net/100/197/269/products/sach-tieu-su-steve-jobs-tai-ban-alphabooks.jpg?v=1587629624130', 2011, N'Nhà Xuất Bản Trẻ'),
+(N'Tiểu sử Steve Jobs', 350000, 7, 20, N'Walter Isaacson', N'Tiểu sử của nhà sáng lập Apple, Steve Jobs', 'https://bizweb.dktcdn.net/100/197/269/products/sach-tieu-su-steve-jobs-tai-ban-alphabooks.jpg?v=1587629624130', 2011, N'Nhà Xuất Bản Trẻ'),
 (N'Kỹ năng mềm cho người mới bắt đầu', 170000, 9, 40, N'Trần Thị Minh Thu', N'Những kỹ năng mềm cần thiết cho người mới bắt đầu', 'https://lib.vinhuni.edu.vn/data/62/upload/1301/images//2023/12/t1.jpg', 2019, N'Nhà Xuất Bản Trẻ');
 GO
 -- Insert 2 bills
